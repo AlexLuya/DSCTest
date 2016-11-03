@@ -291,6 +291,6 @@ public class Util
 
 	public static String wrap(String wrapee)
 	{
-		return "★★★  " + wrapee;
+		return "鈽呪槄鈽�  " + wrapee;
 	}
 }
