@@ -63,6 +63,26 @@ public abstract class SQLDataBase implements DataBase
 		}
 	}
 
+	/**
+	 *
+	 */
+	@Override
+	public void ensureConnected()
+	{
+		try
+		{
+			if (!conn.isClosed())
+			{
+				return;
+			}
+		} catch (SQLException e)
+		{
+			throw new RuntimeException(e);
+		}
+
+		doConnect();
+	}
+
 	@Override
 	public boolean exec(String sql)
 	{
@@ -95,6 +115,10 @@ public abstract class SQLDataBase implements DataBase
 		return this;
 	}
 
+	/**
+	 * @deprecated replaced by {@link com.dsc.db.TableImpl#insert()}.
+	 */
+	@Deprecated
 	@Override
 	public void insert(String sql, Object[][] values)
 	{
@@ -104,7 +128,7 @@ public abstract class SQLDataBase implements DataBase
 
 		try
 		{
-			stmt = conn.prepareStatement(sql);
+			stmt = prepareStatement(sql);
 
 			for (Object[] tupe : values)
 			{
@@ -131,7 +155,7 @@ public abstract class SQLDataBase implements DataBase
 					} else if (value instanceof Timestamp)
 					{
 						stmt.setTimestamp(l, (Timestamp) value);
-					} else if (value instanceof Timestamp)
+					} else
 					{
 						throw new RuntimeException(value + " hasn't be handled for batch insertion statement preparing");
 					}
@@ -192,6 +216,30 @@ public abstract class SQLDataBase implements DataBase
 		this.port = port;
 
 		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.db.DataBase#prepareStatement(java.lang.String)
+	 */
+	@Override
+	public PreparedStatement prepareStatement(String sql)
+	{
+		// validate argument
+		Util.requireNotNullOrEmpty(sql, "sql");
+
+		PreparedStatement stmt=null;
+
+		try
+		{
+			stmt=conn.prepareStatement(sql);
+		} catch (SQLException e)
+		{
+			throw new RuntimeException(e);
+		}
+
+		return stmt;
 	}
 
 	@Override
@@ -321,23 +369,4 @@ public abstract class SQLDataBase implements DataBase
 	 * @return
 	 */
 	protected abstract String driverClass();
-
-	/**
-	 *
-	 */
-	protected void ensureConnected()
-	{
-		try
-		{
-			if (!conn.isClosed())
-			{
-				return;
-			}
-		} catch (SQLException e)
-		{
-			throw new RuntimeException(e);
-		}
-
-		doConnect();
-	}
 }

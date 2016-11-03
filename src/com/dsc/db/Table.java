@@ -5,6 +5,8 @@
  **/
 package com.dsc.db;
 
+import java.sql.ResultSet;
+
 /**
  * @Author alex
  * @CreateTime Aug 4, 2016 5:54:15 PM
@@ -25,6 +27,8 @@ public interface Table
 
 	Columns columnsExcept(String... columns);
 
+	boolean deleteById(Object id);
+
 	/**
 	 *
 	 */
@@ -32,11 +36,12 @@ public interface Table
 
 	Columns hasReferenceColumns();
 
+	void insert(String sql, Object[][] values);
+
 	/**
 	 * @return
 	 */
 	String name();
-
 
 	/**
 	 * @return primary key
@@ -47,4 +52,8 @@ public interface Table
 	 * set primary key
 	 */
 	Table primaryKey(String primaryKey);
+
+	ResultSet selectBy(String sql);
+
+	ResultSet selectById(Object id);
 }

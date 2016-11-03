@@ -5,9 +5,11 @@
  **/
 package com.dsc.db;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.dsc.db.sql.Schema;
@@ -22,7 +24,6 @@ import com.google.common.collect.Lists;
  */
 public class TableImpl implements Table
 {
-
 	private DataBase	dataBase;
 	private String		primaryKey	= "id_in_source";
 
@@ -148,8 +149,22 @@ public class TableImpl implements Table
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.db.table#deleteRowById(java.lang.Object)
+	 */
 	@Override
-	public void ensureSchemaRetrieved(){
+	public boolean deleteById(Object id)
+	{
+		dataBase.ensureConnected();
+
+		return dataBase.exec(String.format("DELETE FROM %s %s", name(),whereIdEquals(id)));
+	}
+
+	@Override
+	public void ensureSchemaRetrieved()
+	{
 		schema.ensureTableRetrieved();
 	}
 
@@ -172,6 +187,69 @@ public class TableImpl implements Table
 		}
 
 		return columns.isEmpty() ? null : columns;
+	}
+
+	@Override
+	public void insert(String sql, Object[][] values)
+	{
+		dataBase.ensureConnected();
+
+		PreparedStatement stmt = null;
+
+		try
+		{
+			stmt = dataBase.prepareStatement(sql);
+
+			for (Object[] tupe : values)
+			{
+				for (int i = 0; i < tupe.length; i++)
+				{
+					Object value = tupe[i];
+					int l = i + 1;
+
+					if (value instanceof Double)
+					{
+						stmt.setDouble(l, (double) value);
+					} else if (value instanceof Float)
+					{
+						stmt.setFloat(l, (float) value);
+					} else if (value instanceof Integer)
+					{
+						stmt.setInt(l, (int) value);
+					} else if (value instanceof Long)
+					{
+						stmt.setLong(l, (long) value);
+					} else if (value instanceof String)
+					{
+						stmt.setString(l, (String) value);
+					} else if (value instanceof Timestamp)
+					{
+						stmt.setTimestamp(l, (Timestamp) value);
+					} else
+					{
+						throw new RuntimeException(value + " hasn't be handled for batch insertion statement preparing");
+					}
+				}
+
+				//
+				stmt.addBatch();
+			}
+
+			stmt.executeBatch();
+
+		} catch (SQLException e)
+		{
+			throw new RuntimeException(e);
+		} finally
+		{
+			try
+			{
+				stmt.close();
+			} catch (SQLException e)
+			{
+				throw new RuntimeException(e);
+			}
+		}
 	}
 
 	/*
@@ -208,6 +286,30 @@ public class TableImpl implements Table
 		return this;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.db.Table#selectBy(java.lang.String)
+	 */
+	@Override
+	public ResultSet selectBy(String sql)
+	{
+		dataBase.ensureConnected();
+
+		return dataBase.query(sql);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.db.Table#selectById(java.lang.Object)
+	 */
+	@Override
+	public ResultSet selectById(Object id)
+	{
+		return selectBy(String.format("select * FROM %s %s", name(),whereIdEquals(id)));
+	}
+
 	// HP override other methods
 	@Override
 	public String toString()
@@ -221,5 +323,26 @@ public class TableImpl implements Table
 	private schemacrawler.schema.Table schema()
 	{
 		return schema.ensureTableRetrieved();
+	}
+
+	private String whereIdEquals(Object id)
+	{
+		String whereIdEquals = "WHERE id=";
+
+		if (id instanceof Integer)
+		{
+			return whereIdEquals + (int) id;
+		} else if (id instanceof Long)
+		{
+			return whereIdEquals + (long) id;
+		} else if (id instanceof String)
+		{
+			return whereIdEquals + "'" + (String) id + "'";
+		} else
+		{
+			throw new RuntimeException(
+					String.format("%s's type is %s that isn't a supported type:int/Integer,long/Long,String typed id supported,",
+							id.toString(), id.getClass().getSimpleName()));
+		}
 	}
 }

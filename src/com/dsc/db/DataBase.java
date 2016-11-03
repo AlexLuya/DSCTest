@@ -5,6 +5,7 @@
  **/
 package com.dsc.db;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.dsc.db.sql.Source;
@@ -48,6 +49,11 @@ public interface DataBase
 	String connectionUrl();
 
 	/**
+	 *
+	 */
+	void ensureConnected();
+
+	/**
 	 * Exec.
 	 *
 	 * @param sql
@@ -72,7 +78,9 @@ public interface DataBase
 	 *            the sql
 	 * @param values
 	 *            the values
+	 * @deprecated  replaced by {@link com.dsc.db.Table#insert()}.
 	 */
+	@Deprecated
 	void insert(String sql, Object[][] values);
 
 	/**
@@ -99,6 +107,12 @@ public interface DataBase
 	 * @return the data base
 	 */
 	DataBase port(int port);
+
+	/**
+	 * @param sql
+	 * @return
+	 */
+	PreparedStatement prepareStatement(String sql);
 
 	/**
 	 * Query.

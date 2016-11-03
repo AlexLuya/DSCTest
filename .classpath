@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="lib/guava/error_prone_annotations-2.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/guava/guava-20.0-20160420.185054-187-sources.jar"/>
@@ -59,5 +60,8 @@
 	<classpathentry kind="lib" path="lib/db/hsqldb-2.3.4.jar"/>
 	<classpathentry kind="lib" path="lib/db/javassist-3.12.1.GA.jar"/>
 	<classpathentry kind="lib" path="lib/db/slf4j-api-1.7.13.jar"/>
+	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
+	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
