@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.db;
+package com.dsc.db.sql;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +12,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.dsc.db.sql.Schema;
+import com.dsc.db.Column;
+import com.dsc.db.Columns;
+import com.dsc.db.DataBase;
+import com.dsc.db.Table;
 import com.dsc.selenium.util.Util;
 import com.google.common.collect.Lists;
 
@@ -22,7 +25,7 @@ import com.google.common.collect.Lists;
  * @Version 1.0
  * @Since 1.0
  */
-public class TableImpl implements Table
+public class SQLTableImpl implements Table
 {
 	private DataBase	dataBase;
 	private String		primaryKey	= "id_in_source";
@@ -32,7 +35,7 @@ public class TableImpl implements Table
 	/**
 	 * @param dataBase
 	 */
-	public TableImpl(DataBase dataBase, Schema schema)
+	public SQLTableImpl(DataBase dataBase, Schema schema)
 	{
 		Util.requireNotNull(this.dataBase = dataBase, "dataBase");
 		Util.requireNotNull(this.schema = schema, "schema");
@@ -152,20 +155,95 @@ public class TableImpl implements Table
 	/*
 	 * (non-Javadoc)
 	 *
+	 * @see com.dsc.db.Table#deleteBy(java.lang.String)
+	 */
+	@Override
+	public int deleteBy(String sql)
+	{
+		Util.requireNotNull(sql, "sql");
+
+		dataBase.ensureConnected();
+
+		return dataBase.exec(sql);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.db.Table#deleteBy(java.lang.String, java.lang.Object)
+	 */
+	@Override
+	public int deleteBy(String column, Object cellValue)
+	{
+		Util.requireNotNullOrEmpty(column, "column name");
+		Util.requireNotNull(cellValue, "cellValue");
+
+		return deleteBy(String.format("DELETE FROM %s %s", name(), whereColumnEquals(column, cellValue)));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see com.dsc.db.table#deleteRowById(java.lang.Object)
 	 */
 	@Override
-	public boolean deleteById(Object id)
+	public int deleteById(Object id)
 	{
-		dataBase.ensureConnected();
+		Util.requireNotNull(id, "id");
 
-		return dataBase.exec(String.format("DELETE FROM %s %s", name(),whereIdEquals(id)));
+		return deleteBy("id", id);
 	}
 
 	@Override
 	public void ensureSchemaRetrieved()
 	{
 		schema.ensureTableRetrieved();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.db.Table#existedBy(java.lang.String)
+	 */
+	@Override
+	public boolean existedBy(String query)
+	{
+		Util.requireNotNull(query, "query");
+
+		try
+		{
+			return selectBy(query).next();
+		} catch (SQLException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.db.Table#existedBy(java.lang.String, java.lang.Object)
+	 */
+	@Override
+	public boolean existedBy(String column, Object cellValue)
+	{
+		Util.requireNotNullOrEmpty(column, "column name");
+		Util.requireNotNull(cellValue, "cellValue");
+
+		return existedBy(String.format("select * FROM %s %s", name(), whereColumnEquals(column, cellValue)));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.db.Table#existedById(java.lang.Object)
+	 */
+	@Override
+	public boolean existedById(Object id)
+	{
+		Util.requireNotNull(id, "id");
+
+		return existedBy("id", id);
 	}
 
 	/*
@@ -294,9 +372,25 @@ public class TableImpl implements Table
 	@Override
 	public ResultSet selectBy(String sql)
 	{
+		Util.requireNotNull(sql, "sql");
+
 		dataBase.ensureConnected();
 
 		return dataBase.query(sql);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.db.Table#selectBy(java.lang.String, java.lang.Object)
+	 */
+	@Override
+	public ResultSet selectBy(String column, Object cellValue)
+	{
+		Util.requireNotNullOrEmpty(column, "column name");
+		Util.requireNotNull(cellValue, "cellValue");
+
+		return selectBy(String.format("select * FROM %s %s", name(), whereColumnEquals(column, cellValue)));
 	}
 
 	/*
@@ -307,7 +401,9 @@ public class TableImpl implements Table
 	@Override
 	public ResultSet selectById(Object id)
 	{
-		return selectBy(String.format("select * FROM %s %s", name(),whereIdEquals(id)));
+		Util.requireNotNull(id, "id");
+
+		return selectBy("id", id);
 	}
 
 	// HP override other methods
@@ -325,9 +421,9 @@ public class TableImpl implements Table
 		return schema.ensureTableRetrieved();
 	}
 
-	private String whereIdEquals(Object id)
+	private String whereColumnEquals(String column, Object id)
 	{
-		String whereIdEquals = "WHERE id=";
+		String whereIdEquals = "WHERE " + column + "=";
 
 		if (id instanceof Integer)
 		{
@@ -344,5 +440,10 @@ public class TableImpl implements Table
 					String.format("%s's type is %s that isn't a supported type:int/Integer,long/Long,String typed id supported,",
 							id.toString(), id.getClass().getSimpleName()));
 		}
+	}
+
+	private String whereIdEquals(Object id)
+	{
+		return whereColumnEquals("id", id);
 	}
 }

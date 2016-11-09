@@ -3,12 +3,13 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.db.sql;
+package com.dsc.db.sql.db;
 
 import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.Server;
 
 import com.dsc.db.DataBase;
+import com.dsc.db.sql.SQLDataBase;
 import com.dsc.selenium.util.Util;
 
 /**

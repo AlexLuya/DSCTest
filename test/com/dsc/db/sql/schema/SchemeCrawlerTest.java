@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.db;
+package com.dsc.db.sql.schema;
 
 import java.sql.Connection;
 import java.sql.SQLException;

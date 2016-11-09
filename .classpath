@@ -29,9 +29,6 @@
 	<classpathentry kind="lib" path="lib/schemacrawler/xpp3_min-1.1.4c.jar"/>
 	<classpathentry kind="lib" path="lib/schemacrawler/xstream-1.4.9.jar"/>
 	<classpathentry kind="lib" path="lib/spock/cglib-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/spock/spock-core-1.1-groovy-2.4-20160613.175212-58-javadoc.jar"/>
-	<classpathentry kind="lib" path="lib/spock/spock-core-1.1-groovy-2.4-20160613.175212-58-sources.jar"/>
-	<classpathentry kind="lib" path="lib/spock/spock-core-1.1-groovy-2.4-20160613.175212-58.jar"/>
 	<classpathentry kind="lib" path="lib/ashot-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.9.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections4-4.1.jar"/>
@@ -60,8 +57,10 @@
 	<classpathentry kind="lib" path="lib/db/hsqldb-2.3.4.jar"/>
 	<classpathentry kind="lib" path="lib/db/javassist-3.12.1.GA.jar"/>
 	<classpathentry kind="lib" path="lib/db/slf4j-api-1.7.13.jar"/>
+	<classpathentry kind="lib" path="lib/driver/postgresql-9.4.1209.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/spock/spock-core-1.1-groovy-2.4-20160930.234233-74.jar" sourcepath="lib/spock/spock-core-1.1-groovy-2.4-20160930.234233-74-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

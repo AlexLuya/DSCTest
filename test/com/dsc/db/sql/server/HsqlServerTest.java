@@ -2,7 +2,7 @@
  * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.db;
+package com.dsc.db.sql.server;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

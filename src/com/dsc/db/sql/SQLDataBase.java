@@ -10,11 +10,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 
 import com.dsc.db.DataBase;
 import com.dsc.db.Table;
-import com.dsc.db.TableImpl;
 import com.dsc.selenium.util.Util;
 
 /**
@@ -84,19 +84,34 @@ public abstract class SQLDataBase implements DataBase
 	}
 
 	@Override
-	public boolean exec(String sql)
+	public int exec(String sql)
 	{
 		// validate argument
 		Util.requireNotNullOrEmpty(sql, "sql");
 
 		ensureConnected();
 
+		Statement stmt =null;
+
 		try
 		{
-			return conn.createStatement().execute(sql);
-		} catch (Exception e)
+			stmt = conn.createStatement();
+			stmt.execute(sql);
+			return stmt.getUpdateCount();
+		}catch (Exception e)
 		{
 			throw new RuntimeException(e);
+		} finally{
+			if(stmt!=null)
+			{
+				try
+				{
+					stmt.close();
+				} catch (SQLException e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
 		}
 	}
 
@@ -116,7 +131,7 @@ public abstract class SQLDataBase implements DataBase
 	}
 
 	/**
-	 * @deprecated replaced by {@link com.dsc.db.TableImpl#insert()}.
+	 * @deprecated replaced by {@link com.dsc.db.sql.SQLTableImpl#insert()}.
 	 */
 	@Deprecated
 	@Override
@@ -339,7 +354,7 @@ public abstract class SQLDataBase implements DataBase
 	@Override
 	public Table table(String table)
 	{
-		return new TableImpl(this, schema.table(table));
+		return new SQLTableImpl(this, schema.table(table));
 	}
 
 	@Override

@@ -3,9 +3,10 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.db.sql;
+package com.dsc.db.sql.db;
 
 import com.dsc.db.DataBase;
+import com.dsc.db.sql.SQLDataBase;
 import com.dsc.selenium.util.Util;
 
 /**
@@ -14,16 +15,15 @@ import com.dsc.selenium.util.Util;
  * @Version 1.0
  * @Since 1.0
  */
-public class Postgresql extends SQLDataBase
+public abstract class MySQLBased extends SQLDataBase
 {
-	public static Postgresql get()
-	{
-		return new Postgresql();
-	}
 
-	public Postgresql()
+	/**
+	 * @param defaultPort
+	 */
+	public MySQLBased()
 	{
-		super(5432);
+		super(3306);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class Postgresql extends SQLDataBase
 	@Override
 	public String connectionUrl()
 	{
-		return String.format("jdbc:postgresql://%s:%d/%s", host, port, name);
+		return String.format("jdbc:" + type() + "://%s:%d/%s", host, port, name);
 	}
 
 	/*
@@ -55,13 +55,8 @@ public class Postgresql extends SQLDataBase
 	@Override
 	public String schemaName()
 	{
-		//HP user may prefer put tables under other schemas
-		return "public";
+		return name;
 	}
 
-	@Override
-	protected String driverClass()
-	{
-		return "org.postgresql.Driver";
-	}
+	protected abstract String type();
 }

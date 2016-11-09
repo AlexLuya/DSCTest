@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 
 import com.dsc.selenium.Browser;
 import com.dsc.selenium.ui.TextBox;
+import com.dsc.selenium.ui.UIObject;
+import com.dsc.selenium.util.Util;
 
 public abstract class Composite extends Widget
 {
@@ -34,7 +36,17 @@ public abstract class Composite extends Widget
 		return browser.findElemById(id);
 	}
 
+	protected void doEnsureAvailable(UIObject... objs){
+		Util.requireNotNull(objs, "objs");
+
+		for (UIObject obj : objs) {
+			obj.ensureAvailable();
+		}
+	}
+
 	protected abstract void ensureChildrenAvailable();
+
+
 
 	protected void input(TextBox elem, String text)
 	{

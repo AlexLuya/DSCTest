@@ -54,13 +54,10 @@ public interface DataBase
 	void ensureConnected();
 
 	/**
-	 * Exec.
-	 *
-	 * @param sql
-	 *            the sql
-	 * @return true, if successful
+	 * @param sql any SQL statement
+	 * @return updated row count
 	 */
-	boolean exec(String sql);
+	int exec(String sql);
 
 	/**
 	 * Host.

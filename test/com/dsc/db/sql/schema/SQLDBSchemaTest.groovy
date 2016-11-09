@@ -1,9 +1,11 @@
-package com.dsc.db
+package com.dsc.db.sql.schema
 
 import spock.lang.Shared
 import spock.lang.Specification
 
-import com.dsc.db.sql.HsqlDB
+import com.dsc.db.Columns
+import com.dsc.db.sql.db.HsqlDB;
+import com.dsc.db.sql.server.HsqlServer;
 
 public class SQLDBSchemaTest extends Specification
 {

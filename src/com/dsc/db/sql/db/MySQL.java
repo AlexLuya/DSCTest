@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.db.sql;
+package com.dsc.db.sql.db;
 
 import schemacrawler.schema.Schema;
 
