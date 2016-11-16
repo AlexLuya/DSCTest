@@ -370,7 +370,7 @@ public abstract class SQLDataBase implements DataBase
 	{
 		try
 		{
-			Class.forName(driverClass());
+			Class.forName(driverClass()).newInstance();
 			conn = DriverManager.getConnection(connectionUrl(), user, password);
 		} catch (Exception e)
 		{

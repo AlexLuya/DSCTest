@@ -11,8 +11,8 @@ import com.dsc.db.Column
 import com.dsc.db.Columns
 import com.dsc.db.DataBase
 import com.dsc.db.RowPair
-import com.dsc.db.sql.db.MySQL;
-import com.dsc.db.sql.db.Postgresql;
+import com.dsc.db.sql.db.MySQL
+import com.dsc.db.sql.db.Postgresql
 
 public class SQLDBDataTest extends Specification
 {
@@ -36,7 +36,7 @@ public class SQLDBDataTest extends Specification
 	]
 
 	def setupSpec(){
-		mysql=MySQL.get().connect("test","root","112600827")
+		mysql=MySQL.get().host("t2.icloudcare.com").connect("assessment","icare","ginkodrop")
 		postgresql=Postgresql.get().connect("test","postgres","112600827")
 
 		mysql.exec(dropTable)

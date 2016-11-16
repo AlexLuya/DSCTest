@@ -1,10 +1,8 @@
 /**
- * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights reserved.
+ 00 * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
 package com.dsc.db.sql
-
-
 
 import java.sql.ResultSet
 
@@ -29,10 +27,6 @@ public class SQLTableTest extends Specification
 		db.connect(HsqlServer.DB)
 
 		table=db.table(tableName)
-	}
-
-	def cleanupSpec(){
-		db.stop()
 	}
 
 	def "select by id"(Object id,_){
@@ -93,7 +87,7 @@ public class SQLTableTest extends Specification
 		then:"first expected row got selected out"
 		res.next()==true
 		res.getObject(2).toString().equals(value.toString())//NP will toString() give any potential problem
-		then:"second expected row got selected out"
+		and:"second expected row got selected out"
 		res.next()==true
 		res.getObject(2).toString().equals(value.toString())//NP will toString() give any potential problem
 		and:"only expected rows got selected out"

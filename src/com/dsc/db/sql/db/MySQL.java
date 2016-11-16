@@ -40,7 +40,7 @@ public class MySQL extends MySQLBased
 	@Override
 	protected String driverClass()
 	{
-		return "com.mysql.cj.jdbc.Driver";
+		return "com.mysql.jdbc.Driver";
 	}
 
 	/*

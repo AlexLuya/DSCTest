@@ -146,6 +146,12 @@ public class Browser
 		return true;
 	}
 
+	public WebElement findDivByText(String text)
+	{
+
+		return findDivByText("//div[contains(text(),'" + text + "')]");
+	}
+
 	public WebElement findElemById(String id)
 	{
 		if (id == null || id == "")
@@ -182,6 +188,24 @@ public class Browser
 		driver.findElement(By.tagName(tag)).getSize();
 
 		return driver.findElement(By.tagName(tag));
+	}
+
+	public WebElement findElemByXpath(String xpath)
+	{
+		if (xpath == null || xpath == "")
+		{
+			throw new IllegalArgumentException("xpath mustn't be null");
+		}
+
+		try
+		{
+			waitUntil(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+		} catch (TimeoutException e)
+		{
+			throw new NoSuchElementException("Can't find the element with ----------------xpath:---------------" + xpath, e);
+		}
+
+		return driver.findElement(By.xpath(xpath));
 	}
 
 	public String getCookie(String key)
@@ -222,28 +246,45 @@ public class Browser
 	}
 
 	/**
-	 * @param id
+	 * @param target
+	 * @deprecated use {@link #moveToElement(WebElement)} instead
 	 */
-	// public boolean isPresented(String id)
-	// {
-	// return getUIObjectById(id) != null;
-	// }
-
-	public WebElement mouseMoveTo(WebElement elem)
+	@Deprecated
+	public WebElement mouseMoveTo(WebElement target)
 	{
-		new Actions(driver).moveToElement(elem, 0, 0).perform();
-
-		return elem;
+		return moveToElement(target);
 	}
 
 	/**
-	 * @param wrapee
+	 * @param target
+	 * @param x
+	 * @param y
+	 * @deprecated use {@link #moveToElement(WebElement, int , int )} instead
+	 */
+	@Deprecated
+	public void mouseMoveTo(WebElement target, int x, int y)
+	{
+		moveToElement(target, x, y);
+	}
+
+	/**
+	 * @param target
+	 */
+	public WebElement moveToElement(WebElement target)
+	{
+		new Actions(driver).moveToElement(target, 0, 0).perform();
+
+		return target;
+	}
+
+	/**
+	 * @param target
 	 * @param x
 	 * @param y
 	 */
-	public void mouseMoveTo(WebElement wrapee, int x, int y)
+	public void moveToElement(WebElement target, int x, int y)
 	{
-		new Actions(driver).moveToElement(wrapee, x, y).perform();
+		new Actions(driver).moveToElement(target, x, y).perform();
 	}
 
 	public void open(String url)

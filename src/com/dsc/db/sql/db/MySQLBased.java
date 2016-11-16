@@ -44,7 +44,7 @@ public abstract class MySQLBased extends SQLDataBase
 	@Override
 	public String connectionUrl()
 	{
-		return String.format("jdbc:" + type() + "://%s:%d/%s", host, port, name);
+		return String.format("jdbc:" + type() + "://%s:%d/%s?characterEncoding=utf8", host, port, name);
 	}
 
 	/*
