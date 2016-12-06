@@ -7,7 +7,7 @@
 package com.dsc.selenium;
 
 import static com.dsc.selenium.util.Util.wrap;
-import static java.lang.String.format;
+import static com.dsc.util.Log.info;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -46,7 +46,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.dsc.selenium.ui.UIObject;
 import com.dsc.selenium.util.Util;
-import com.dsc.util.Log;
 
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
@@ -210,7 +209,7 @@ public class Browser
 
 	public String getCookie(String key)
 	{
-		Util.requireNotNullOrEmpty(key, "cookie key");
+		Util.mustNotNullOrEmpty(key, "cookie key");
 
 		for (Cookie ck : driver.manage().getCookies())
 		{
@@ -363,7 +362,7 @@ public class Browser
 			return driver.findElement(By.id(id));
 		} catch (NoSuchElementException e)
 		{
-			Log.info(wrap(format("element '%s' not presented in page: '%s'", id, driver.getCurrentUrl())));
+			info("element '%s' not presented in page: '%s'", id, driver.getCurrentUrl());
 			return null;
 		}
 	}

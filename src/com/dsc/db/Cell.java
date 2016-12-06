@@ -24,8 +24,8 @@ public class Cell
 	 */
 	public Cell(String column, Object key, Object value)
 	{
-		Util.requireNotNull(this.column = column, "column");
-		Util.requireNotNull(this.key = key, "key");
+		Util.mustNotNull(this.column = column, "column");
+		Util.mustNotNull(this.key = key, "key");
 		this.value = value;
 	}
 
@@ -59,7 +59,7 @@ public class Cell
 	 */
 	public boolean keyEqualsTo(Object key)
 	{
-		Util.requireNotNull(key, "key");
+		Util.mustNotNull(key, "key");
 
 		// toString() to fix the bug: Integer-41167 != Long-41167
 		return this.key.toString().equals(key.toString());

@@ -42,7 +42,7 @@ public class HsqlDB extends SQLDataBase
 	@Override
 	public DataBase connect(String db, String user, String password)
 	{
-		Util.requireNotNullOrEmpty(name = db, "db");
+		Util.mustNotNullOrEmpty(name = db, "db");
 		// Util.tryToThrowOutNullOrEmptyArgumentException(this.user=user,
 		// "user");
 		// Util.tryToThrowOutNullOrEmptyArgumentException(this.password=password,

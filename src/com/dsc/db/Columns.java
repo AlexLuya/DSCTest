@@ -41,7 +41,7 @@ public class Columns extends ArrayList<Column>
 
 	public List<RowPair> diffsWith(Columns toCompare) throws SQLException
 	{
-		Util.requireNotNull(toCompare, "toCompare");
+		Util.mustNotNull(toCompare, "toCompare");
 
 		ensureRetrieved();
 

@@ -37,7 +37,7 @@ public abstract class Composite extends Widget
 	}
 
 	protected void doEnsureAvailable(UIObject... objs){
-		Util.requireNotNull(objs, "objs");
+		Util.mustNotNull(objs, "objs");
 
 		for (UIObject obj : objs) {
 			obj.ensureAvailable();

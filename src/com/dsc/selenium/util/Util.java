@@ -111,6 +111,18 @@ public class Util
 		return StringUtils.join(names(list));
 	}
 
+	public static String message(String body, Object... args)
+	{
+		mustNotNullOrEmpty(body, "message body");
+
+		if (null != args && args.length > 0)
+		{
+			return  format(body, args);
+		}
+
+		return body;
+	}
+
 	public static <T extends IdName> List<String> names(List<T> list)
 	{
 		List<String> names = Lists.newArrayList();
@@ -172,7 +184,7 @@ public class Util
 		return str == null || str.trim().isEmpty();
 	}
 
-	public static void requireNotNull(Object obj, String name) throws IllegalArgumentException
+	public static void mustNotNull(Object obj, String name) throws IllegalArgumentException
 	{
 		if (obj == null)
 		{
@@ -180,9 +192,9 @@ public class Util
 		}
 	}
 
-	public static void requireNotNull(String name,Object[] array) throws IllegalArgumentException
+	public static void mustNotNull(String name,Object[] array) throws IllegalArgumentException
 	{
-		requireNotNull(array, name);
+		mustNotNull(array, name);
 
 		if (array.length == 0)
 		{
@@ -198,22 +210,11 @@ public class Util
 		}
 	}
 
-	public static void requireNotNullOrEmpty(String value, String name) throws IllegalArgumentException
+	public static void mustNotNullOrEmpty(String value, String name) throws IllegalArgumentException
 	{
 		if (nullOrEmpty(value))
 		{
 			throw new IllegalArgumentException(name + " mustn't be null or empty");
-		}
-	}
-
-	public static void sleep(int millisecond)
-	{
-		try
-		{
-			Thread.sleep(millisecond);
-		} catch (InterruptedException e)
-		{
-			e.printStackTrace();
 		}
 	}
 
@@ -229,12 +230,23 @@ public class Util
 	// return null;
 	// }
 
+	public static void sleep(int millisecond)
+	{
+		try
+		{
+			Thread.sleep(millisecond);
+		} catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * @param seconds
 	 */
 	public static void sleep(int seconds, String elementId)
 	{
-		Log.info(wrap(format("Waiting %d seconds for ******'%s'****** to be displayed fully", seconds, elementId)));
+		Log.info("Waiting %d seconds for ******'%s'****** to be displayed fully", seconds, elementId);
 		sleep(seconds * 1000);
 	}
 

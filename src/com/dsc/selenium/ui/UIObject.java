@@ -7,11 +7,13 @@ package com.dsc.selenium.ui;
 
 import static com.dsc.selenium.util.Util.nullIfEmpty;
 import static com.dsc.selenium.util.Util.wrap;
+import static com.dsc.util.Log.info;
 import static java.lang.String.format;
 
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,7 +24,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.dsc.selenium.Browser;
 import com.dsc.selenium.ui.gwt.Consts;
 import com.dsc.selenium.util.Util;
-import com.dsc.util.Log;
 import com.google.common.collect.Lists;
 
 // LP BLOG exception or boolean+log
@@ -80,7 +81,7 @@ public class UIObject
 
 	public boolean containsCss(String css)
 	{
-		Log.info(wrap(format("checks whether %s's css:'%s' contains '%s' in #containsCss()", id(), css(), css)));
+		info("checks whether %s's css:'%s' contains '%s' in #containsCss()", id(), css(), css);
 		return css().contains(css);
 	}
 
@@ -174,19 +175,19 @@ public class UIObject
 
 	public boolean isHidden()
 	{
-		Log.info(wrap("calls #containsCss(HIDE) in #isHidden()"));
+		info("calls #containsCss(HIDE) in #isHidden()");
 		return containsCss(Consts.HIDE);
 	}
 
 	public boolean isShowingError()
 	{
-		Log.info(wrap("calls #containsCss(ERROR_CSS) in #isShowingError()"));
+		info("calls #containsCss(ERROR_CSS) in #isShowingError()");
 		return containsCss(ERROR_CSS);
 	}
 
 	public boolean isShowingWarning()
 	{
-		Log.info(wrap("calls #containsCss(WARN_CSS) in #isShowingWarning()"));
+		info("calls #containsCss(WARN_CSS) in #isShowingWarning()");
 		return containsCss(WARN_CSS);
 	}
 
@@ -215,7 +216,7 @@ public class UIObject
 
 	public boolean notHasCss(String css)
 	{
-		Log.info("calls !#containsCss() in #notContainsCss()");
+		info("calls !#containsCss() in #notContainsCss()");
 		return !containsCss(css);
 	}
 
@@ -230,7 +231,7 @@ public class UIObject
 
 	public boolean textIs(String text)
 	{
-		Log.info(wrap(format("check whether %s's actual text: '%s' equals to expected text: '%s'", id(), text(), text)));
+		info("check whether %s's actual text: '%s' equals to expected text: '%s'", id(), text(), text);
 		return text().equals(text);
 	}
 
@@ -256,7 +257,7 @@ public class UIObject
 
 	protected boolean asyncTextPresented(String text)
 	{
-		Log.info(wrap(format("checks whether async text: '%s' is presented in #asyncTextPresented()", text)));
+		info("checks whether async text: '%s' is presented in #asyncTextPresented()", text);
 		// NP tell actual text
 		return waitUntil(ExpectedConditions.textToBePresentInElement(wrapee, text));
 	}
@@ -312,7 +313,7 @@ public class UIObject
 	 */
 	protected boolean containsText(String text)
 	{
-		Log.info(wrap(format("checks whether %s's text:'%s' contains '%s' in #containsText()", id(), text(), text)));
+		info("checks whether %s's text:'%s' contains '%s' in #containsText()", id(), text(), text);
 		return text().contains(text);
 	}
 
@@ -323,7 +324,7 @@ public class UIObject
 
 	protected boolean cssHasChangedFrom(final String css)
 	{
-		Log.info(wrap(format("chech whether %s's css has changed to '%s' from '%s'", id(), css, css())));
+		info("chech whether %s's css has changed to '%s' from '%s'", id(), css, css());
 		return waitUntil(new ExpectedCondition<Boolean>()
 		{
 			@Override
@@ -331,10 +332,10 @@ public class UIObject
 			{
 				if (!css.equals(css()))
 				{
-					Log.info(wrap(format("the css of %s has changed to '%s' from '%s'", id(), css, css())));
+					info("the css of %s has changed to '%s' from '%s'", id(), css, css());
 					return true;
 				}
-				Log.info(wrap(format("the css of %s is still '%s'", id(), css)));
+				info("the css of %s is still '%s'", id(), css);
 				return null;
 			}
 
@@ -358,7 +359,7 @@ public class UIObject
 
 	protected void ensureAttrNotNullOrEmpty(String attr)
 	{
-		Util.requireNotNullOrEmpty(attr, "attribute name");
+		Util.mustNotNullOrEmpty(attr, "attribute name");
 
 		if (stringAttr(attr) == null)
 		{
@@ -430,10 +431,17 @@ public class UIObject
 		return true;
 	}
 
+
 	protected boolean isSyncErrorIndicated(final String text)
 	{
-		Log.info(wrap("#isSyncErrorIndicated() call #containsText() and #isShowingError()"));
+		info("#isSyncErrorIndicated() call #containsText() and #isShowingError()");
 		return containsText(text) && isShowingError();
+	}
+
+	protected boolean isSyncWarningIndicated(final String text)
+	{
+		info("#isSyncErrorIndicated() call #containsText() and #isShowWarning()");
+		return containsText(text) && isShowingWarning();
 	}
 
 	// protected boolean isPresented(String id)
@@ -441,10 +449,19 @@ public class UIObject
 	// return browser.isPresented(id);
 	// }
 
-	protected boolean isSyncWarningIndicated(final String text)
+	protected void removeAttribute(String name)
 	{
-		Log.info(wrap("#isSyncErrorIndicated() call #containsText() and #isShowWarning()"));
-		return containsText(text) && isShowingWarning();
+		info("remove attribute: '%s'", name);
+
+		((JavascriptExecutor) browser.getDriver()).executeScript("arguments[0].removeAttribute(arguments[1]);", wrapee, name);
+	}
+
+	protected void setAttribute(String name, String value)
+	{
+		info("set attribute: '%s' to: '%s'", name, value);
+
+		((JavascriptExecutor) browser.getDriver()).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", wrapee,
+				name, value);
 	}
 
 	/**
@@ -462,7 +479,7 @@ public class UIObject
 
 	protected boolean srcEndsWith(String src)
 	{
-		Log.info(wrap(format("check whether %s's actual src: '%s' ends with: '%s'", id(), src(), src)));
+		info("check whether %s's actual src: '%s' ends with: '%s'", id(), src(), src);
 		return src().endsWith(src);
 	}
 
@@ -489,7 +506,7 @@ public class UIObject
 
 	protected boolean textIsNot(String text)
 	{
-		Log.info(wrap(format("#textIsNot() calls !#textIs()")));
+		info("#textIsNot() calls !#textIs()");
 		return !textIs(text);
 	}
 
@@ -526,7 +543,7 @@ public class UIObject
 			text = value();
 		}
 
-		// Log.info(wrap(format("text is -------------------------%s", id())));
+		// info("text is -------------------------%s", id())));
 		return text;
 	}
 
@@ -568,7 +585,7 @@ public class UIObject
 			@Override
 			public String apply(WebDriver driver)
 			{
-				Log.info(wrap(format("wait text is presented in-------------------------%s", id())));
+				info("wait text is presented in-------------------------%s", id());
 
 				try
 				{

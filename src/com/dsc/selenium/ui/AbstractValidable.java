@@ -1,7 +1,7 @@
 /**
  * Copyright (c) (2016-2017),VSI and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
-**/
+ **/
 package com.dsc.selenium.ui;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +15,7 @@ import com.dsc.selenium.Browser;
  * @Version 1.0
  * @Since 1.0
  */
-public class AbstractValidable extends UIObject implements Validable
+public class AbstractValidable extends Disableable implements Validable
 {
 
 	/**

@@ -87,7 +87,7 @@ public abstract class SQLDataBase implements DataBase
 	public int exec(String sql)
 	{
 		// validate argument
-		Util.requireNotNullOrEmpty(sql, "sql");
+		Util.mustNotNullOrEmpty(sql, "sql");
 
 		ensureConnected();
 
@@ -123,7 +123,7 @@ public abstract class SQLDataBase implements DataBase
 	@Override
 	public DataBase host(String host)
 	{
-		Util.requireNotNullOrEmpty(host, "host");
+		Util.mustNotNullOrEmpty(host, "host");
 
 		this.host = host;
 
@@ -242,7 +242,7 @@ public abstract class SQLDataBase implements DataBase
 	public PreparedStatement prepareStatement(String sql)
 	{
 		// validate argument
-		Util.requireNotNullOrEmpty(sql, "sql");
+		Util.mustNotNullOrEmpty(sql, "sql");
 
 		PreparedStatement stmt=null;
 
@@ -261,7 +261,7 @@ public abstract class SQLDataBase implements DataBase
 	public ResultSet query(String query)
 	{
 		// validate argument
-		Util.requireNotNullOrEmpty(query, "query");
+		Util.mustNotNullOrEmpty(query, "query");
 
 		ensureConnected();
 
@@ -308,7 +308,7 @@ public abstract class SQLDataBase implements DataBase
 	@Override
 	public void setDefaultSourceDB(String defaultSourceDB)
 	{
-		Util.requireNotNullOrEmpty(this.defaultSourceDB = defaultSourceDB, "default source db");
+		Util.mustNotNullOrEmpty(this.defaultSourceDB = defaultSourceDB, "default source db");
 	}
 
 	/*
@@ -319,7 +319,7 @@ public abstract class SQLDataBase implements DataBase
 	@Override
 	public void setSources(Source... sources)
 	{
-		Util.requireNotNull("sources", this.sources = sources);
+		Util.mustNotNull("sources", this.sources = sources);
 	}
 
 	/*
@@ -331,7 +331,7 @@ public abstract class SQLDataBase implements DataBase
 	@Override
 	public void setSourceTable(String sourceTable)
 	{
-		Util.requireNotNullOrEmpty(sourceTable, "sourceTable");
+		Util.mustNotNullOrEmpty(sourceTable, "sourceTable");
 		sources = new Source[] { new Source(defaultSourceDB, sourceTable) };
 	}
 

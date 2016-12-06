@@ -5,8 +5,7 @@
  **/
 package com.dsc.db;
 
-import static com.dsc.selenium.util.Util.wrap;
-import static java.lang.String.format;
+import static com.dsc.util.Log.info;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +13,6 @@ import java.util.List;
 
 import com.dsc.db.sql.Schema;
 import com.dsc.selenium.util.Util;
-import com.dsc.util.Log;
 import com.google.common.collect.Lists;
 
 /**
@@ -36,9 +34,9 @@ public class ColumnBase<T extends ColumnBase<T>>
 	 */
 	public ColumnBase(DataBase dataBase, Schema schema, Table parent)
 	{
-		Util.requireNotNull(this.dataBase = dataBase, "dataBase");
-		Util.requireNotNull(this.schema = schema, "schema");
-		Util.requireNotNull(this.parent = parent, "parent");
+		Util.mustNotNull(this.dataBase = dataBase, "dataBase");
+		Util.mustNotNull(this.schema = schema, "schema");
+		Util.mustNotNull(this.parent = parent, "parent");
 	}
 
 	public Cell cell(int index)
@@ -61,7 +59,7 @@ public class ColumnBase<T extends ColumnBase<T>>
 
 	public List<CellPair> diffsWith(T toCompare)
 	{
-		Util.requireNotNull(toCompare, "toCompare");
+		Util.mustNotNull(toCompare, "toCompare");
 
 		ensureRetrieved();
 
@@ -86,7 +84,7 @@ public class ColumnBase<T extends ColumnBase<T>>
 	public boolean hasValue(String value)
 	{
 
-		Util.requireNotNullOrEmpty(value, "value");
+		Util.mustNotNullOrEmpty(value, "value");
 
 		ensureRetrieved();
 
@@ -98,7 +96,7 @@ public class ColumnBase<T extends ColumnBase<T>>
 			}
 		}
 
-		Log.info(wrap(format("column %s's values are %s", name(), stringifiedValues())));
+		info("column %s's values are %s", name(), stringifiedValues());
 
 		return false;
 	}

@@ -7,6 +7,8 @@ package com.dsc.util;
 
 import org.apache.log4j.Logger;
 
+import com.dsc.selenium.util.Util;
+
 /**
  * @Author alex
  * @CreateTime Dec 22, 2014 1:18:12 PM
@@ -17,7 +19,7 @@ public class Log
 {
 	// BLOG log the details of checking event to avoid debugging
 
-	private static Logger	Log	= Logger.getLogger(Log.class.getName());	//
+	private static Logger Log = Logger.getLogger(Log.class.getName()); //
 
 	public static void debug(String message)
 	{
@@ -48,9 +50,10 @@ public class Log
 		Log.fatal(message);
 	}
 
-	public static void info(String message)
+	public static void info(String info, Object... args)
 	{
-		Log.info(message);
+		Util.mustNotNullOrEmpty(info, "info");
+		Log.info(Util.message(info, args));
 	}
 
 	public static void startTestCase(String testCaseName)

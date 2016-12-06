@@ -30,9 +30,9 @@ public class Postgresql extends SQLDataBase
 	@Override
 	public DataBase connect(String db, String user, String password)
 	{
-		Util.requireNotNullOrEmpty(name = db, "db");
-		Util.requireNotNullOrEmpty(this.user = user, "user");
-		Util.requireNotNullOrEmpty(this.password = password, "password");
+		Util.mustNotNullOrEmpty(name = db, "db");
+		Util.mustNotNullOrEmpty(this.user = user, "user");
+		Util.mustNotNullOrEmpty(this.password = password, "password");
 
 		return doConnect();
 	}

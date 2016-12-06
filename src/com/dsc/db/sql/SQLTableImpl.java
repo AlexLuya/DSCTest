@@ -37,8 +37,8 @@ public class SQLTableImpl implements Table
 	 */
 	public SQLTableImpl(DataBase dataBase, Schema schema)
 	{
-		Util.requireNotNull(this.dataBase = dataBase, "dataBase");
-		Util.requireNotNull(this.schema = schema, "schema");
+		Util.mustNotNull(this.dataBase = dataBase, "dataBase");
+		Util.mustNotNull(this.schema = schema, "schema");
 	}
 
 	/*
@@ -160,7 +160,7 @@ public class SQLTableImpl implements Table
 	@Override
 	public int deleteBy(String sql)
 	{
-		Util.requireNotNull(sql, "sql");
+		Util.mustNotNull(sql, "sql");
 
 		dataBase.ensureConnected();
 
@@ -175,8 +175,8 @@ public class SQLTableImpl implements Table
 	@Override
 	public int deleteBy(String column, Object cellValue)
 	{
-		Util.requireNotNullOrEmpty(column, "column name");
-		Util.requireNotNull(cellValue, "cellValue");
+		Util.mustNotNullOrEmpty(column, "column name");
+		Util.mustNotNull(cellValue, "cellValue");
 
 		return deleteBy(String.format("DELETE FROM %s %s", name(), whereColumnEquals(column, cellValue)));
 	}
@@ -189,7 +189,7 @@ public class SQLTableImpl implements Table
 	@Override
 	public int deleteById(Object id)
 	{
-		Util.requireNotNull(id, "id");
+		Util.mustNotNull(id, "id");
 
 		return deleteBy("id", id);
 	}
@@ -208,7 +208,7 @@ public class SQLTableImpl implements Table
 	@Override
 	public boolean existedBy(String query)
 	{
-		Util.requireNotNull(query, "query");
+		Util.mustNotNull(query, "query");
 
 		try
 		{
@@ -227,8 +227,8 @@ public class SQLTableImpl implements Table
 	@Override
 	public boolean existedBy(String column, Object cellValue)
 	{
-		Util.requireNotNullOrEmpty(column, "column name");
-		Util.requireNotNull(cellValue, "cellValue");
+		Util.mustNotNullOrEmpty(column, "column name");
+		Util.mustNotNull(cellValue, "cellValue");
 
 		return existedBy(String.format("select * FROM %s %s", name(), whereColumnEquals(column, cellValue)));
 	}
@@ -241,7 +241,7 @@ public class SQLTableImpl implements Table
 	@Override
 	public boolean existedById(Object id)
 	{
-		Util.requireNotNull(id, "id");
+		Util.mustNotNull(id, "id");
 
 		return existedBy("id", id);
 	}
@@ -372,7 +372,7 @@ public class SQLTableImpl implements Table
 	@Override
 	public ResultSet selectBy(String sql)
 	{
-		Util.requireNotNull(sql, "sql");
+		Util.mustNotNull(sql, "sql");
 
 		dataBase.ensureConnected();
 
@@ -387,8 +387,8 @@ public class SQLTableImpl implements Table
 	@Override
 	public ResultSet selectBy(String column, Object cellValue)
 	{
-		Util.requireNotNullOrEmpty(column, "column name");
-		Util.requireNotNull(cellValue, "cellValue");
+		Util.mustNotNullOrEmpty(column, "column name");
+		Util.mustNotNull(cellValue, "cellValue");
 
 		return selectBy(String.format("select * FROM %s %s", name(), whereColumnEquals(column, cellValue)));
 	}
@@ -401,7 +401,7 @@ public class SQLTableImpl implements Table
 	@Override
 	public ResultSet selectById(Object id)
 	{
-		Util.requireNotNull(id, "id");
+		Util.mustNotNull(id, "id");
 
 		return selectBy("id", id);
 	}
