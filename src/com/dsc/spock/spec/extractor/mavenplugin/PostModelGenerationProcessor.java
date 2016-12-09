@@ -1,12 +1,12 @@
 package com.dsc.spock.spec.extractor.mavenplugin;
 
-import com.dsc.spock.spec.extractor.core.domain.Block;
-import com.dsc.spock.spec.extractor.core.domain.Scenario;
-import com.dsc.spock.spec.extractor.core.domain.Spec;
-import com.dsc.spock.spec.extractor.core.domain.Statement;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.dsc.spock.spec.extractor.domain.Block;
+import com.dsc.spock.spec.extractor.domain.Scenario;
+import com.dsc.spock.spec.extractor.domain.Spec;
+import com.dsc.spock.spec.extractor.domain.Statement;
 
 class PostModelGenerationProcessor {
 

@@ -1,4 +1,4 @@
-package com.dsc.spock.spec.extractor.core.domain
+package com.dsc.spock.spec.extractor.domain
 
 enum Block {
     EXPECT,

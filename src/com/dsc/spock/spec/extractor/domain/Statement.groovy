@@ -1,4 +1,4 @@
-package com.dsc.spock.spec.extractor.core.domain
+package com.dsc.spock.spec.extractor.domain
 
 import groovy.transform.Immutable
 

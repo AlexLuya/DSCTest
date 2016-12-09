@@ -1,4 +1,4 @@
-package com.dsc.spock.spec.extractor.core
+package com.dsc.spock.spec.extractor
 
 import groovy.transform.PackageScope
 import groovyjarjarantlr.collections.AST

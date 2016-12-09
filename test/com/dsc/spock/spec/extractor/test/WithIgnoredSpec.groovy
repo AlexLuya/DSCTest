@@ -1,4 +1,4 @@
-package com.dsc.spock.spec.extractor.core.test
+package com.dsc.spock.spec.extractor.test
 
 import spock.lang.Ignore
 import spock.lang.Specification

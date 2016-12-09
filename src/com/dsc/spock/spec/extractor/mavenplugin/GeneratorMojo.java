@@ -1,7 +1,5 @@
 package com.dsc.spock.spec.extractor.mavenplugin;
 
-import com.dsc.spock.spec.extractor.core.domain.Block;
-import com.dsc.spock.spec.extractor.core.domain.Spec;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -10,6 +8,9 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
+
+import com.dsc.spock.spec.extractor.domain.Block;
+import com.dsc.spock.spec.extractor.domain.Spec;
 
 import java.io.File;
 import java.util.ArrayList;

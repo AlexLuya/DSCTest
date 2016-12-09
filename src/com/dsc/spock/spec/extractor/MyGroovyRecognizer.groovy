@@ -1,4 +1,4 @@
-package com.dsc.spock.spec.extractor.core
+package com.dsc.spock.spec.extractor
 
 import groovyjarjarantlr.TokenStream
 import org.codehaus.groovy.antlr.parser.GroovyRecognizer

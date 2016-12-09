@@ -1,6 +1,5 @@
 package com.dsc.spock.spec.extractor.mavenplugin;
 
-import com.dsc.spock.spec.extractor.core.domain.Spec;
 import freemarker.template.*;
 
 import java.io.File;
@@ -11,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import com.dsc.spock.spec.extractor.domain.Spec;
 
 class SpecificationFileGenerator {
     private final String projectName;

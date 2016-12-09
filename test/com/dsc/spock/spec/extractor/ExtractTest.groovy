@@ -1,43 +1,51 @@
-package com.dsc.spock.spec.extractor.core
+package com.dsc.spock.spec.extractor
 
 import spock.lang.Specification
 
-import com.dsc.spock.spec.extractor.core.domain.*
+import com.dsc.spock.spec.extractor.domain.*
+import com.dsc.spock.spec.extractor.test.GivenExpectAndSetupExpectCleanupSpec
+import com.dsc.spock.spec.extractor.test.NoScenariosSpec
+import com.dsc.spock.spec.extractor.test.OnlyExpectWithAnd
+import com.dsc.spock.spec.extractor.test.OnlyExpectWithDescriptionSpec
+import com.dsc.spock.spec.extractor.test.OnlyExpectWithNarrative
+import com.dsc.spock.spec.extractor.test.OnlyExpectWithSubject
+import com.dsc.spock.spec.extractor.test.OnlyExpectWithTitle
+import com.dsc.spock.spec.extractor.test.OnlyExpectWithoutDescriptionSpec
+import com.dsc.spock.spec.extractor.test.WhenThenWithDescriptionSpec
+import com.dsc.spock.spec.extractor.test.WithIgnoredSpec
+import com.dsc.spock.spec.extractor.test.WithIssueSpec
+import com.dsc.spock.spec.extractor.test.WithNoBlocksSpec
+import com.dsc.spock.spec.extractor.test.WithSeeSpec
+import com.dsc.spock.spec.extractor.test.WithWhereSpec
 
-class SpecModelGeneratorTest extends Specification {
+class ExtractTest extends Specification {
 
 	def "should generate spec for only expect with description spec"() {
-		given:
-		String code = this.class.getResource("test/OnlyExpectWithDescriptionSpec.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(OnlyExpectWithDescriptionSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.core.test.OnlyExpectWithDescriptionSpec", scenarios: [
+		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.test.OnlyExpectWithDescriptionSpec", scenarios: [
 			new Scenario(name: "adding test", statements: [new Statement(block: Block.EXPECT, description: "adding works")])
 		])
 	}
 
 	def "should generate spec for only expect without description spec"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/OnlyExpectWithoutDescriptionSpec.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(OnlyExpectWithoutDescriptionSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.core.test.OnlyExpectWithoutDescriptionSpec", scenarios: [
+		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.test.OnlyExpectWithoutDescriptionSpec", scenarios: [
 			new Scenario(name: "adding test", statements: [new Statement(block: Block.EXPECT)])
 		])
 	}
 
 	def "should generate spec with when then with description spec"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/WhenThenWithDescriptionSpec.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(WhenThenWithDescriptionSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.core.test.WhenThenWithDescriptionSpec", scenarios: [
+		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.test.WhenThenWithDescriptionSpec", scenarios: [
 			new Scenario(name: "length should be positive", statements: [
 				new Statement(block: Block.WHEN, description: "get length of string"),
 				new Statement(block: Block.THEN, description: "length is positive")
@@ -46,13 +54,11 @@ class SpecModelGeneratorTest extends Specification {
 	}
 
 	def "should generate spec with where spec"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/WithWhereSpec.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(WithWhereSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.core.test.WithWhereSpec", scenarios: [
+		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.test.WithWhereSpec", scenarios: [
 			new Scenario(name: "length should be positive", statements: [
 				new Statement(block: Block.WHEN),
 				new Statement(block: Block.THEN),
@@ -62,13 +68,11 @@ class SpecModelGeneratorTest extends Specification {
 	}
 
 	def "should generate spec with given expect and setup expect cleanup"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/GivenExpectAndSetupExpectCleanupSpec.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(GivenExpectAndSetupExpectCleanupSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.core.test.GivenExpectAndSetupExpectCleanupSpec",
+		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.test.GivenExpectAndSetupExpectCleanupSpec",
 		scenarios: [
 			new Scenario(name: "length should be positive", statements: [
 				new Statement(block: Block.GIVEN, description: "A string"),
@@ -83,35 +87,29 @@ class SpecModelGeneratorTest extends Specification {
 	}
 
 	def "should generate spec without scenario when there is no blocks in method"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/WithNoBlocksSpec.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(WithNoBlocksSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.core.test.WithNoBlocksSpec", scenarios: [
+		specs[0] == new Spec(name: "com.dsc.spock.spec.extractor.test.WithNoBlocksSpec", scenarios: [
 			new Scenario(name: "adding test", statements: [new Statement(block: Block.EXPECT, description: "adding works")])
 		])
 	}
 
 	def "should generate empty spec when there are no scenarios"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/NoScenariosSpec.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(NoScenariosSpec.class)
 		then:
 		specs.isEmpty()
 	}
 
 	def "should generate spec for only expect with Title annotation"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/OnlyExpectWithTitle.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(OnlyExpectWithTitle.class)
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.spec.extractor.core.test.OnlyExpectWithTitle",
+				name: "com.dsc.spock.spec.extractor.test.OnlyExpectWithTitle",
 				title: "Tests of adding",
 				scenarios: [
 					new Scenario(
@@ -123,14 +121,12 @@ class SpecModelGeneratorTest extends Specification {
 	}
 
 	def "should generate spec for only expect with and"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/OnlyExpectWithAnd.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(OnlyExpectWithAnd.class)
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.spec.extractor.core.test.OnlyExpectWithAnd",
+				name: "com.dsc.spock.spec.extractor.test.OnlyExpectWithAnd",
 				scenarios: [
 					new Scenario(
 					name: "adding test",
@@ -142,14 +138,12 @@ class SpecModelGeneratorTest extends Specification {
 	}
 
 	def "should generate spec for only expect with Narrative annotation"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/OnlyExpectWithNarrative.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(OnlyExpectWithNarrative.class)
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.spec.extractor.core.test.OnlyExpectWithNarrative",
+				name: "com.dsc.spock.spec.extractor.test.OnlyExpectWithNarrative",
 				description: "Long description of tests",
 				scenarios: [
 					new Scenario(
@@ -161,14 +155,12 @@ class SpecModelGeneratorTest extends Specification {
 	}
 
 	def "should generate spec Subject annotation on class and field"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/OnlyExpectWithSubject.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(OnlyExpectWithSubject.class)
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.spec.extractor.core.test.OnlyExpectWithSubject",
+				name: "com.dsc.spock.spec.extractor.test.OnlyExpectWithSubject",
 				subjects: [String, Long, int, Byte] as Set,
 				scenarios: [
 					new Scenario(
@@ -180,14 +172,12 @@ class SpecModelGeneratorTest extends Specification {
 	}
 
 	def "should generate spec with See annotation on class and methods"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/WithSeeSpec.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(WithSeeSpec.class)
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.spec.extractor.core.test.WithSeeSpec",
+				name: "com.dsc.spock.spec.extractor.test.WithSeeSpec",
 				links: ['http://google.com', 'http://oracle.com'] as Set,
 				scenarios: [
 					new Scenario(
@@ -208,14 +198,12 @@ class SpecModelGeneratorTest extends Specification {
 	}
 
 	def "should generate spec with Issue annotation on class and methods"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/WithIssueSpec.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(WithIssueSpec.class)
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.spec.extractor.core.test.WithIssueSpec",
+				name: "com.dsc.spock.spec.extractor.test.WithIssueSpec",
 				issues: ['http://mantis.test/1', 'http://bugzilla.test/145'] as Set,
 				scenarios: [
 					new Scenario(
@@ -234,14 +222,12 @@ class SpecModelGeneratorTest extends Specification {
 	}
 
 	def "should generate spec with ignore annotation on class and methods"() {
-		given:
-		String code = this.class.getResource("/com/github/alien11689/spockspecextractor/core/test/WithIgnoredSpec.groovy").text
 		when:
-		List<Spec> specs = SpecModelGenerator.generateSpec(code, getClass().classLoader)
+		List<Spec> specs = Extract.specsOf(WithIgnoredSpec.class)
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.spec.extractor.core.test.WithIgnoredSpec",
+				name: "com.dsc.spock.spec.extractor.test.WithIgnoredSpec",
 				ignored: new Ignored("Ignore spec description"),
 				scenarios: [
 					new Scenario(

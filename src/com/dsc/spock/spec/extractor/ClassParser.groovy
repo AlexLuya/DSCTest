@@ -1,9 +1,10 @@
-package com.dsc.spock.spec.extractor.core
+package com.dsc.spock.spec.extractor
 
-import com.dsc.spock.spec.extractor.core.domain.Ignored
 import spock.lang.*
 
 import java.lang.reflect.Field
+
+import com.dsc.spock.spec.extractor.domain.Ignored;
 
 class ClassParser {
     static Set<Class> getSubjectsFromClassAndFields(Class<?> clazz) {

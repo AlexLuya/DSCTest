@@ -123,6 +123,40 @@ public class Util
 		return body;
 	}
 
+	public static void mustNotNull(Object obj, String name) throws IllegalArgumentException
+	{
+		if (obj == null)
+		{
+			throw new IllegalArgumentException(name + " mustn't be null or empty");
+		}
+	}
+
+	public static void mustNotNull(String name,Object[] array) throws IllegalArgumentException
+	{
+		mustNotNull(array, name);
+
+		if (array.length == 0)
+		{
+			throw new IllegalArgumentException(name + " mustn't be empty");
+		}
+
+		for (int i = 0; i < array.length; i++)
+		{
+			if (array[i] == null)
+			{
+				throw new IllegalArgumentException(String.format("The %i th item of %s is null", i, name));
+			}
+		}
+	}
+
+	public static void mustNotNullOrEmpty(String value, String name) throws IllegalArgumentException
+	{
+		if (nullOrEmpty(value))
+		{
+			throw new IllegalArgumentException(name + " mustn't be null or empty");
+		}
+	}
+
 	public static <T extends IdName> List<String> names(List<T> list)
 	{
 		List<String> names = Lists.newArrayList();
@@ -182,40 +216,6 @@ public class Util
 	public static boolean nullOrEmpty(String str)
 	{
 		return str == null || str.trim().isEmpty();
-	}
-
-	public static void mustNotNull(Object obj, String name) throws IllegalArgumentException
-	{
-		if (obj == null)
-		{
-			throw new IllegalArgumentException(name + " mustn't be null or empty");
-		}
-	}
-
-	public static void mustNotNull(String name,Object[] array) throws IllegalArgumentException
-	{
-		mustNotNull(array, name);
-
-		if (array.length == 0)
-		{
-			throw new IllegalArgumentException(name + " mustn't be empty");
-		}
-
-		for (int i = 0; i < array.length; i++)
-		{
-			if (array[i] == null)
-			{
-				throw new IllegalArgumentException(String.format("The %i th item of %s is null", i, name));
-			}
-		}
-	}
-
-	public static void mustNotNullOrEmpty(String value, String name) throws IllegalArgumentException
-	{
-		if (nullOrEmpty(value))
-		{
-			throw new IllegalArgumentException(name + " mustn't be null or empty");
-		}
 	}
 
 	// public static <T> T annoByName(Field field,String name){
@@ -303,6 +303,6 @@ public class Util
 
 	public static String wrap(String wrapee)
 	{
-		return "鈽呪槄鈽�  " + wrapee;
+		return "★★★   " + wrapee;
 	}
 }
