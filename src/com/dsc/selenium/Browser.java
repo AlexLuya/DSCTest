@@ -20,6 +20,7 @@ import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
@@ -56,14 +57,18 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public class Browser
 {
-	private static final int	DEFAULT_WAIT_SECONDS	= 3;
-	private static int			REAL_WAIT_SECONDS		= DEFAULT_WAIT_SECONDS;
-	private static final String	UTF_8					= "UTF-8";
+	private static final String	CHROME_DRIVER_DIR			= "DSCTest/chromedrivers";
+	private static final int	DEFAULT_WAIT_SECONDS		= 3;
+	private static int			REAL_WAIT_SECONDS			= DEFAULT_WAIT_SECONDS;
+	private static final String	UTF_8						= "UTF-8";
 	// NP get from configuration file
-	private static final String	WHERE_CHROME_DRIVER		= "/usr/local/bin/chromedriver";
+	private static final String	WHERE_CHROME_DRIVER_IN_LIN	= "/usr/local/bin/chromedriver.lin";
+	private static final String	WHERE_CHROME_DRIVER_IN_MAC	= "/usr/local/bin/chromedriver.mac";
+	private static final String	WHERE_CHROME_DRIVER_IN_WIN	= "C:\\Program Files\\chromedriver.exe";
 
-	private static final String	WHERE_FIREFOX_BIN		= "/usr/bin/firefox";
-	private static final String	WHERE_FIREFOX_DRIVER	= "/usr/local/bin/geckodriver";
+	// private static final String WHERE_FIREFOX_BIN = "/usr/bin/firefox";
+	// private static final String WHERE_FIREFOX_DRIVER =
+	// "/usr/local/bin/geckodriver";
 
 	public static DesiredCapabilities cap(DesiredCapabilities caps)
 	{
@@ -76,7 +81,14 @@ public class Browser
 
 	public static Browser chrome()
 	{
-		System.setProperty("webdriver.chrome.driver", WHERE_CHROME_DRIVER);
+		// if driver file not exist under dedicated dir
+		if (!new File(whereChromeDriver()).exists())
+		{
+			throw new IllegalStateException(String.format("please copy OS corresponded chrome driver from %s to %s",
+					CHROME_DRIVER_DIR, whereChromeDriver()));
+		}
+
+		System.setProperty("webdriver.chrome.driver", whereChromeDriver());
 
 		return new Browser(new ChromeDriver(cap(DesiredCapabilities.chrome())));
 	}
@@ -111,6 +123,31 @@ public class Browser
 	private static int defaultWaitSeconds()
 	{
 		return REAL_WAIT_SECONDS;
+	}
+
+	/**
+	 *
+	 */
+	private static String whereChromeDriver()
+	{
+
+		if (SystemUtils.IS_OS_WINDOWS)
+		{
+			return WHERE_CHROME_DRIVER_IN_WIN;
+		}
+
+		if (SystemUtils.IS_OS_LINUX)
+		{
+			return WHERE_CHROME_DRIVER_IN_LIN;
+		}
+
+		if (SystemUtils.IS_OS_MAC)
+		{
+			return WHERE_CHROME_DRIVER_IN_MAC;
+		}
+
+		throw new IllegalStateException(
+				SystemUtils.OS_NAME + " NOT SUPPORTED due to no corresponded chrome driver provided by vendor");
 	}
 
 	WebDriver driver;
