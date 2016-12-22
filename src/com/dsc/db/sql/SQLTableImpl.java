@@ -5,6 +5,9 @@
  **/
 package com.dsc.db.sql;
 
+import static com.dsc.selenium.util.Util.wrap;
+import static java.lang.String.format;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -16,6 +19,7 @@ import com.dsc.db.Column;
 import com.dsc.db.Columns;
 import com.dsc.db.DataBase;
 import com.dsc.db.Table;
+import com.dsc.db.sql.ChildTable.Info;
 import com.dsc.selenium.util.Util;
 import com.google.common.collect.Lists;
 
@@ -178,7 +182,7 @@ public class SQLTableImpl implements Table
 		Util.mustNotNullOrEmpty(column, "column name");
 		Util.mustNotNull(cellValue, "cellValue");
 
-		return deleteBy(String.format("DELETE FROM %s %s", name(), whereColumnEquals(column, cellValue)));
+		return deleteBy(format("DELETE FROM %s %s", name(), whereColumnEquals(column, cellValue)));
 	}
 
 	/*
@@ -192,6 +196,28 @@ public class SQLTableImpl implements Table
 		Util.mustNotNull(id, "id");
 
 		return deleteBy("id", id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.db.Table#deleteCascadely(java.lang.String, java.lang.Object,
+	 * java.util.List)
+	 */
+	@Override
+	public int deleteCascadely(String column, Object cellValue, List<Info> childTablesInfo)
+	{
+		// delete cascaded records in child tables
+		for (Info child : childTablesInfo)
+		{
+			dataBase.exec(
+					format("DELETE FROM %s where %s in (select parent.%s from %s AS parent INNER JOIN (SELECT * FROM %s) AS child ON parent.%s=child.%s %s)",
+							child.table, child.foreignKey,child.refereeColumn, name(), child.table, child.refereeColumn, child.foreignKey,
+							whereColumnEquals("parent."+column, cellValue)));
+		}
+
+		// delete records in parent table
+		return deleteBy(column, cellValue);
 	}
 
 	@Override
@@ -437,7 +463,7 @@ public class SQLTableImpl implements Table
 		} else
 		{
 			throw new RuntimeException(
-					String.format("%s's type is %s that isn't a supported type:int/Integer,long/Long,String typed id supported,",
+					wrap("%s's type is %s that isn't a supported type:int/Integer,long/Long,String typed id supported,",
 							id.toString(), id.getClass().getSimpleName()));
 		}
 	}

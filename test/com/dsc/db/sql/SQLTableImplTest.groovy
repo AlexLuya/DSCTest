@@ -1,5 +1,5 @@
 /**
- 00 * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights reserved.
+ * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
 package com.dsc.db.sql
@@ -13,7 +13,7 @@ import com.dsc.db.Table
 import com.dsc.db.sql.db.HsqlDB
 import com.dsc.db.sql.server.HsqlServer
 
-public class SQLTableTest extends Specification
+public class SQLTableImplTest extends Specification
 {
 	@Shared HsqlDB db
 	@Shared Table table
@@ -39,10 +39,7 @@ public class SQLTableTest extends Specification
 							value_1 VARCHAR(250),\
 		)")
 		and:"row existed"
-		//NP quite ugly,concise blow three lines
-		Object[][] arr=new Object[1][2]
-		arr[0][0]=id
-		arr[0][1]=columnValue
+		Object[][] arr=[[id,columnValue]]
 		table.insert(String.format("insert into %s (id,value_1) values (?,?)",tableName),arr)
 
 		when:"select by id"
@@ -59,6 +56,99 @@ public class SQLTableTest extends Specification
 		"1"	|_
 	}
 
+	def createTable(String table,String column){
+		db.exec(String.format("DROP TABLE IF EXISTS %s;CREATE TABLE %s(\
+			id INT IDENTITY, \
+			%s INT,\
+			)",table,table,column))
+	}
+
+	def insert(String tableName,column,Object[][] values){
+		insert(table,tableName,column,values)
+	}
+
+	def insert(Table table,String tableName,column,Object[][] values){
+		table.insert(String.format("insert into %s (id,%s) values (?,?)",tableName,column),values)
+	}
+
+	def "deleteCascadely"(){
+
+		//var
+		String firstChildTableName="first_child_table"
+		Table firstChildTable=db.table(firstChildTableName)
+		String secondChildTableName="second_child_table"
+		Table secondChildTable=db.table(secondChildTableName)
+		String flagColumn="flag_column"
+		int flagColumnValue=1
+		int noiseRowValue=2
+		String foreignKey="foreign_key"
+		int firstNoiseForeignKey = 3
+		int secondNoiseForeignKey = 4
+		int thirdNoiseForeignKey = 5
+
+		given:"parent table existed"
+		createTable(tableName,flagColumn)
+		and:"first child table existed"
+		createTable(firstChildTableName,foreignKey)
+		and:"second child table existed"
+		createTable(secondChildTableName,foreignKey)
+		and:"parent table set up"
+		Object[][] arr=[[1,flagColumnValue]]//should be deleted
+		insert(tableName,flagColumn,arr)
+		arr=[[2,flagColumnValue]]//should be deleted
+		insert(tableName,flagColumn,arr)
+		arr=[[firstNoiseForeignKey,noiseRowValue]]//shouldn't be deleted
+		insert(tableName,flagColumn,arr)
+		and:"first child table set up"
+		arr=[[1,1]]//should be deleted
+		insert(firstChildTableName,foreignKey,arr)
+		arr=[[2,2]]//should be deleted
+		insert(firstChildTableName,foreignKey,arr)
+		arr=[[firstNoiseForeignKey,firstNoiseForeignKey]]//shouldn't be deleted due to parent record!=flagValue
+		insert(firstChildTableName,foreignKey,arr)
+		and:"second child table set up"
+		arr=[[1,1]]//should be deleted
+		insert(secondChildTableName,foreignKey,arr)
+		arr=[[2,secondNoiseForeignKey]]//should be deleted due to parent record!=flagValue
+		insert(secondChildTableName,foreignKey,arr)
+		arr=[[firstNoiseForeignKey,thirdNoiseForeignKey]]//shouldn't be deleted due to parent record!=flagValue
+		insert(secondChildTableName,foreignKey,arr)
+
+		when:"delete cascadely"
+		table.deleteCascadely(flagColumn,flagColumnValue,ChildTable.from(firstChildTableName,foreignKey).and(secondChildTableName,foreignKey).all())
+		and:"select left rows from parent table"
+		ResultSet parentResult=table.selectBy("SELECT * FROM "+tableName)
+
+		then:"noise row left"
+		parentResult.next()==true
+		parentResult.getObject(2).toString().equals(noiseRowValue.toString())
+		and:"only one noise row left"
+		parentResult.next()==false
+
+
+		when:"select left rows from first child table"
+		ResultSet firstChildResult=table.selectBy("SELECT * FROM "+firstChildTableName)
+
+		then:"first child table has noise left"
+		firstChildResult.next()==true
+		firstChildResult.getObject(2).toString().equals(firstNoiseForeignKey.toString())
+		and:"only noise row left"
+		firstChildResult.next()==false
+
+
+		when:"select left rows from second child table"
+		ResultSet secondChildResut=table.selectBy("SELECT * FROM "+secondChildTableName)
+
+		then:"first noise row left"
+		secondChildResut.next()==true
+		secondChildResut.getObject(2).toString().equals(secondNoiseForeignKey.toString())
+		and:"second noise row left"
+		secondChildResut.next()==true
+		secondChildResut.getObject(2).toString().equals(thirdNoiseForeignKey.toString())
+		and:"only tow noise rows left"
+		parentResult.next()==false
+	}
+
 	//NP make it more concise
 	def "select by specific column"(String columnType,String columnName,Object value,Object noiseRowValue){
 
@@ -68,17 +158,13 @@ public class SQLTableTest extends Specification
 							%s %s,\
 							)",tableName,tableName,columnName,columnType))
 		and:"first targeted row inserted"
-		Object[][] arr=new Object[1][2]
-		arr[0][0]=1
-		arr[0][1]=value
+		Object[][] arr=[[1,value]]
 		table.insert(String.format("insert into %s (id,%s) values (?,?)",tableName,columnName),arr)
 		and:"second targeted row inserted"
-		arr[0][0]=2
-		arr[0][1]=value
+		arr=[[2,value]]
 		table.insert(String.format("insert into %s (id,%s) values (?,?)",tableName,columnName),arr)
 		and:"noise row inserted"
-		arr[0][0]=3
-		arr[0][1]=noiseRowValue
+		arr=[[3,noiseRowValue]]
 		table.insert(String.format("insert into %s (id,%s) values (?,?)",tableName,columnName),arr)
 
 		when:"select by specific column"
@@ -108,17 +194,13 @@ public class SQLTableTest extends Specification
 					%s %s,\
 					)",tableName,tableName,columnName,columnType))
 		and:"first targeted row inserted"
-		Object[][] arr=new Object[1][2]
-		arr[0][0]=1
-		arr[0][1]=value
+		Object[][] arr=[[1,value]]
 		table.insert(String.format("insert into %s (id,%s) values (?,?)",tableName,columnName),arr)
 		and:"second targeted row inserted"
-		arr[0][0]=2
-		arr[0][1]=value
+		arr=[[2,value]]
 		table.insert(String.format("insert into %s (id,%s) values (?,?)",tableName,columnName),arr)
 		and:"noise row inserted"
-		arr[0][0]=3
-		arr[0][1]=noiseRowValue
+		arr=[[3,noiseRowValue]]
 		table.insert(String.format("insert into %s (id,%s) values (?,?)",tableName,columnName),arr)
 
 		when:"delete by specific column"
@@ -151,15 +233,11 @@ public class SQLTableTest extends Specification
 					%s %s,\
 					)",tableName,tableName,columnName,columnType))
 		and:"first targeted row inserted"
-		Object[][] arr=new Object[1][2]
-		arr[0][0]=1
-		arr[0][1]=firstRowValue
+		Object[][] arr=[[1,firstRowValue]]
 		table.insert(String.format("insert into %s (id,%s) values (?,?)",tableName,columnName),arr)
 		and:"another row inserted"
-		arr[0][0]=3
-		arr[0][1]=secondRowValue
+		arr=[[3,secondRowValue]]
 		table.insert(String.format("insert into %s (id,%s) values (?,?)",tableName,columnName),arr)
-
 
 		when:"check first row existing"
 		boolean firstRowExisting=table.existedBy(columnName,firstRowValue)
@@ -192,9 +270,7 @@ public class SQLTableTest extends Specification
 							)")
 		and:"row existed"
 		//NP quite ugly,concise blow three lines
-		Object[][] arr=new Object[1][2]
-		arr[0][0]=id
-		arr[0][1]=columnValue
+		Object[][] arr=[[id,columnValue]]
 		table.insert(String.format("insert into %s (id,value_1) values (?,?)",tableName),arr)
 
 		when:"select by id"

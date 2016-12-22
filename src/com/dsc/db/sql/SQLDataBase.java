@@ -100,7 +100,7 @@ public abstract class SQLDataBase implements DataBase
 			return stmt.getUpdateCount();
 		}catch (Exception e)
 		{
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage()+"...."+sql);
 		} finally{
 			if(stmt!=null)
 			{

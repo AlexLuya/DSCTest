@@ -6,6 +6,9 @@
 package com.dsc.db;
 
 import java.sql.ResultSet;
+import java.util.List;
+
+import com.dsc.db.sql.ChildTable;
 
 /**
  * The Interface Table.
@@ -87,6 +90,19 @@ public interface Table
 	 * @return the count of deleted row
 	 */
 	int deleteById(Object id);
+
+	/**
+	 * Delete cascadely.
+	 *
+	 * @param column
+	 *            the column for filtering
+	 * @param cellValue
+	 *            the cell value for filtering
+	 * @param childTablesInfo
+	 *            the infos where contains how child tables reference to parent table
+	 * @return the count of deleted row
+	 */
+	int deleteCascadely(String column, Object cellValue,List<ChildTable.Info> childTablesInfo);
 
 	/**
 	 * Ensure schema retrieved.

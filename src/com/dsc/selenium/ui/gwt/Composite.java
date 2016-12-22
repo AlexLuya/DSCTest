@@ -15,9 +15,9 @@ import com.dsc.selenium.util.Util;
 public abstract class Composite extends Widget
 {
 
-	public Composite(Browser browser, String ID)
+	public Composite(Browser browser, String id)
 	{
-		super(browser, ID);
+		super(browser, id);
 	}
 
 	public Composite(Browser browser, WebElement wrapee)
@@ -45,8 +45,6 @@ public abstract class Composite extends Widget
 	}
 
 	protected abstract void ensureChildrenAvailable();
-
-
 
 	protected void input(TextBox elem, String text)
 	{

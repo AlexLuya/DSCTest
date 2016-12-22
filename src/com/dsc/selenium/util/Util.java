@@ -301,8 +301,16 @@ public class Util
 		return null;
 	}
 
+
 	public static String wrap(String wrapee)
 	{
 		return "★★★   " + wrapee;
+	}
+
+	public static String wrap(String format,Object... args)
+	{
+		mustNotNull(format, "format");
+
+		return wrap(format(format,args));
 	}
 }
