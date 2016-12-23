@@ -129,7 +129,7 @@ public class SQLTableImplTest extends Specification
 		when:"select left rows from first child table"
 		ResultSet firstChildResult=table.selectBy("SELECT * FROM "+firstChildTableName)
 
-		then:"first child table has noise left"
+		then:"noise row left"
 		firstChildResult.next()==true
 		firstChildResult.getObject(2).toString().equals(firstNoiseForeignKey.toString())
 		and:"only noise row left"
@@ -145,7 +145,7 @@ public class SQLTableImplTest extends Specification
 		and:"second noise row left"
 		secondChildResut.next()==true
 		secondChildResut.getObject(2).toString().equals(thirdNoiseForeignKey.toString())
-		and:"only tow noise rows left"
+		and:"only two noise rows left"
 		parentResult.next()==false
 	}
 
