@@ -5,8 +5,6 @@
 package com.dsc.selenium.ui
 
 import com.dsc.selenium.TestStub
-import com.dsc.selenium.ui.gwt.UIObject;
-import com.dsc.selenium.ui.UIObject;
 
 /**
  * @Author alex
