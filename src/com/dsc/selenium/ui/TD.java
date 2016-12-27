@@ -38,6 +38,6 @@ public class TD extends UIObject
 	@Override
 	public String text()
 	{
-		return wrapee.getText();
+		return super.text();
 	}
 }
