@@ -24,45 +24,4 @@ public class Button extends ButtonBase
 	{
 		super(browser, wrapee);
 	}
-
-	@Override
-	public void click()
-	{
-		wrapee.click();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.selenium.ui.UIObject#ensureTextIs(int)
-	 */
-	@Override
-	public boolean ensureTextIs(String text)
-	{
-		return super.ensureTextIs(text);
-	}
-
-	public boolean isDisabled()
-	{
-		return !isEnabled();
-	}
-
-	/**
-	 * @return
-	 */
-	public boolean isEnabled()
-	{
-		return wrapee.isEnabled();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.selenium.ui.UIObject#text()
-	 */
-	@Override
-	protected String text()
-	{
-		return super.text();
-	}
 }

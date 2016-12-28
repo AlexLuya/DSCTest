@@ -58,7 +58,7 @@ public class ListBox extends AbstractValidable
 	 *
 	 * @param itemId
 	 *            the item id
-	 * @deprecated replaced by {@link #ensureSelectedOptionIs(String)}
+	 * @deprecated replaced by {@link #ensureSelectedOptionIs(java.lang.String)}
 	 */
 	@Deprecated
 	public void ensureSelectedItemIs(String itemId)

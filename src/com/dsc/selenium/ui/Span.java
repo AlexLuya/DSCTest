@@ -16,7 +16,8 @@ public class Span extends UIObject
 	}
 
 	/*
-	 *  make ensureTextIs() public
+	 * (non-Javadoc)
+	 * @see com.dsc.selenium.ui.UIObject#ensureTextIs(int)
 	 */
 	@Override
 	public boolean ensureTextIs(int toStringify)
@@ -25,7 +26,8 @@ public class Span extends UIObject
 	}
 
 	/*
-	 *  make ensureTextIs() public
+	 * (non-Javadoc)
+	 * @see com.dsc.selenium.ui.UIObject#ensureTextIs(java.lang.String)
 	 */
 	@Override
 	public boolean ensureTextIs(String text)

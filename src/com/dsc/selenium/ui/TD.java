@@ -27,7 +27,8 @@ public class TD extends UIObject
 	}
 
 	/*
-	 * make ensureTextIs() public
+	 * (non-Javadoc)
+	 * @see com.dsc.selenium.ui.UIObject#ensureTextIs(java.lang.String)
 	 */
 	@Override
 	public boolean ensureTextIs(String text)

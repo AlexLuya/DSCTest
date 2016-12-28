@@ -61,17 +61,16 @@ public class UIObject
 	 */
 	public List<UIObject> children()
 	{
-		List<WebElement> rawList = wrapee.findElements(By.xpath(".//*"));
 
-		List<UIObject> list = Lists.newArrayList();
+		List<UIObject> children = Lists.newArrayList();
 
 		// boxing to to UIObject
-		for (WebElement we : rawList)
+		for (WebElement elem : wrapee.findElements(By.xpath(".//*")))
 		{
-			list.add(new UIObject(browser, we));
+			children.add(new UIObject(browser, elem));
 		}
 
-		return list;
+		return children;
 	}
 
 	public void click()
@@ -405,6 +404,13 @@ public class UIObject
 		return ensureTextIs(Integer.toString(text));
 	}
 
+	/*
+	 * @deprecated   using text()=="expected text" instead if using spockframework
+	 * 				it will print out more intuitive error message like this:
+	 * 				@see <a href="http://spockframework.org/spock/docs/1.1-rc-3/spock_primer.html">
+	 * 						http://spockframework.org/spock/docs/1.1-rc-3/spock_primer.html
+	 * 					</a>
+	 */
 	protected boolean ensureTextIs(String expected)
 	{
 		if (!expected.equals(text()))
