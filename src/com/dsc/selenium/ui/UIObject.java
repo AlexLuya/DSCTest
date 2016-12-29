@@ -61,11 +61,10 @@ public class UIObject
 	 */
 	public List<UIObject> children()
 	{
-
 		List<UIObject> children = Lists.newArrayList();
 
-		// boxing to to UIObject
-		for (WebElement elem : wrapee.findElements(By.xpath(".//*")))
+		// boxing as UIObject
+		for (WebElement elem : wrapee.findElements(By.xpath("*")))
 		{
 			children.add(new UIObject(browser, elem));
 		}

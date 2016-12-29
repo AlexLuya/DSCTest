@@ -25,10 +25,14 @@ public class Widget extends UIObject
 		this(browser, browser.findElemById(containerId));
 	}
 
+	public Widget(Browser browser, UIObject wrapee){
+		this(browser,wrapee.element());
+	}
+
 	public Widget(Browser browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 		// initialize all fields
-		PageFactory.initElements(new WebElementDecorator(browser), this);
+		PageFactory.initElements(new WebElementDecorator(browser,this.element()), this);
 	}
 }

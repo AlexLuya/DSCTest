@@ -9,6 +9,7 @@ import static com.dsc.selenium.util.Util.wrap;
 
 import java.lang.reflect.Field;
 
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
@@ -24,9 +25,9 @@ public class WebElementDecorator extends DefaultFieldDecorator
 
 	private UIObjectFactory uiObjectFactory = new UIObjectFactoryImpl();
 
-	public WebElementDecorator(Browser browser)
+	public WebElementDecorator(Browser browser,SearchContext searchContext)
 	{
-		super(new WebElementLocatorFactory(browser.getDriver()));
+		super(new WebElementLocatorFactory(searchContext));
 		this.browser = browser;
 	}
 
@@ -35,17 +36,12 @@ public class WebElementDecorator extends DefaultFieldDecorator
 	{
 		if (findByAnno(field) == null)
 		{
-			// for page elements without annotation or non page
-			// elements,like:string
+			// ignore field without FindBy annotation or non page
+			// elements like:string
 			return null;
 		}
 
 		WebElement wrapee = proxyForLocator(classLoader, factory.createLocator(field));
-
-		// if (Composite.class.isAssignableFrom(field.getType()))
-		// {
-		// return decorateComposite(field, wrapee);
-		// }
 
 		if (UIObject.class.isAssignableFrom(field.getType()))
 		{
@@ -54,7 +50,7 @@ public class WebElementDecorator extends DefaultFieldDecorator
 				return decorateElement(field, wrapee);
 			} catch (Exception e)
 			{
-				throw new RuntimeException(wrap("can't create element with--------id:--------" + annotatedId(field)), e);
+				throw new RuntimeException(wrap("can't create element with--------id--------" + annotatedId(field)), e);
 			}
 		}
 
@@ -69,18 +65,6 @@ public class WebElementDecorator extends DefaultFieldDecorator
 	{
 		return findByAnno(itself).id();
 	}
-
-	// private Object decorateComposite(final Field field, final WebElement
-	// wrapee)
-	// {
-	// @SuppressWarnings("unchecked")
-	// Composite composite = compositeFactory.create(browser, (Class<? extends
-	// Composite>) field.getType(), wrapee);
-	//
-	// composite.setAnnotatedId(findByAnno(field).id());
-	//
-	// return composite;
-	// }
 
 	private Object decorateElement(final Field field, final WebElement wrapee) throws Exception
 	{

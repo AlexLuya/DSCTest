@@ -20,6 +20,10 @@ public abstract class Composite extends Widget
 		super(browser, id);
 	}
 
+	public Composite(Browser browser, UIObject object){
+		super(browser,object);
+	}
+
 	public Composite(Browser browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
