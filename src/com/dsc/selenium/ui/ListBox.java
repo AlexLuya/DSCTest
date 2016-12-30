@@ -132,6 +132,7 @@ public class ListBox extends AbstractValidable
 		{
 			if (options().get(i).idEquals(optionId))
 			{
+				click();
 				self().selectByIndex(i);
 				break;
 			}
@@ -157,6 +158,7 @@ public class ListBox extends AbstractValidable
 	 */
 	public void selectByValue(String value)
 	{
+		click();
 		self().selectByValue(value);
 	}
 
@@ -168,6 +170,7 @@ public class ListBox extends AbstractValidable
 	 */
 	public void selectByVisibleText(String text)
 	{
+		click();
 		self().selectByVisibleText(text);
 	}
 
@@ -178,7 +181,6 @@ public class ListBox extends AbstractValidable
 	 */
 	public Option selectedOption()
 	{
-
 		if(self().getAllSelectedOptions().isEmpty())
 		{
 			throw new IllegalStateException(wrap(format("no option selected in ListBox with id ----------%s---------", id())));
