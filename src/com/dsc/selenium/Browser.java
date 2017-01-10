@@ -21,14 +21,18 @@ import java.util.logging.Level;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.WebDriver.Window;
 import org.openqa.selenium.WebElement;
@@ -155,16 +159,32 @@ public class Browser
 				SystemUtils.OS_NAME + " NOT SUPPORTED due to no corresponded chrome driver provided by vendor");
 	}
 
-	WebDriver driver;
+	private WebDriver		driver;
 
-	protected Browser(WebDriver driver)
+	private String	previousWindowHandler;
+
+	private Browser(WebDriver driver)
 	{
 		this.driver = driver;
+	}
+
+	public Actions actions()
+	{
+		return new Actions(driver);
+	}
+
+	public Alert alter()
+	{
+		return driver.switchTo().alert();
 	}
 
 	public void close()
 	{
 		driver.quit();
+	}
+
+	public void closeCurrentWindow(){
+		driver.close();
 	}
 
 	public void deleteAllCookies()
@@ -185,6 +205,16 @@ public class Browser
 		}
 
 		return true;
+	}
+
+	/**
+	 * @param script
+	 * @param args
+	 */
+	public void executeScript(String script, Object... args)
+	{
+		((JavascriptExecutor) driver).executeScript(script, args);
+
 	}
 
 	public WebElement findDivByText(String text)
@@ -271,10 +301,8 @@ public class Browser
 		return null;
 	}
 
-	// a method to allow retrieving our driver instance
-	public WebDriver getDriver()
-	{
-		return driver;
+	public String getCurrentUrl(){
+		return driver.getCurrentUrl();
 	}
 
 	/**
@@ -284,6 +312,11 @@ public class Browser
 	public UIObject getUIObjectById(String id)
 	{
 		return new UIObject(this, findElemById(id));
+	}
+
+	public void hitEnterKey()
+	{
+		actions().sendKeys(Keys.ENTER).perform();
 	}
 
 	/**
@@ -326,6 +359,10 @@ public class Browser
 	public void moveToElement(WebElement target, int x, int y)
 	{
 		new Actions(driver).moveToElement(target, x, y).perform();
+	}
+
+	public Navigation navigation(){
+		return driver.navigate();
 	}
 
 	public void open(String url)
@@ -371,7 +408,28 @@ public class Browser
 		REAL_WAIT_SECONDS = defaultWaitSeconds;
 	}
 
-	// a method to obtain screenshots
+	public void switchBackToPreviousWindow()
+	{
+		// store current window for switching back
+		previousWindowHandler = null;
+		// switch to popoup window
+		driver.switchTo().window(previousWindowHandler);
+	}
+
+	public void switchToPopupWindow()
+	{
+		// store current window for switching back
+		previousWindowHandler = driver.getWindowHandle();
+		// switch to popoup window(last is latest opened under webdriver
+		// mechanism)
+		switchToWindow(windowHandles().length - 1);
+	}
+
+	public void switchToWindow(int index)
+	{
+		driver.switchTo().window(windowHandles()[index]);
+	}
+
 	public File takeScreenshot()
 	{
 		// take a screenshot
@@ -386,6 +444,11 @@ public class Browser
 	public Window window()
 	{
 		return driver.manage().window();
+	}
+
+	public String[] windowHandles()
+	{
+		return (String[]) driver.getWindowHandles().toArray();
 	}
 
 	Options manage()

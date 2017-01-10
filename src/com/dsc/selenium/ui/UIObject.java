@@ -13,7 +13,6 @@ import static java.lang.String.format;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -85,7 +84,7 @@ public class UIObject
 
 	public void doubleClick()
 	{
-		new Actions(browser.getDriver()).doubleClick(wrapee).perform();
+		browser.actions().doubleClick(wrapee).perform();
 	}
 
 	/**
@@ -347,7 +346,7 @@ public class UIObject
 
 	protected void dragAndDrop(int xOffset, int yOffset)
 	{
-		Actions slide = new Actions(browser.getDriver());
+		Actions slide = browser.actions();
 		slide.build();
 		// slide.click(wrapee);
 		slide.dragAndDropBy(wrapee, xOffset, yOffset);
@@ -404,11 +403,13 @@ public class UIObject
 	}
 
 	/*
-	 * @deprecated   using text()=="expected text" instead if using spockframework
-	 * 				it will print out more intuitive error message like this:
-	 * 				@see <a href="http://spockframework.org/spock/docs/1.1-rc-3/spock_primer.html">
-	 * 						http://spockframework.org/spock/docs/1.1-rc-3/spock_primer.html
-	 * 					</a>
+	 * @deprecated using text()=="expected text" instead if using spockframework
+	 * it will print out more intuitive error message like this:
+	 *
+	 * @see <a
+	 * href="http://spockframework.org/spock/docs/1.1-rc-3/spock_primer.html">
+	 * http://spockframework.org/spock/docs/1.1-rc-3/spock_primer.html
+	 * </a>
 	 */
 	protected boolean ensureTextIs(String expected)
 	{
@@ -436,7 +437,6 @@ public class UIObject
 		return true;
 	}
 
-
 	protected boolean isSyncErrorIndicated(final String text)
 	{
 		info("#isSyncErrorIndicated() call #containsText() and #isShowingError()");
@@ -458,15 +458,14 @@ public class UIObject
 	{
 		info("remove attribute: '%s'", name);
 
-		((JavascriptExecutor) browser.getDriver()).executeScript("arguments[0].removeAttribute(arguments[1]);", wrapee, name);
+		browser.executeScript("arguments[0].removeAttribute(arguments[1]);", wrapee, name);
 	}
 
 	protected void setAttribute(String name, String value)
 	{
 		info("set attribute: '%s' to: '%s'", name, value);
 
-		((JavascriptExecutor) browser.getDriver()).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", wrapee,
-				name, value);
+		browser.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", wrapee, name, value);
 	}
 
 	/**
@@ -493,9 +492,19 @@ public class UIObject
 	 */
 	protected String text()
 	{
-		if (doGetText() == null)
+		// DON'T do it like blew,return null is acceptable
+		//		if (doGetText() == null)
+		//		{
+		//			return waitUntil(textPresented());
+		//		}
+
+		// wait 3 seconds for text being presented
+		//due to it will be retrieved async
+		int wait = 1;
+		while (doGetText() == null && wait < 300)
 		{
-			return waitUntil(textPresented());
+			//wait 10 milliseconds each time
+			Util.sleep(10 * wait++);
 		}
 
 		return doGetText();
