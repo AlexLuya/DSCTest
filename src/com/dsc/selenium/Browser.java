@@ -159,9 +159,9 @@ public class Browser
 				SystemUtils.OS_NAME + " NOT SUPPORTED due to no corresponded chrome driver provided by vendor");
 	}
 
-	private WebDriver		driver;
+	private WebDriver	driver;
 
-	private String	previousWindowHandler;
+	private String		previousWindowHandler;
 
 	private Browser(WebDriver driver)
 	{
@@ -183,7 +183,8 @@ public class Browser
 		driver.quit();
 	}
 
-	public void closeCurrentWindow(){
+	public void closeCurrentWindow()
+	{
 		driver.close();
 	}
 
@@ -301,7 +302,8 @@ public class Browser
 		return null;
 	}
 
-	public String getCurrentUrl(){
+	public String getCurrentUrl()
+	{
 		return driver.getCurrentUrl();
 	}
 
@@ -361,7 +363,8 @@ public class Browser
 		new Actions(driver).moveToElement(target, x, y).perform();
 	}
 
-	public Navigation navigation(){
+	public Navigation navigation()
+	{
 		return driver.navigate();
 	}
 
@@ -448,7 +451,7 @@ public class Browser
 
 	public String[] windowHandles()
 	{
-		return (String[]) driver.getWindowHandles().toArray();
+		return driver.getWindowHandles().toArray(new String[driver.getWindowHandles().size()]);
 	}
 
 	Options manage()
