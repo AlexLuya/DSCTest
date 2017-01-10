@@ -33,6 +33,7 @@ import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.WebDriver.Window;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -73,9 +74,10 @@ public class Browser
 	public static DesiredCapabilities cap(DesiredCapabilities caps)
 	{
 		LoggingPreferences logPrefs = new LoggingPreferences();
-		logPrefs.enable(LogType.BROWSER, Level.ALL);
 
+		logPrefs.enable(LogType.BROWSER, Level.ALL);
 		caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+
 		return caps;
 	}
 
@@ -90,7 +92,14 @@ public class Browser
 
 		System.setProperty("webdriver.chrome.driver", whereChromeDriver());
 
-		return new Browser(new ChromeDriver(cap(DesiredCapabilities.chrome())));
+		// disable popup blocking
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("test-type");
+		options.addArguments("disable-popup-blocking");
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+
+		return new Browser(new ChromeDriver(cap(capabilities)));
 	}
 
 	public static Browser firfox()
@@ -99,13 +108,9 @@ public class Browser
 		// System.setProperty("webdriver.firefox.bin", WHERE_FIREFOX_BIN);
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability("marionette", true);
-		return new Browser(new FirefoxDriver(capabilities));
+
+		return new Browser(new FirefoxDriver(cap(capabilities)));
 	}
-	// public static Browser firfox()
-	// {
-	// System.setProperty("webdriver.firefox.driver", WHERE_FIREFOX_DRIVER);
-	// return new Browser(new FirefoxDriver(DesiredCapabilities.firefox()));
-	// }
 
 	public static Browser ie()
 	{
