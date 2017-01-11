@@ -1,7 +1,7 @@
 /**
  * Copyright (c) (2016-2017),VSI and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
-**/
+ **/
 package com.dsc.selenium.ui;
 
 import org.openqa.selenium.WebElement;
@@ -25,6 +25,10 @@ public class CheckBox extends UIObject
 		super(browser,wrapee);
 	}
 
+	public boolean isSelected(){
+		return wrapee.isSelected();
+	}
+
 	/**
 	 * @param auto
 	 */
@@ -35,5 +39,4 @@ public class CheckBox extends UIObject
 			wrapee.click();
 		}
 	}
-
 }

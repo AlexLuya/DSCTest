@@ -1,7 +1,7 @@
 /**
  * Copyright (c) (2016-2017),VSI and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
-**/
+ **/
 package com.dsc.selenium.ui;
 
 import org.openqa.selenium.WebElement;
@@ -14,7 +14,7 @@ import com.dsc.selenium.Browser;
  * @Version 1.0
  * @Since 1.0
  */
-public class Radio extends UIObject
+public class Radio extends CheckBox
 {
 
 	/**
@@ -24,16 +24,4 @@ public class Radio extends UIObject
 	{
 		super(browser,wrapee);
 	}
-
-	/**
-	 * @param auto
-	 */
-	public void setValue(boolean checked)
-	{
-		if(wrapee.isSelected()!=checked)
-		{
-			wrapee.click();
-		}
-	}
-
 }
