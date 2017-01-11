@@ -53,4 +53,9 @@ public class ImageUtil
 	{
 		return combine(new File(image_1), new File(image_2));
 	}
+
+	public static boolean compare(String image_1, String image_2) throws IOException{
+		//HP
+		return false;
+	}
 }

@@ -27,6 +27,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
@@ -176,7 +177,13 @@ public class Browser
 
 	public Alert alter()
 	{
-		return driver.switchTo().alert();
+		try
+		{
+			return driver.switchTo().alert();
+		} catch (NoAlertPresentException e)
+		{
+			return null;
+		}
 	}
 
 	public void close()
