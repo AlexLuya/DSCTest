@@ -8,6 +8,7 @@ package com.dsc.selenium;
 
 import static com.dsc.selenium.util.Util.wrap;
 import static com.dsc.util.Log.info;
+import static com.dsc.util.Log.warn;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -214,8 +215,7 @@ public class Browser
 	 */
 	public void executeScript(String script, Object... args)
 	{
-		((JavascriptExecutor) driver).executeScript(script, args);
-
+		jsExecutor().executeScript(script, args);
 	}
 
 	public WebElement findDivByText(String text)
@@ -240,6 +240,24 @@ public class Browser
 		}
 
 		return doFindElemById(id);
+	}
+
+	public WebElement findElemByLinkText(String text)
+	{
+		if (text == null || text == "")
+		{
+			throw new IllegalArgumentException("linkText mustn't be null");
+		}
+
+		try
+		{
+			waitUntil(ExpectedConditions.visibilityOfElementLocated(By.linkText(text)));
+		} catch (TimeoutException e)
+		{
+			throw new NoSuchElementException("Can't find the element with ----------------linkText:---------------" + text, e);
+		}
+
+		return driver.findElement(By.linkText(text));
 	}
 
 	public WebElement findElemByTag(String tag)
@@ -413,10 +431,8 @@ public class Browser
 
 	public void switchBackToPreviousWindow()
 	{
-		// store current window for switching back
+		switchToWindow(previousWindowHandler);
 		previousWindowHandler = null;
-		// switch to popoup window
-		driver.switchTo().window(previousWindowHandler);
 	}
 
 	public void switchToPopupWindow()
@@ -430,7 +446,28 @@ public class Browser
 
 	public void switchToWindow(int index)
 	{
-		driver.switchTo().window(windowHandles()[index]);
+		switchToWindow(windowHandles()[index]);
+	}
+
+	public void switchToWindow(String nameOrHandler)
+	{
+		// this will switch to expected window/tab but visually,it may won't
+		// due to window is opened in tab
+		driver.switchTo().window(nameOrHandler);
+
+		// so use a trick(show an alter,and click [OK]) to ensure focused
+		// visually
+		// but if 'alter' existed
+		if (null != alter())
+		{
+			// trick won't work,user must do it manually
+			warn("alter() existed,and it will shade the trick---alter('ensure focused visually').accept()---,please do it manually");
+			return;
+		}
+
+		// else use this trick
+		executeScript("alert('ensure focused visually')");
+		alter().accept();
 	}
 
 	public File takeScreenshot()
@@ -498,6 +535,14 @@ public class Browser
 		{
 			throw new RuntimeException(wrap("take screenshot failed"), e.getCause());
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	private JavascriptExecutor jsExecutor()
+	{
+		return (JavascriptExecutor) driver;
 	}
 
 	/**

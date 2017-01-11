@@ -17,11 +17,6 @@ public class Link extends UIObject
 		super(browser, wrapee);
 	}
 
-	public void clickMe()
-	{
-		wrapee.click();
-	}
-
 	/*
 	 * make ensureTextIs() public
 	 */
