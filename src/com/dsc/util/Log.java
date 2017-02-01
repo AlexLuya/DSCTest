@@ -7,7 +7,7 @@ package com.dsc.util;
 
 import org.apache.log4j.Logger;
 
-import com.dsc.selenium.util.Util;
+import com.dsc.test.web.util.Util;
 
 /**
  * @Author alex

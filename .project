@@ -10,9 +10,15 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.github.sdbg.integration.jdt.gwtsdmbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.groovy.core.groovyNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>com.github.sdbg.integration.jdt.gwtsdmnature</nature>
 	</natures>
 </projectDescription>

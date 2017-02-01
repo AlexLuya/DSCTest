@@ -2,8 +2,8 @@ package com.dsc.spock.extractor
 
 import groovyjarjarantlr.collections.AST
 
-import com.dsc.selenium.util.Util
 import com.dsc.spock.extractor.domain.Spec
+import com.dsc.test.web.util.Util
 
 class Extract {
 	static List<Spec> specsOf(File file, ClassLoader classLoader) {
