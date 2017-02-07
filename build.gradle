@@ -1,12 +1,44 @@
-task hello{
-	doLast{
-		println 'DSCTest'
-		// Using a getter method
-		println project.buildDir
-		println getProject().getBuildDir()
-		
-		// Using a setter method
-		project.buildDir = 'target'
-		getProject().setBuildDir('target')
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+//reasons to set java src dirs to []
+//https://coderwall.com/p/wuqopq/compile-groovy-before-java-in-gradle-build
+sourceSets {
+	main {
+		 java { srcDirs = [] }
+         groovy { srcDir 'src' }
 	}
+	test {
+		 java { srcDirs = [] } 
+         groovy { srcDir 'test' }
+	}
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'junit:junit:4.12'
+
+    compile 'org.codehaus.groovy:groovy-all:2.4.7'
+    compile 'org.spockframework:spock-core:1.0-groovy-2.4'
+	
+	compile fileTree(dir: 'lib', include: '*.jar')
+	compile fileTree(dir: 'lib/appium', include: '*.jar')
+	compile fileTree(dir: 'lib/db', include: '*.jar')
+	compile fileTree(dir: 'lib/driver', include: '*.jar')
+	compile fileTree(dir: 'lib/guava', include: '*.jar')
+	compile fileTree(dir: 'lib/hsqldb', include: '*.jar')
+	compile fileTree(dir: 'lib/maven', include: '*.jar')
+	compile fileTree(dir: 'lib/schemacrawler', include: '*.jar')
+
+	
+	testCompile files('lib/schemacrawler/schemacrawler-14.09.03.jar')
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    testCompile 'junit:junit:4.12'
 }
