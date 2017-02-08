@@ -5,7 +5,7 @@
  **/
 package com.dsc.test.db;
 
-import com.dsc.test.web.util.Util;
+import com.dsc.util.Util;
 
 /**
  * @Author alex

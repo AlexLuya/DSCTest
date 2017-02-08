@@ -1,7 +1,7 @@
 package com.dsc.test.web
 
-import com.dsc.test.web.ui.Link
-import com.dsc.test.web.util.Util
+import com.dsc.test.common.ui.Link
+import com.dsc.util.Util
 
 
 public class BrowserTest extends WebTestStub {

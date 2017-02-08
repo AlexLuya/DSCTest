@@ -7,7 +7,7 @@ package com.dsc.test.db;
 
 import java.util.List;
 
-import com.dsc.test.web.util.Util;
+import com.dsc.util.Util;
 
 /**
  * @Author alex

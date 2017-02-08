@@ -4,8 +4,8 @@
  **/
 package com.dsc.test.web
 
-import static com.dsc.test.web.util.FileUtil.*
-import static com.dsc.test.web.util.Util.wrap
+import static com.dsc.util.FileUtil.*
+import static com.dsc.util.Util.wrap
 import static java.lang.String.format
 
 import java.awt.image.BufferedImage
@@ -17,11 +17,11 @@ import org.apache.commons.io.FileUtils
 import org.junit.Rule
 import org.junit.rules.TestName
 
+import com.dsc.util.ImageUtil
+import com.dsc.util.Log
+
 import spock.lang.Shared
 import spock.lang.Specification
-
-import com.dsc.test.web.util.ImageUtil
-import com.dsc.util.Log
 
 /**
  * The Class WebTestStub.

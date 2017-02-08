@@ -5,7 +5,7 @@
  **/
 package com.dsc.test.db.sql;
 
-import static com.dsc.test.web.util.Util.wrap;
+import static com.dsc.util.Util.wrap;
 import static java.lang.String.format;
 
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ import com.dsc.test.db.Columns;
 import com.dsc.test.db.DataBase;
 import com.dsc.test.db.Table;
 import com.dsc.test.db.sql.ChildTable.Info;
-import com.dsc.test.web.util.Util;
+import com.dsc.util.Util;
 import com.google.common.collect.Lists;
 
 /**

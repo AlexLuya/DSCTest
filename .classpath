@@ -43,6 +43,7 @@
 	<classpathentry kind="lib" path="lib/freemarker-2.3.21.jar"/>
 	<classpathentry kind="lib" path="lib/schemacrawler/schemacrawler-14.09.03.jar"/>
 	<classpathentry kind="lib" path="lib/ashot-1.5.2.jar"/>
+	<classpathentry kind="lib" path="lib/appium/java-client-5.0.0-BETA1.jar" sourcepath="lib/src/java-client-5.0.0-BETA1-sources.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>

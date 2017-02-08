@@ -10,7 +10,7 @@ import org.hsqldb.server.Server;
 
 import com.dsc.test.db.DataBase;
 import com.dsc.test.db.sql.SQLDataBase;
-import com.dsc.test.web.util.Util;
+import com.dsc.util.Util;
 
 /**
  * @Author alex

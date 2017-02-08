@@ -7,8 +7,6 @@ package com.dsc.util;
 
 import org.apache.log4j.Logger;
 
-import com.dsc.test.web.util.Util;
-
 /**
  * @Author alex
  * @CreateTime Dec 22, 2014 1:18:12 PM

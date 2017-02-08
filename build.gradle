@@ -22,6 +22,9 @@ sourceSets {
 }
 
 dependencies {
+	compile 'io.appium:java-client:5.0.0-BETA2'
+	
+	
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'junit:junit:4.12'
 

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.dsc.test.db.sql.Schema;
-import com.dsc.test.web.util.Util;
+import com.dsc.util.Util;
 import com.google.common.collect.Lists;
 
 /**

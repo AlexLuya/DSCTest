@@ -6,9 +6,9 @@
  **/
 package com.dsc.test.web;
 
-import static com.dsc.test.web.util.Util.wrap;
 import static com.dsc.util.Log.info;
 import static com.dsc.util.Log.warn;
+import static com.dsc.util.Util.wrap;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -52,8 +52,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.dsc.test.web.ui.UIObject;
-import com.dsc.test.web.util.Util;
+import com.dsc.test.common.ui.UIObject;
+import com.dsc.util.Util;
 
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;

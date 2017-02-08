@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 
 import com.dsc.test.db.DataBase;
 import com.dsc.test.db.Table;
-import com.dsc.test.web.util.Util;
+import com.dsc.util.Util;
 
 /**
  * @Author alex
