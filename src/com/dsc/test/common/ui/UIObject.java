@@ -20,8 +20,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import com.dsc.test.common.TesteeHost;
 import com.dsc.test.common.ui.widget.Consts;
-import com.dsc.test.web.Browser;
 import com.dsc.util.Util;
 import com.google.common.collect.Lists;
 
@@ -40,14 +40,14 @@ public class UIObject
 
 	protected String				annotatedId;
 
-	protected Browser				browser;
+	protected TesteeHost				browser;
 	protected WebElement			wrapee;
 
 	/**
 	 * @param browser
 	 * @param wrapee
 	 */
-	public UIObject(Browser browser, WebElement wrapee)
+	public UIObject(TesteeHost browser, WebElement wrapee)
 	{
 		this.wrapee = wrapee;
 		this.browser = browser;
