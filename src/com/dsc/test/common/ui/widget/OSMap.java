@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.dsc.test.common.ui.Button;
 import com.dsc.test.common.ui.Canvas;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 import com.dsc.util.Util;
 
 /**
@@ -33,7 +33,7 @@ public class OSMap extends Composite
 	 * @param browser
 	 * @param wrapee
 	 */
-	public OSMap(Browser browser, WebElement wrapee)
+	public OSMap(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

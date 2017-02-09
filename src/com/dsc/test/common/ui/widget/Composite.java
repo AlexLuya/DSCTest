@@ -9,22 +9,22 @@ import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.TextBox;
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 import com.dsc.util.Util;
 
 public abstract class Composite extends Widget
 {
 
-	public Composite(Browser browser, String id)
+	public Composite(TesteeHost browser, String id)
 	{
 		super(browser, id);
 	}
 
-	public Composite(Browser browser, UIObject object){
+	public Composite(TesteeHost browser, UIObject object){
 		super(browser,object);
 	}
 
-	public Composite(Browser browser, WebElement wrapee)
+	public Composite(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

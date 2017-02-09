@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.dsc.test.common.pagefactory.WebElementDecorator;
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 /**
  * @Author alex
@@ -20,16 +20,16 @@ import com.dsc.test.web.Browser;
  */
 public class Widget extends UIObject
 {
-	public Widget(Browser browser, String containerId)
+	public Widget(TesteeHost browser, String containerId)
 	{
 		this(browser, browser.findElemById(containerId));
 	}
 
-	public Widget(Browser browser, UIObject wrapee){
+	public Widget(TesteeHost browser, UIObject wrapee){
 		this(browser,wrapee.element());
 	}
 
-	public Widget(Browser browser, WebElement wrapee)
+	public Widget(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 		// initialize all fields

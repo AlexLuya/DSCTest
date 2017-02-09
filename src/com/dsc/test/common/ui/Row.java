@@ -7,7 +7,7 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 /**
  * @Author alex
@@ -21,7 +21,7 @@ public class Row extends UIObject
 	/**
 	 * @param wrapee
 	 */
-	public Row(Browser browser,WebElement wrapee)
+	public Row(TesteeHost browser,WebElement wrapee)
 	{
 		super(browser,wrapee);
 	}

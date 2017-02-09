@@ -7,7 +7,7 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.widget.Widget;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 /**
  * @Author alex
@@ -21,12 +21,12 @@ public abstract class FlowPanel extends Widget
 	 * @param browser
 	 * @param containerId
 	 */
-	public FlowPanel(Browser browser, String containerId)
+	public FlowPanel(TesteeHost browser, String containerId)
 	{
 		super(browser, containerId);
 	}
 
-	public FlowPanel(Browser browser, WebElement wrapee)
+	public FlowPanel(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

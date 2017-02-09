@@ -8,7 +8,7 @@ package com.dsc.test.common.ui.widget;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.TextBox;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 import com.dsc.util.Log;
 
 /**
@@ -25,7 +25,7 @@ public class RETextBox extends TextBox
 	/**
 	 * @param el
 	 */
-	public RETextBox(Browser browser,WebElement wrapee)
+	public RETextBox(TesteeHost browser,WebElement wrapee)
 	{
 		super(browser,wrapee);
 	}

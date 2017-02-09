@@ -9,7 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.widget.Widget;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 /**
  * @Author alex
@@ -20,12 +20,12 @@ import com.dsc.test.web.Browser;
 public class Table extends Widget
 {
 
-	public Table(Browser browser,String id)
+	public Table(TesteeHost browser,String id)
 	{
 		super(browser,id);
 	}
 
-	public Table(Browser browser,WebElement wrapee)
+	public Table(TesteeHost browser,WebElement wrapee)
 	{
 		super(browser,wrapee);
 	}

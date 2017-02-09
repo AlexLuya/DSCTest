@@ -7,13 +7,13 @@ package com.dsc.test.common.pagefactory;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.widget.Composite;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 public class CompositeFactoryImpl implements CompositeFactory
 {
 
 	@Override
-	public <T extends Composite> T create(Browser browser,Class<T> wrappingClass, WebElement wrapee)
+	public <T extends Composite> T create(TesteeHost browser,Class<T> wrappingClass, WebElement wrapee)
 	{
 		try
 		{

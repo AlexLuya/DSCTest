@@ -6,7 +6,7 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 /**
  * @Author alex
@@ -21,7 +21,7 @@ public class TD extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	public TD(Browser browser, WebElement wrapee)
+	public TD(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

@@ -13,7 +13,7 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 import com.google.common.collect.Lists;
 
 /**
@@ -35,7 +35,7 @@ public class ListBox extends AbstractValidable
 	 * @param wrapee
 	 *            the wrapee
 	 */
-	public ListBox(Browser browser, WebElement wrapee)
+	public ListBox(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

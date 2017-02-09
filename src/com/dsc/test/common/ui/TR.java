@@ -7,7 +7,7 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.widget.Widget;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 /**
  * @Author alex
@@ -22,7 +22,7 @@ public class TR extends Widget
 	 * @param browser
 	 * @param wrapee
 	 */
-	public TR(Browser browser, WebElement wrapee)
+	public TR(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

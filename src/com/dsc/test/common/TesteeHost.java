@@ -41,7 +41,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 import com.dsc.util.Util;
 
 import ru.yandex.qatools.ashot.AShot;
@@ -393,7 +393,7 @@ public abstract class TesteeHost
 
 	public <T> T waitUntil(ExpectedCondition<T> isTrue) throws TimeoutException
 	{
-		return new WebDriverWait(driver, Browser.defaultWaitSeconds()).until(isTrue);
+		return new WebDriverWait(driver, TesteeHost.defaultWaitSeconds()).until(isTrue);
 	}
 
 	public Window window()

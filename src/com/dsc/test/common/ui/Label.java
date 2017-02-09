@@ -6,12 +6,12 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 public class Label extends UIObject
 {
 
-	public Label(Browser browser, WebElement wrapee)
+	public Label(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

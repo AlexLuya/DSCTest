@@ -8,7 +8,7 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.widget.Widget;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 /**
  * @Author alex
@@ -18,7 +18,7 @@ import com.dsc.test.web.Browser;
  */
 public class ButtonBase extends Widget
 {
-	public ButtonBase(Browser browser, String containerId)
+	public ButtonBase(TesteeHost browser, String containerId)
 	{
 		super(browser, containerId);
 	}
@@ -27,7 +27,7 @@ public class ButtonBase extends Widget
 	 * @param browser
 	 * @param wrapee
 	 */
-	public ButtonBase(Browser browser, WebElement wrapee)
+	public ButtonBase(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

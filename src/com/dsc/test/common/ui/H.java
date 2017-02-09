@@ -6,7 +6,7 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 /**
  * @Author alex
@@ -21,7 +21,7 @@ public abstract class H extends Label
 	 * @param browser
 	 * @param wrapee
 	 */
-	public H(Browser browser, WebElement wrapee)
+	public H(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

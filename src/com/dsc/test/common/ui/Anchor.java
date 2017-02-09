@@ -6,11 +6,11 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 public class Anchor extends FocusWidget
 {
-	public Anchor(Browser browser,WebElement wrapee)
+	public Anchor(TesteeHost browser,WebElement wrapee)
 	{
 		super(browser,wrapee);
 	}

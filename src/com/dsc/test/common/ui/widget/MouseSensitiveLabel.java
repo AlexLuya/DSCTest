@@ -7,7 +7,7 @@ package com.dsc.test.common.ui.widget;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.Label;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 /**
  * @Author alex
@@ -20,7 +20,7 @@ public class MouseSensitiveLabel extends Label
 	/**
 	 * @param el
 	 */
-	public MouseSensitiveLabel(Browser browser,WebElement wrapee)
+	public MouseSensitiveLabel(TesteeHost browser,WebElement wrapee)
 	{
 		super(browser,wrapee);
 	}

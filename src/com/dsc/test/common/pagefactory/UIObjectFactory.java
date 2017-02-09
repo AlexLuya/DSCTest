@@ -8,9 +8,9 @@ package com.dsc.test.common.pagefactory;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 public interface UIObjectFactory
 {
-	public <E extends UIObject> E create(Browser browser, Class<E> containerClass, WebElement wrapeeElement) throws Exception;
+	public <E extends UIObject> E create(TesteeHost browser, Class<E> containerClass, WebElement wrapeeElement) throws Exception;
 }

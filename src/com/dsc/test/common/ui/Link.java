@@ -7,12 +7,12 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 public class Link extends UIObject
 {
 
-	public Link(Browser browser, WebElement wrapee)
+	public Link(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

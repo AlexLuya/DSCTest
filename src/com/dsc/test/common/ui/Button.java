@@ -7,11 +7,11 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 public class Button extends ButtonBase
 {
-	public Button(Browser browser, String containerId)
+	public Button(TesteeHost browser, String containerId)
 	{
 		super(browser, containerId);
 	}
@@ -20,7 +20,7 @@ public class Button extends ButtonBase
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Button(Browser browser, WebElement wrapee)
+	public Button(TesteeHost browser, WebElement wrapee)
 	{
 		super(browser, wrapee);
 	}

@@ -8,7 +8,7 @@ package com.dsc.test.common.ui.widget;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 
 /**
@@ -26,7 +26,7 @@ public class PopupPanel extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	//	public PopupPanel(Browser browser, WebElement wrapee)
+	//	public PopupPanel(TesteeHost browser, WebElement wrapee)
 	//	{
 	//		super(browser, wrapee);
 	//	}
@@ -34,7 +34,7 @@ public class PopupPanel extends UIObject
 	/**
 	 * @param wrapee
 	 */
-	public PopupPanel(Browser browser,WebElement wrapee)
+	public PopupPanel(TesteeHost browser,WebElement wrapee)
 	{
 		super(browser,wrapee);
 	}

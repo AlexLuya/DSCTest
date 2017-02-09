@@ -15,17 +15,17 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 public class WebElementDecorator extends DefaultFieldDecorator
 {
-	private final Browser browser;
+	private final TesteeHost browser;
 
 	// private CompositeFactory compositeFactory = new CompositeFactoryImpl();
 
 	private UIObjectFactory uiObjectFactory = new UIObjectFactoryImpl();
 
-	public WebElementDecorator(Browser browser,SearchContext searchContext)
+	public WebElementDecorator(TesteeHost browser,SearchContext searchContext)
 	{
 		super(new WebElementLocatorFactory(searchContext));
 		this.browser = browser;

@@ -10,12 +10,12 @@ import static com.dsc.util.Util.wrap;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 public class UIObjectFactoryImpl implements UIObjectFactory
 {
 	@Override
-	public <T extends UIObject> T create(Browser browser, Class<T> wrapping, WebElement wrapee) throws Exception
+	public <T extends UIObject> T create(TesteeHost browser, Class<T> wrapping, WebElement wrapee) throws Exception
 	{
 		// create instance by reflection
 		T instance = null;
@@ -78,7 +78,7 @@ public class UIObjectFactoryImpl implements UIObjectFactory
 	private String msgOfCanNotInvokeConstructor(Class<?> clz)
 	{
 		return String.format(
-				"Constructor--------%s(Browser,WebElement)--------can't be invoked\n"
+				"Constructor--------%s(TesteeHost,WebElement)--------can't be invoked\n"
 						+ wrap("Possible reasons:\n")
 						+ "① it is private\n",
 						clz.getSimpleName());
@@ -87,11 +87,11 @@ public class UIObjectFactoryImpl implements UIObjectFactory
 	private String msgOfNoSuchConstructor(Class<?> clz)
 	{
 		return String.format(
-				"--------%s--------hasn't expected constructor %s(Browser,WebElement)\n"
+				"--------%s--------hasn't expected constructor %s(TesteeHost,WebElement)\n"
 						+ wrap("Possible reasons:\n")
 						+ "① No constructor existed\n"
-						+ "② Only single arg constructor: %s(Browser) or %s(WebElement) exist\n"
-						+ "③ Two args constructor existed but args's order isn't expected (Browser,WebElement) but (WebElement,Browser)\n",
+						+ "② Only single arg constructor: %s(TesteeHost) or %s(WebElement) exist\n"
+						+ "③ Two args constructor existed but args's order isn't expected (TesteeHost,WebElement) but (WebElement,TesteeHost)\n",
 						clz.getSimpleName(), clz.getSimpleName(), clz.getSimpleName(), clz.getSimpleName());
 	}
 

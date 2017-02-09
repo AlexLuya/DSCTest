@@ -2,11 +2,11 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.web.Browser;
+import com.dsc.test.common.TesteeHost;
 
 public class Image extends UIObject
 {
-	public Image(Browser browser,WebElement wrapee)
+	public Image(TesteeHost browser,WebElement wrapee)
 	{
 		super(browser,wrapee);
 	}
