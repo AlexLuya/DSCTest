@@ -14,7 +14,7 @@ import com.dsc.test.common.Context;
  * @Version 1.0
  * @Since 1.0
  */
-public abstract class FlowPanel extends GeneralWidget
+public abstract class FlowPanel extends Widget<Context>
 {
 	/**
 	 * @param context

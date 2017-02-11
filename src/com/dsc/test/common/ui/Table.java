@@ -9,7 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.widget.GeneralWidget;
+import com.dsc.test.common.ui.widget.Widget;
 
 /**
  * @Author alex
@@ -17,7 +17,7 @@ import com.dsc.test.common.ui.widget.GeneralWidget;
  * @Version 1.0
  * @Since 1.0
  */
-public class Table extends GeneralWidget
+public class Table extends Widget<Context>
 {
 
 	public Table(Context context,String id)
