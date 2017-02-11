@@ -7,7 +7,7 @@ package com.dsc.test.common.ui.widget;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 
 /**
@@ -25,8 +25,8 @@ public class InputSelectBox extends SuggestionBox
 	/**
 	 * @param el
 	 */
-	public InputSelectBox(TesteeHost browser,WebElement wrapee)
+	public InputSelectBox(Context context,WebElement wrapee)
 	{
-		super(browser,wrapee);
+		super(context,wrapee);
 	}
 }

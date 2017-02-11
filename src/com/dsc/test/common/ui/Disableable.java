@@ -6,7 +6,7 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 /**
  * @Description
@@ -22,9 +22,9 @@ public class Disableable extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Disableable(TesteeHost browser, WebElement wrapee)
+	public Disableable(Context context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	public void disable(){

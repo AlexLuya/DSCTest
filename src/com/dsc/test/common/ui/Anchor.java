@@ -6,13 +6,14 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
+import com.dsc.test.common.ui.widget.FocusWidget;
 
 public class Anchor extends FocusWidget
 {
-	public Anchor(TesteeHost browser,WebElement wrapee)
+	public Anchor(Context context,WebElement wrapee)
 	{
-		super(browser,wrapee);
+		super(context,wrapee);
 	}
 
 	/* (non-Javadoc)

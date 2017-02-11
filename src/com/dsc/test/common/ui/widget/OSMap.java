@@ -8,10 +8,9 @@ package com.dsc.test.common.ui.widget;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.dsc.test.common.Context;
 import com.dsc.test.common.ui.Button;
 import com.dsc.test.common.ui.Canvas;
-import com.dsc.test.common.TesteeHost;
-import com.dsc.util.Util;
 
 /**
  * @Author alex
@@ -19,7 +18,7 @@ import com.dsc.util.Util;
  * @Version 1.0
  * @Since 1.0
  */
-public class OSMap extends Composite
+public class OSMap extends Composite<Context>
 {
 	//NP alex   add  "protected",delete "legend"
 	@FindBy(tagName = "canvas")
@@ -33,28 +32,23 @@ public class OSMap extends Composite
 	 * @param browser
 	 * @param wrapee
 	 */
-	public OSMap(TesteeHost browser, WebElement wrapee)
+	public OSMap(Context context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	public void dragAndDropMap(int xOffset, int yOffset){
 		canvas.dragAndDrop(xOffset, yOffset);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.common.ui.widget.gwt.Composite#ensureElementsAvailable()
+	/* (non-Javadoc)
+	 * @see com.dsc.test.common.ui.widget.Composite#ensureChildrenAvailable()
 	 */
 	@Override
 	protected void ensureChildrenAvailable()
 	{
 		canvas.ensureAvailable();
-		// attributions;
 		zoomIn.ensureAvailable();
 		zoomOut.ensureAvailable();
-		//NP
-		Util.sleep(3,"canvas content");
 	}
 }

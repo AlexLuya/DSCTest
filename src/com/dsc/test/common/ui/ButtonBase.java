@@ -7,8 +7,7 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.ui.widget.Widget;
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 /**
  * @Author alex
@@ -16,20 +15,20 @@ import com.dsc.test.common.TesteeHost;
  * @Version 1.0
  * @Since 1.0
  */
-public class ButtonBase extends Widget
+public class ButtonBase extends UIObject
 {
-	public ButtonBase(TesteeHost browser, String containerId)
+	public ButtonBase(Context context, String id)
 	{
-		super(browser, containerId);
+		this(context, context.findElemById(id));
 	}
 
 	/**
 	 * @param browser
 	 * @param wrapee
 	 */
-	public ButtonBase(TesteeHost browser, WebElement wrapee)
+	public ButtonBase(Context context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	@Override

@@ -14,21 +14,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 
+import com.dsc.test.common.Context;
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.common.TesteeHost;
 
-public class WebElementDecorator extends DefaultFieldDecorator
+public class UIObjectDecorator extends DefaultFieldDecorator
 {
-	private final TesteeHost browser;
+	private final Context context;
 
 	// private CompositeFactory compositeFactory = new CompositeFactoryImpl();
 
-	private UIObjectFactory uiObjectFactory = new UIObjectFactoryImpl();
+	private UIObjectFactory uiObjectFactory = new UIObjectFactory();
 
-	public WebElementDecorator(TesteeHost browser,SearchContext searchContext)
+	public UIObjectDecorator(Context context,SearchContext searchContext)
 	{
 		super(new WebElementLocatorFactory(searchContext));
-		this.browser = browser;
+		this.context = context;
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class WebElementDecorator extends DefaultFieldDecorator
 				return decorateElement(field, wrapee);
 			} catch (Exception e)
 			{
-				throw new RuntimeException(wrap("can't create element with--------id--------" + annotatedId(field)), e);
+				throw new RuntimeException(wrap("can't create element with id=" + annotatedId(field)), e);
 			}
 		}
 
@@ -69,7 +69,7 @@ public class WebElementDecorator extends DefaultFieldDecorator
 	private Object decorateElement(final Field field, final WebElement wrapee) throws Exception
 	{
 		@SuppressWarnings("unchecked")
-		UIObject element = uiObjectFactory.create(browser, (Class<? extends UIObject>) field.getType(), wrapee);
+		UIObject element = uiObjectFactory.create(context, (Class<? extends UIObject>) field.getType(), wrapee);
 
 		element.setAnnotatedId(findByAnno(field).id());
 

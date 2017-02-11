@@ -2,11 +2,12 @@
  * Copyright (c) (2016-2017),VSI and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
 **/
-package com.dsc.test.common.ui;
+package com.dsc.test.common.ui.widget;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
+import com.dsc.test.common.ui.UIObject;
 
 /**
  * @Author alex
@@ -20,9 +21,9 @@ public class HTMLPanel extends UIObject
 	/**
 	 * @param wrapee
 	 */
-	public HTMLPanel(TesteeHost browser,WebElement wrapee)
+	public HTMLPanel(Context context,WebElement wrapee)
 	{
-		super(browser,wrapee);
+		super(context,wrapee);
 	}
 
 }

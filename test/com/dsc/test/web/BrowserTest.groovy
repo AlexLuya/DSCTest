@@ -3,7 +3,6 @@ package com.dsc.test.web
 import com.dsc.test.common.ui.Link
 import com.dsc.util.Util
 
-
 public class BrowserTest extends WebTestStub {
 
 	static final String TEST_PAGE="https://www.baidu.com/"

@@ -6,12 +6,12 @@ package com.dsc.test.db.sql
 
 import java.sql.ResultSet
 
-import spock.lang.Shared
-import spock.lang.Specification
-
 import com.dsc.test.db.Table
 import com.dsc.test.db.sql.db.HsqlDB
 import com.dsc.test.db.sql.server.HsqlServer
+
+import spock.lang.Shared
+import spock.lang.Specification
 
 public class SQLTableImplTest extends Specification
 {

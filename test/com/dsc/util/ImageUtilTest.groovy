@@ -4,10 +4,6 @@
  **/
 package com.dsc.util
 
-import static com.dsc.util.FileUtil.*
-
-import org.apache.commons.io.FileUtils
-
 import spock.lang.Specification
 
 public class ImageUtilTest extends Specification {

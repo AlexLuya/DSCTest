@@ -7,7 +7,7 @@ package com.dsc.test.common.ui.widget;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 /**
  * The Class SuggestionBox.
@@ -19,8 +19,8 @@ import com.dsc.test.common.TesteeHost;
  */
 public class SuggestionBox extends RETextBox
 {
-	public SuggestionBox(TesteeHost browser,WebElement wrapee)
+	public SuggestionBox(Context context,WebElement wrapee)
 	{
-		super(browser,wrapee);
+		super(context,wrapee);
 	}
 }

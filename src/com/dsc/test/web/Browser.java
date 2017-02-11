@@ -21,9 +21,9 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
-public class Browser extends TesteeHost
+public class Browser extends Context
 {
 	private static final String	CHROME_DRIVER_DIR			= "DSCTest/chromedrivers";
 
@@ -112,9 +112,8 @@ public class Browser extends TesteeHost
 				SystemUtils.OS_NAME + " NOT SUPPORTED due to no corresponded chrome driver provided by vendor");
 	}
 
-	private Browser(WebDriver driver)
+	public Browser(WebDriver driver)
 	{
 		this.driver = driver;
 	}
-
 }

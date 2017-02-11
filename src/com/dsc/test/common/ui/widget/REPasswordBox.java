@@ -6,7 +6,7 @@ package com.dsc.test.common.ui.widget;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 /**
  * @Author alex
@@ -20,9 +20,9 @@ public class REPasswordBox extends RETextBox
 	/**
 	 * @param el
 	 */
-	public REPasswordBox(TesteeHost browser,WebElement wrapee)
+	public REPasswordBox(Context context,WebElement wrapee)
 	{
-		super(browser,wrapee);
+		super(context,wrapee);
 	}
 
 }

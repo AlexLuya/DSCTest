@@ -6,7 +6,7 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 /**
  * @Author alex
@@ -20,9 +20,9 @@ public class H4 extends H
 	 * @param browser
 	 * @param wrapee
 	 */
-	public H4(TesteeHost browser, WebElement wrapee)
+	public H4(Context context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	/* (non-Javadoc)

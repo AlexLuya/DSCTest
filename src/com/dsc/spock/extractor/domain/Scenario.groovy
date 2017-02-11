@@ -1,32 +1,17 @@
 package com.dsc.spock.extractor.domain
 
-//Alex Luya commented this annotation,added constructor due to:
-//http://stackoverflow.com/questions/30641790/groovy-generated-constructor-missing-during-compile
-//https://issues.apache.org/jira/browse/GROOVY-7593?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel
-//@Immutable
+import java.util.List
+import java.util.Set
+
+import groovy.transform.Immutable
+
+@Immutable
 class Scenario {
 	String name
 	List<Statement> statements
 	Set<String> issues
 	Set<String> links
 	Ignored ignored
-
-	/**
-	 * @param name
-	 * @param statements
-	 * @param issues
-	 * @param links
-	 * @param ignored
-	 */
-	public Scenario(String name, List<Statement> statements, Set<String> issues, Set<String> links, Ignored ignored)
-	{
-		super()
-		this.name = name
-		this.statements = statements
-		this.issues = issues
-		this.links = links
-		this.ignored = ignored
-	}
 
 
 	boolean isValid() {

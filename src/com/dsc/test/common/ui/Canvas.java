@@ -7,14 +7,14 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 public class Canvas extends UIObject
 {
 
-	public Canvas(TesteeHost browser, WebElement wrapee)
+	public Canvas(Context context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	/*

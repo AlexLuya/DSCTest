@@ -2,9 +2,6 @@ package com.dsc.test.db.sql
 
 import java.sql.Timestamp
 
-import spock.lang.Shared
-import spock.lang.Specification
-
 import com.dsc.test.db.Cell
 import com.dsc.test.db.CellPair
 import com.dsc.test.db.Column
@@ -13,6 +10,9 @@ import com.dsc.test.db.DataBase
 import com.dsc.test.db.RowPair
 import com.dsc.test.db.sql.db.MySQL
 import com.dsc.test.db.sql.db.Postgresql
+
+import spock.lang.Shared
+import spock.lang.Specification
 
 public class SQLDBDataTest extends Specification
 {

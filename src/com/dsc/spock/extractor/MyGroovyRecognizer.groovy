@@ -1,7 +1,8 @@
 package com.dsc.spock.extractor
 
-import groovyjarjarantlr.TokenStream
 import org.codehaus.groovy.antlr.parser.GroovyRecognizer
+
+import groovyjarjarantlr.TokenStream
 
 class MyGroovyRecognizer extends GroovyRecognizer {
     MyGroovyRecognizer(TokenStream lexer) {

@@ -1,8 +1,10 @@
 package com.dsc.spock.extractor
 
-import spock.lang.Specification
-
-import com.dsc.spock.extractor.domain.*
+import com.dsc.spock.extractor.domain.Block
+import com.dsc.spock.extractor.domain.Ignored
+import com.dsc.spock.extractor.domain.Scenario
+import com.dsc.spock.extractor.domain.Spec
+import com.dsc.spock.extractor.domain.Statement
 import com.dsc.spock.extractor.test.GivenExpectAndSetupExpectCleanupSpec
 import com.dsc.spock.extractor.test.NoScenariosSpec
 import com.dsc.spock.extractor.test.OnlyExpectWithAnd
@@ -17,6 +19,8 @@ import com.dsc.spock.extractor.test.WithIssueSpec
 import com.dsc.spock.extractor.test.WithNoBlocksSpec
 import com.dsc.spock.extractor.test.WithSeeSpec
 import com.dsc.spock.extractor.test.WithWhereSpec
+
+import spock.lang.Specification
 
 class ExtractTest extends Specification {
 

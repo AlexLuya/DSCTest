@@ -5,12 +5,16 @@
  **/
 package com.dsc.test.common.ui.widget;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-import com.dsc.test.common.pagefactory.WebElementDecorator;
+import com.dsc.test.common.Context;
+import com.dsc.test.common.pagefactory.UIObjectDecorator;
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.common.TesteeHost;
+import com.google.common.collect.Lists;
 
 /**
  * @Author alex
@@ -18,21 +22,85 @@ import com.dsc.test.common.TesteeHost;
  * @Version 1.0
  * @Since 1.0
  */
-public class Widget extends UIObject
+public abstract class Widget<H extends Context> extends UIObject
 {
-	public Widget(TesteeHost browser, String containerId)
+	public Widget(H context, String containerId)
 	{
-		this(browser, browser.findElemById(containerId));
+		this(context, context.findElemById(containerId));
 	}
 
-	public Widget(TesteeHost browser, UIObject wrapee){
-		this(browser,wrapee.element());
+	public Widget(H context,  UIObject wrapee){
+		this(context,wrapee.element());
 	}
 
-	public Widget(TesteeHost browser, WebElement wrapee)
+	public Widget(H context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 		// initialize all fields
-		PageFactory.initElements(new WebElementDecorator(browser,this.element()), this);
+		PageFactory.initElements(new UIObjectDecorator(context(),this.element()), this);
+	}
+
+	/**
+	 * NP not elegant
+	 *
+	 * @return
+	 */
+	public List<UIObject> children()
+	{
+		List<UIObject> children = Lists.newArrayList();
+
+		// boxing as UIObject
+		for (WebElement elem : wrapee.findElements(By.xpath("*")))
+		{
+			children.add(new UIObject(context(), elem));
+		}
+
+		return children;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public H context(){
+		return (H) super.context();
+	}
+
+	protected UIObject child(int index)
+	{
+		return children().get(index);
+	}
+
+	protected UIObject child(String id)
+	{
+		for (UIObject child : children())
+		{
+			if (id.equals(child.id()))
+			{
+				return child;
+			}
+		}
+		return null;
+	}
+
+	protected WebElement childElem(int index)
+	{
+		return child(index).getWrapped();
+	}
+
+	protected WebElement childElem(String id)
+	{
+		return child(id).getWrapped();
+	}
+
+	protected WebElement childElement(int index)
+	{
+		return child(index).element();
+	}
+
+	/**
+	 * @return
+	 */
+	protected int childrenCount()
+	{
+		return children().size();
 	}
 }

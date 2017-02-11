@@ -6,7 +6,7 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 /**
  * @Author alex
@@ -22,9 +22,9 @@ public class Option extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Option(TesteeHost browser, WebElement wrapee)
+	public Option(Context context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	/**

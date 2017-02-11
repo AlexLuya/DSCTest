@@ -29,6 +29,6 @@ public class WebElementLocatorFactory implements ElementLocatorFactory
 	@Override
 	public ElementLocator createLocator(Field field)
 	{
-		return new WebElementLocatorImpl(searchContext, field);
+		return new WebElementLocator(searchContext, field);
 	}
 }

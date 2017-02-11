@@ -6,7 +6,7 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 /**
  * @Author alex
@@ -20,8 +20,8 @@ public class Radio extends CheckBox
 	/**
 	 * @param wrapee
 	 */
-	public Radio(TesteeHost browser,WebElement wrapee)
+	public Radio(Context context,WebElement wrapee)
 	{
-		super(browser,wrapee);
+		super(context,wrapee);
 	}
 }

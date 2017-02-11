@@ -13,7 +13,7 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 import com.google.common.collect.Lists;
 
 /**
@@ -35,9 +35,9 @@ public class ListBox extends AbstractValidable
 	 * @param wrapee
 	 *            the wrapee
 	 */
-	public ListBox(TesteeHost browser, WebElement wrapee)
+	public ListBox(Context context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class ListBox extends AbstractValidable
 
 		for (WebElement elem : self().getOptions())
 		{
-			options.add(new Option(browser, elem));
+			options.add(new Option(context(), elem));
 		}
 
 		return options;
@@ -186,7 +186,7 @@ public class ListBox extends AbstractValidable
 			throw new IllegalStateException(wrap(format("no option selected in ListBox with id ----------%s---------", id())));
 		}
 
-		return new Option(browser, self().getFirstSelectedOption());
+		return new Option(context(), self().getFirstSelectedOption());
 	}
 
 	/**

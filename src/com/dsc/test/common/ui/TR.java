@@ -6,8 +6,8 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
+import com.dsc.test.common.Context;
 import com.dsc.test.common.ui.widget.Widget;
-import com.dsc.test.common.TesteeHost;
 
 /**
  * @Author alex
@@ -15,19 +15,20 @@ import com.dsc.test.common.TesteeHost;
  * @Version 1.0
  * @Since 1.0
  */
-public class TR extends Widget
+public class TR extends Widget<Context>
 {
 
 	/**
 	 * @param browser
 	 * @param wrapee
 	 */
-	public TR(TesteeHost browser, WebElement wrapee)
+	public TR(Context context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	public TD cell(int index){
-		return new TD(browser, childElem(index));
+		return new TD(context(), childElem(index));
 	}
+
 }

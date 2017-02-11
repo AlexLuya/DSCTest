@@ -8,8 +8,8 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.ui.widget.Widget;
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
+import com.dsc.test.common.ui.widget.GeneralWidget;
 
 /**
  * @Author alex
@@ -17,17 +17,17 @@ import com.dsc.test.common.TesteeHost;
  * @Version 1.0
  * @Since 1.0
  */
-public class Table extends Widget
+public class Table extends GeneralWidget
 {
 
-	public Table(TesteeHost browser,String id)
+	public Table(Context context,String id)
 	{
-		super(browser,id);
+		super(context,id);
 	}
 
-	public Table(TesteeHost browser,WebElement wrapee)
+	public Table(Context context,WebElement wrapee)
 	{
-		super(browser,wrapee);
+		super(context,wrapee);
 	}
 
 	public boolean ensureCellContentIs(int row, int cell, String text)
@@ -42,7 +42,7 @@ public class Table extends Widget
 
 	public Row getRow(int row)
 	{
-		return new Row(browser,wrapee.findElements(By.tagName("tr")).get(row));
+		return new Row(context(),wrapee.findElements(By.tagName("tr")).get(row));
 	}
 
 	public void mouseOver(int row)

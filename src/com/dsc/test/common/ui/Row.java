@@ -7,7 +7,7 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 /**
  * @Author alex
@@ -21,9 +21,9 @@ public class Row extends UIObject
 	/**
 	 * @param wrapee
 	 */
-	public Row(TesteeHost browser,WebElement wrapee)
+	public Row(Context context,WebElement wrapee)
 	{
-		super(browser,wrapee);
+		super(context,wrapee);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class Row extends UIObject
 	 */
 	public Cell getCell(int cell)
 	{
-		return  new Cell(browser,wrapee.findElements(By.tagName("td")).get(cell));
+		return  new Cell(context(),wrapee.findElements(By.tagName("td")).get(cell));
 	}
 
 }

@@ -6,7 +6,7 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 /**
  * The Class TextBox.
@@ -22,9 +22,9 @@ public class TextBox extends AbstractValidable
 	 * @param wrapee
 	 *            the wrapee
 	 */
-	public TextBox(TesteeHost browser, WebElement wrapee)
+	public TextBox(Context context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	/**

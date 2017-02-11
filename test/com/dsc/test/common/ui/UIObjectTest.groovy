@@ -4,7 +4,6 @@
  **/
 package com.dsc.test.common.ui
 
-import com.dsc.test.common.ui.UIObject
 import com.dsc.test.web.WebTestStub
 
 /**

@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.dsc.common.Pair;
 import com.dsc.common.model.IdName;
 import com.dsc.test.common.ui.UIObject;
+import com.dsc.test.common.ui.widget.Widget;
 import com.google.common.collect.Lists;
 
 // import com.dsc.athena.test.Statics;
@@ -61,7 +62,7 @@ public class Util
 		return file.substring(file.lastIndexOf('.') + 1);
 	}
 
-	public static UIObject findChildByText(UIObject parent, String text)
+	public static UIObject  findChildByText(Widget<?> parent, String text)
 	{
 		for (UIObject child : parent.children())
 		{
@@ -103,7 +104,6 @@ public class Util
 
 		return null;
 	}
-
 	@SuppressWarnings("unchecked")
 	public static <T extends IdName> String joinedNames(List<T> list)
 	{
@@ -217,6 +217,58 @@ public class Util
 		return str == null || str.trim().isEmpty();
 	}
 
+	/**
+	 * Selected option text.
+	 *
+	 * @param options
+	 *            the options
+	 * @param optionId
+	 *            the option id
+	 * @return the string
+	 */
+	public static String selectedOptionText(String[] options, int optionId)
+	{
+		return selectedOptionText(options, Integer.toString(optionId));
+	}
+
+	/**
+	 * Selected option text.
+	 *
+	 * @param options
+	 *            the options
+	 * @param optionId
+	 *            the option id
+	 * @return the string
+	 */
+	public static String selectedOptionText(String[] options, String optionId)
+	{
+		return selectedOptionText(options, optionId, false);
+	}
+
+	/**
+	 * Selected option text.
+	 *
+	 * @param options
+	 *            the options
+	 * @param optionId
+	 *            the option id
+	 * @param optionIsTriple
+	 *            the option is triple
+	 * @return the string
+	 */
+	public static String selectedOptionText(String[] options, String optionId, boolean optionIsTriple)
+	{
+		for (int i = 0, len = options.length; i < len; i = i + (optionIsTriple ? 3 : 2))
+		{
+			if (optionId.equals(options[i]))
+			{
+				return options[i + 1];
+			}
+		}
+
+		return null;
+	}
+
 	// public static <T> T annoByName(Field field,String name){
 	// Annotation[] annotations = field.getAnnotations();
 	//
@@ -286,11 +338,11 @@ public class Util
 		}
 	}
 
-	public static UIObject twoLevelsFindByText(UIObject parent, String text)
+	public static UIObject twoLevelsFindByText(Widget<?> parent, String text)
 	{
 		for (UIObject child : parent.children())
 		{
-			if (child.textIs(text) || findChildByText(child, text) != null)
+			if (child.textIs(text) || findChildByText((Widget<?>) child, text) != null)
 			{
 				// CAUTION:even second case,return child not child's child
 				return child;

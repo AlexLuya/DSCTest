@@ -1,5 +1,6 @@
 /**
- * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights reserved.
+ * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights
+ * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
 package com.dsc.test.common;
@@ -41,7 +42,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.common.TesteeHost;
 import com.dsc.util.Util;
 
 import ru.yandex.qatools.ashot.AShot;
@@ -57,11 +57,12 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
  * @Version 1.0
  * @Since 1.0
  */
-public abstract class TesteeHost
+public abstract class Context
 {
-	private static final int	DEFAULT_WAIT_SECONDS		= 3;
-	private static int			REAL_WAIT_SECONDS			= DEFAULT_WAIT_SECONDS;
-	private static final String	UTF_8						= "UTF-8";
+	private static final int	DEFAULT_WAIT_SECONDS	= 3;
+	private static int			REAL_WAIT_SECONDS		= DEFAULT_WAIT_SECONDS;
+	private static final String	UTF_8					= "UTF-8";
+
 	/**
 	 * @return
 	 */
@@ -70,13 +71,9 @@ public abstract class TesteeHost
 		return REAL_WAIT_SECONDS;
 	}
 
-
-
-	private WebDriver	driver;
+	protected WebDriver	driver;
 
 	private String		previousWindowHandler;
-
-
 
 	public Actions actions()
 	{
@@ -254,6 +251,11 @@ public abstract class TesteeHost
 		actions().sendKeys(Keys.ENTER).perform();
 	}
 
+	public boolean isPresented(String id)
+	{
+		return findElemById(id) != null;
+	}
+
 	/**
 	 * @param target
 	 * @deprecated use {@link #moveToElement(WebElement)} instead
@@ -393,7 +395,7 @@ public abstract class TesteeHost
 
 	public <T> T waitUntil(ExpectedCondition<T> isTrue) throws TimeoutException
 	{
-		return new WebDriverWait(driver, TesteeHost.defaultWaitSeconds()).until(isTrue);
+		return new WebDriverWait(driver, Context.defaultWaitSeconds()).until(isTrue);
 	}
 
 	public Window window()

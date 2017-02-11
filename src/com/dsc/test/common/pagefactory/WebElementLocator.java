@@ -20,7 +20,7 @@ import org.openqa.selenium.support.pagefactory.ElementLocator;
  * @Version 1.0
  * @Since 1.0
  */
-public class WebElementLocatorImpl implements ElementLocator
+public class WebElementLocator implements ElementLocator
 {
 	private final By			by;
 	private WebElement			cachedElement;
@@ -36,7 +36,7 @@ public class WebElementLocatorImpl implements ElementLocator
 	 * @param field
 	 *            The field on the Page Object that will hold the located value
 	 */
-	public WebElementLocatorImpl(SearchContext searchContext, Field field)
+	public WebElementLocator(SearchContext searchContext, Field field)
 	{
 		this.searchContext = searchContext;
 		Annotations annotations = new Annotations(field);

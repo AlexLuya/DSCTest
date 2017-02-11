@@ -6,13 +6,13 @@ package com.dsc.test.common.ui;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 
 public class Span extends UIObject
 {
-	public Span(TesteeHost browser, WebElement wrapee)
+	public Span(Context context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	/*

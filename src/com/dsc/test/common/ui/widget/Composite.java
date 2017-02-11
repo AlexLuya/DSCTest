@@ -7,26 +7,26 @@ package com.dsc.test.common.ui.widget;
 
 import org.openqa.selenium.WebElement;
 
+import com.dsc.test.common.Context;
 import com.dsc.test.common.ui.TextBox;
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.common.TesteeHost;
 import com.dsc.util.Util;
 
-public abstract class Composite extends Widget
+public abstract class Composite<T extends Context> extends Widget<T>
 {
 
-	public Composite(TesteeHost browser, String id)
+	public Composite(T context, String id)
 	{
-		super(browser, id);
+		super(context, id);
 	}
 
-	public Composite(TesteeHost browser, UIObject object){
-		super(browser,object);
+	public Composite(T context, UIObject object){
+		super(context,object);
 	}
 
-	public Composite(TesteeHost browser, WebElement wrapee)
+	public Composite(T context, WebElement wrapee)
 	{
-		super(browser, wrapee);
+		super(context, wrapee);
 	}
 
 	@Override
@@ -35,17 +35,17 @@ public abstract class Composite extends Widget
 		ensureChildrenAvailable();
 	}
 
-	WebElement elem(String id)
-	{
-		return browser.findElemById(id);
-	}
-
 	protected void doEnsureAvailable(UIObject... objs){
 		Util.mustNotNull(objs, "objs");
 
 		for (UIObject obj : objs) {
 			obj.ensureAvailable();
 		}
+	}
+
+	protected WebElement elem(String id)
+	{
+		return context().findElemById(id);
 	}
 
 	protected abstract void ensureChildrenAvailable();

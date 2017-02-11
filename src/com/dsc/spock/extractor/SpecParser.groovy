@@ -1,15 +1,13 @@
 package com.dsc.spock.extractor
 
-import static com.dsc.spock.extractor.AstUtil.*
-import static com.dsc.spock.extractor.ClassParser.*
-import groovy.transform.PackageScope
-import groovyjarjarantlr.collections.AST
-
 import com.dsc.spock.extractor.domain.Block
 import com.dsc.spock.extractor.domain.Ignored
 import com.dsc.spock.extractor.domain.Scenario
 import com.dsc.spock.extractor.domain.Spec
 import com.dsc.spock.extractor.domain.Statement
+
+import groovy.transform.PackageScope
+import groovyjarjarantlr.collections.AST
 
 @PackageScope
 class SpecParser {

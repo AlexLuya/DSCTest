@@ -7,7 +7,7 @@ package com.dsc.test.common.ui;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.TesteeHost;
+import com.dsc.test.common.Context;
 import com.dsc.test.web.Validable;
 
 /**
@@ -22,9 +22,9 @@ public class AbstractValidable extends Disableable implements Validable
 	/**
 	 * @param wrapee
 	 */
-	public AbstractValidable(TesteeHost browser,WebElement wrapee)
+	public AbstractValidable(Context context,WebElement wrapee)
 	{
-		super(browser,wrapee);
+		super(context,wrapee);
 	}
 
 	/* (non-Javadoc)
