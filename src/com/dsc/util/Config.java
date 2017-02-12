@@ -28,8 +28,8 @@ public class Config
 	private static Properties config()
 	{
 		Properties props = new Properties();
-		InputStream is = null;
 
+		InputStream is = null;
 		try
 		{
 			is = ClassLoader.getSystemResourceAsStream(CONFIG_INI);

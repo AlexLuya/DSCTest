@@ -1,6 +1,5 @@
 /**
- * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights
- * reserved.
+ * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
 package com.dsc.util;
@@ -14,6 +13,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
+ * The Class ImageUtil.
+ *
  * @Author alex
  * @CreateTime Jul 5, 2016 10:08:02 PM
  * @Version 1.0
@@ -21,6 +22,18 @@ import javax.imageio.ImageIO;
  */
 public class ImageUtil
 {
+
+	/**
+	 * Combine.
+	 *
+	 * @param image_1
+	 *            the image 1
+	 * @param image_2
+	 *            the image 2
+	 * @return the buffered image
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public static BufferedImage combine(File image_1, File image_2) throws IOException
 	{
 		BufferedImage img1 = ImageIO.read(image_1);
@@ -49,11 +62,33 @@ public class ImageUtil
 		return newImage;
 	}
 
+	/**
+	 * Combine.
+	 *
+	 * @param image_1
+	 *            the image 1
+	 * @param image_2
+	 *            the image 2
+	 * @return the buffered image
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public static BufferedImage combine(String image_1, String image_2) throws IOException
 	{
 		return combine(new File(image_1), new File(image_2));
 	}
 
+	/**
+	 * Compare.
+	 *
+	 * @param image_1
+	 *            the image 1
+	 * @param image_2
+	 *            the image 2
+	 * @return true, if successful
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public static boolean compare(String image_1, String image_2) throws IOException{
 		//HP
 		return false;
