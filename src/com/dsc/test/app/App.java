@@ -10,6 +10,7 @@ import static io.appium.java_client.remote.MobileCapabilityType.AUTOMATION_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.BROWSER_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.DEVICE_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.PLATFORM_NAME;
+import static org.openqa.selenium.remote.CapabilityType.TAKES_SCREENSHOT;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -30,7 +31,7 @@ import io.appium.java_client.TouchAction;
  * @Version 1.0
  * @Since 1.0
  */
-public abstract class App<T extends App<T,D>,D extends AppiumDriver<RemoteWebElement>>
+public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebElement>>
 {
 	private static final String		NATIVE_APP	= "NATIVE_APP";
 	private static final String		WEBVIEW		= "WEBVIEW_";
@@ -38,14 +39,20 @@ public abstract class App<T extends App<T,D>,D extends AppiumDriver<RemoteWebEle
 	protected DesiredCapabilities	cap			= new DesiredCapabilities();
 	private D						driver;
 
+	public App()
+	{
+		setCapability(AUTOMATION_NAME, "Appium");
+		setCapability(TAKES_SCREENSHOT, "true");
+	}
+
 	public App(String appFilePath)
 	{
+		this();
 		Util.mustNotNull("apk path", appFilePath);
-
-		setCapability(AUTOMATION_NAME, "Appium");// appium做自动化
-
-		//install apk
 		install(appFilePath);
+
+		setCapability(AUTOMATION_NAME, "Appium");
+		setCapability(TAKES_SCREENSHOT, "true");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -66,6 +73,7 @@ public abstract class App<T extends App<T,D>,D extends AppiumDriver<RemoteWebEle
 	{
 		return new MultiTouchAction(driver);
 	}
+
 	@SuppressWarnings("unchecked")
 	public T platform(String platform)
 	{
@@ -77,10 +85,10 @@ public abstract class App<T extends App<T,D>,D extends AppiumDriver<RemoteWebEle
 	{
 		Util.mustNotNull("remote address", remoteAddress);
 
-		//HP ensure neccessary capabilities got set already
-		//device name
+		// HP ensure neccessary capabilities got set already
+		// device name
 
-		driver=createDriver(remoteAddress);
+		driver = createDriver(remoteAddress);
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
@@ -96,6 +104,7 @@ public abstract class App<T extends App<T,D>,D extends AppiumDriver<RemoteWebEle
 	{
 		return new TouchAction(driver);
 	}
+
 	@SuppressWarnings("unchecked")
 	public T toWebView()
 	{
@@ -117,7 +126,8 @@ public abstract class App<T extends App<T,D>,D extends AppiumDriver<RemoteWebEle
 	 */
 	protected abstract D createDriver(String remoteAddress) throws MalformedURLException;
 
-	protected void setCapability(String name,String value){
+	protected void setCapability(String name, String value)
+	{
 		cap.setCapability(name, value);// appium做自动化
 	}
 

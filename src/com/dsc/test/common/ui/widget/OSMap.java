@@ -5,6 +5,7 @@
  **/
 package com.dsc.test.common.ui.widget;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -18,7 +19,7 @@ import com.dsc.test.common.ui.Canvas;
  * @Version 1.0
  * @Since 1.0
  */
-public class OSMap extends Composite<Context>
+public class OSMap extends Composite<Context<? ,? extends WebDriver>>
 {
 	//NP alex   add  "protected",delete "legend"
 	@FindBy(tagName = "canvas")

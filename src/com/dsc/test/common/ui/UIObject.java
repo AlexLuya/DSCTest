@@ -37,9 +37,9 @@ public class UIObject
 	protected String				annotatedId;
 
 	protected WebElement			wrapee;
-	private Context				context;
+	private Context<?,? extends WebDriver>				context;
 
-	public UIObject(Context context, String id)
+	public UIObject(Context<?,? extends WebDriver> context, String id)
 	{
 		this(context, context.findElemById(id));
 	}
@@ -48,7 +48,7 @@ public class UIObject
 	 * @param context
 	 * @param wrapee
 	 */
-	public UIObject(Context context, WebElement wrapee)
+	public UIObject(Context<?,? extends WebDriver> context, WebElement wrapee)
 	{
 		this.context = context;
 		this.wrapee = wrapee;

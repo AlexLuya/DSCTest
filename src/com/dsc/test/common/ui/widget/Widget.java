@@ -8,6 +8,7 @@ package com.dsc.test.common.ui.widget;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -22,7 +23,7 @@ import com.google.common.collect.Lists;
  * @Version 1.0
  * @Since 1.0
  */
-public abstract class Widget<H extends Context> extends UIObject
+public abstract class Widget<H extends Context<? ,? extends WebDriver>> extends UIObject
 {
 	public Widget(H context, String containerId)
 	{
@@ -58,7 +59,6 @@ public abstract class Widget<H extends Context> extends UIObject
 		return children;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public H context(){
 		return (H) super.context();

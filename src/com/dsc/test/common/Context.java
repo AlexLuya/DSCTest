@@ -12,8 +12,6 @@ import static com.dsc.util.Util.wrap;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Date;
 import java.util.Random;
 
@@ -21,7 +19,6 @@ import javax.imageio.ImageIO;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
@@ -31,9 +28,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.WebDriver.Options;
-import org.openqa.selenium.WebDriver.Window;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -42,7 +37,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.dsc.test.common.ui.UIObject;
-import com.dsc.util.Util;
 
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
@@ -57,11 +51,10 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
  * @Version 1.0
  * @Since 1.0
  */
-public abstract class Context
+public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 {
 	private static final int	DEFAULT_WAIT_SECONDS	= 3;
 	private static int			REAL_WAIT_SECONDS		= DEFAULT_WAIT_SECONDS;
-	private static final String	UTF_8					= "UTF-8";
 
 	/**
 	 * @return
@@ -71,9 +64,8 @@ public abstract class Context
 		return REAL_WAIT_SECONDS;
 	}
 
-	protected WebDriver	driver;
+	protected D driver;
 
-	private String		previousWindowHandler;
 
 	public Actions actions()
 	{
@@ -94,21 +86,6 @@ public abstract class Context
 	public void close()
 	{
 		driver.quit();
-	}
-
-	public void closeCurrentWindow()
-	{
-		driver.close();
-	}
-
-	public void deleteAllCookies()
-	{
-		manage().deleteAllCookies();
-	}
-
-	public void deleteCookie(String key)
-	{
-		manage().deleteCookieNamed(key);
 	}
 
 	public boolean ensureNotPresented(String id)
@@ -210,33 +187,6 @@ public abstract class Context
 		return driver.findElement(By.xpath(xpath));
 	}
 
-	public String getCookie(String key)
-	{
-		Util.mustNotNullOrEmpty(key, "cookie key");
-
-		for (Cookie ck : driver.manage().getCookies())
-		{
-			if (ck.getName().equals(key))
-			{
-				try
-				{
-					return URLDecoder.decode(ck.getValue(), UTF_8);
-				} catch (UnsupportedEncodingException e)
-				{
-					throw new IllegalStateException(
-							String.format("'%s''s cookie value:'%s' can't be decoded as %s", key, ck.getValue(), UTF_8), e);
-				}
-			}
-		}
-
-		return null;
-	}
-
-	public String getCurrentUrl()
-	{
-		return driver.getCurrentUrl();
-	}
-
 	/**
 	 * @param id
 	 * @return
@@ -298,22 +248,6 @@ public abstract class Context
 		new Actions(driver).moveToElement(target, x, y).perform();
 	}
 
-	public Navigation navigation()
-	{
-		return driver.navigate();
-	}
-
-	public void open(String url)
-	{
-		driver.get(url);
-		driver.manage().window().maximize();
-	}
-
-	public void refresh()
-	{
-		driver.navigate().refresh();
-	}
-
 	public void resetWaitSeconds()
 	{
 		REAL_WAIT_SECONDS = DEFAULT_WAIT_SECONDS;
@@ -331,39 +265,9 @@ public abstract class Context
 
 	}
 
-	public void setCookie(String key, String value)
-	{
-		setCookie(key, value, "/");
-	}
-
-	public void setCookie(String key, String value, String path)
-	{
-		manage().addCookie(new Cookie(key, value, path));
-	}
-
 	public void setWaitSeconds(int defaultWaitSeconds)
 	{
 		REAL_WAIT_SECONDS = defaultWaitSeconds;
-	}
-
-	public void switchBackToPreviousWindow()
-	{
-		switchToWindow(previousWindowHandler);
-		previousWindowHandler = null;
-	}
-
-	public void switchToPopupWindow()
-	{
-		// store current window for switching back
-		previousWindowHandler = driver.getWindowHandle();
-		// switch to popoup window(last is latest opened under webdriver
-		// mechanism)
-		switchToWindow(windowHandles().length - 1);
-	}
-
-	public void switchToWindow(int index)
-	{
-		switchToWindow(windowHandles()[index]);
 	}
 
 	public void switchToWindow(String nameOrHandler)
@@ -393,22 +297,12 @@ public abstract class Context
 		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 	}
 
-	public <T> T waitUntil(ExpectedCondition<T> isTrue) throws TimeoutException
+	public <V> V waitUntil(ExpectedCondition<V> isTrue) throws TimeoutException
 	{
 		return new WebDriverWait(driver, Context.defaultWaitSeconds()).until(isTrue);
 	}
 
-	public Window window()
-	{
-		return driver.manage().window();
-	}
-
-	public String[] windowHandles()
-	{
-		return driver.getWindowHandles().toArray(new String[driver.getWindowHandles().size()]);
-	}
-
-	Options manage()
+	protected Options manage()
 	{
 		return driver.manage();
 	}

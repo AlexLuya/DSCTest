@@ -6,6 +6,7 @@
 package com.dsc.test.common.ui;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
@@ -17,15 +18,15 @@ import com.dsc.test.common.ui.widget.Widget;
  * @Version 1.0
  * @Since 1.0
  */
-public class Table extends Widget<Context>
+public class Table extends Widget<Context<?,? extends WebDriver>>
 {
 
-	public Table(Context context,String id)
+	public Table(Context<? ,? extends WebDriver> context,String id)
 	{
 		super(context,id);
 	}
 
-	public Table(Context context,WebElement wrapee)
+	public Table(Context<? ,? extends WebDriver> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

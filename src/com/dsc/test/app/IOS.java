@@ -44,8 +44,6 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 		return this;
 	}
 
-
-
 	/*
 	 * (non-Javadoc)
 	 *

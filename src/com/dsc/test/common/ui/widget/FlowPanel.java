@@ -4,6 +4,7 @@
  **/
 package com.dsc.test.common.ui.widget;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
@@ -14,7 +15,7 @@ import com.dsc.test.common.Context;
  * @Version 1.0
  * @Since 1.0
  */
-public abstract class FlowPanel extends Widget<Context>
+public abstract class FlowPanel extends Widget<Context<? ,? extends WebDriver>>
 {
 	/**
 	 * @param context

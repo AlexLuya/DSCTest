@@ -7,10 +7,15 @@
 package com.dsc.test.web;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.logging.Level;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriver.Navigation;
+import org.openqa.selenium.WebDriver.Window;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -22,19 +27,18 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 
 import com.dsc.test.common.Context;
+import com.dsc.util.Util;
 
-public class Browser extends Context
+public class Browser extends Context<Browser,WebDriver>
 {
 	private static final String	CHROME_DRIVER_DIR			= "DSCTest/chromedrivers";
 
+	private static final String	UTF_8						= "UTF-8";
 	// NP get from configuration file
 	private static final String	WHERE_CHROME_DRIVER_IN_LIN	= "/usr/local/bin/chromedriver.lin";
 	private static final String	WHERE_CHROME_DRIVER_IN_MAC	= "/usr/local/bin/chromedriver.mac";
-	private static final String	WHERE_CHROME_DRIVER_IN_WIN	= "C:\\Program Files\\chromedriver.exe";
 
-	// private static final String WHERE_FIREFOX_BIN = "/usr/bin/firefox";
-	// private static final String WHERE_FIREFOX_DRIVER =
-	// "/usr/local/bin/geckodriver";
+	private static final String	WHERE_CHROME_DRIVER_IN_WIN	= "C:\\Program Files\\chromedriver.exe";
 
 	public static DesiredCapabilities cap(DesiredCapabilities caps)
 	{
@@ -66,6 +70,10 @@ public class Browser extends Context
 
 		return new Browser(new ChromeDriver(cap(capabilities)));
 	}
+
+	// private static final String WHERE_FIREFOX_BIN = "/usr/bin/firefox";
+	// private static final String WHERE_FIREFOX_DRIVER =
+	// "/usr/local/bin/geckodriver";
 
 	public static Browser firfox()
 	{
@@ -112,8 +120,110 @@ public class Browser extends Context
 				SystemUtils.OS_NAME + " NOT SUPPORTED due to no corresponded chrome driver provided by vendor");
 	}
 
+	private String previousWindowHandler;
+
 	public Browser(WebDriver driver)
 	{
 		this.driver = driver;
+	}
+
+	public void closeCurrentWindow()
+	{
+		driver.close();
+	}
+
+	public void deleteAllCookies()
+	{
+		manage().deleteAllCookies();
+	}
+
+	public void deleteCookie(String key)
+	{
+		manage().deleteCookieNamed(key);
+	}
+
+	public String getCookie(String key)
+	{
+		Util.mustNotNullOrEmpty(key, "cookie key");
+
+		for (Cookie ck : driver.manage().getCookies())
+		{
+			if (ck.getName().equals(key))
+			{
+				try
+				{
+					return URLDecoder.decode(ck.getValue(), UTF_8);
+				} catch (UnsupportedEncodingException e)
+				{
+					throw new IllegalStateException(
+							String.format("'%s''s cookie value:'%s' can't be decoded as %s", key, ck.getValue(), UTF_8), e);
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public String getCurrentUrl()
+	{
+		return driver.getCurrentUrl();
+	}
+
+	public Navigation navigation()
+	{
+		return driver.navigate();
+	}
+
+	public void open(String url)
+	{
+		driver.get(url);
+		driver.manage().window().maximize();
+	}
+
+	public void refresh()
+	{
+		driver.navigate().refresh();
+	}
+
+	public void setCookie(String key, String value)
+	{
+		setCookie(key, value, "/");
+	}
+
+	public void setCookie(String key, String value, String path)
+	{
+		manage().addCookie(new Cookie(key, value, path));
+	}
+
+	public void switchBackToPreviousWindow()
+	{
+		switchToWindow(previousWindowHandler);
+		previousWindowHandler = null;
+	}
+
+	public void switchToPopupWindow()
+	{
+		// store current window for switching back
+		previousWindowHandler = driver.getWindowHandle();
+		// switch to popoup window(last is latest opened under webdriver
+		// mechanism)
+		switchToWindow(windowHandles().length - 1);
+	}
+
+	public void switchToWindow(int index)
+	{
+		switchToWindow(windowHandles()[index]);
+	}
+
+
+
+	public Window window()
+	{
+		return driver.manage().window();
+	}
+
+	public String[] windowHandles()
+	{
+		return driver.getWindowHandles().toArray(new String[driver.getWindowHandles().size()]);
 	}
 }

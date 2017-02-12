@@ -4,6 +4,7 @@
  **/
 package com.dsc.test.common.ui;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
@@ -15,14 +16,14 @@ import com.dsc.test.common.ui.widget.Widget;
  * @Version 1.0
  * @Since 1.0
  */
-public class TR extends Widget<Context>
+public class TR extends Widget<Context<? ,? extends WebDriver>>
 {
 
 	/**
 	 * @param browser
 	 * @param wrapee
 	 */
-	public TR(Context context, WebElement wrapee)
+	public TR(Context<? ,? extends WebDriver> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}
