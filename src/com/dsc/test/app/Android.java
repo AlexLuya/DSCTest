@@ -14,6 +14,7 @@ import static io.appium.java_client.remote.MobilePlatform.ANDROID;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -28,7 +29,7 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 {
 	private Android(String apkPath)
 	{
-		super(apkPath);
+		super(apkPath,DesiredCapabilities.android());
 		platform(ANDROID);
 		setCapability("noSign", "true");
 	}

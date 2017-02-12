@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 
+import com.dsc.test.common.Context;
 import com.dsc.util.Util;
 
 import io.appium.java_client.AppiumDriver;
@@ -31,23 +32,22 @@ import io.appium.java_client.TouchAction;
  * @Version 1.0
  * @Since 1.0
  */
-public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebElement>>
+public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebElement>> extends Context<T,D>
 {
 	private static final String		NATIVE_APP	= "NATIVE_APP";
 	private static final String		WEBVIEW		= "WEBVIEW_";
 
-	protected DesiredCapabilities	cap			= new DesiredCapabilities();
-	private D						driver;
 
-	public App()
+	public App(DesiredCapabilities cap)
 	{
+		super(cap);
 		setCapability(AUTOMATION_NAME, "Appium");
 		setCapability(TAKES_SCREENSHOT, "true");
 	}
 
-	public App(String appFilePath)
+	public App(String appFilePath,DesiredCapabilities cap)
 	{
-		this();
+		this(cap);
 		Util.mustNotNull("apk path", appFilePath);
 		install(appFilePath);
 
@@ -65,7 +65,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	@SuppressWarnings("unchecked")
 	public T deviceName(String name)
 	{
-		cap.setCapability(DEVICE_NAME, name);
+		setCapability(DEVICE_NAME, name);
 		return (T) this;
 	}
 
@@ -126,10 +126,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	 */
 	protected abstract D createDriver(String remoteAddress) throws MalformedURLException;
 
-	protected void setCapability(String name, String value)
-	{
-		cap.setCapability(name, value);// appium做自动化
-	}
+
 
 	@SuppressWarnings("unchecked")
 	private T install(String appFilePath)

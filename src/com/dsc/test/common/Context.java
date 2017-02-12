@@ -32,6 +32,7 @@ import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -64,8 +65,16 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 		return REAL_WAIT_SECONDS;
 	}
 
+	protected final DesiredCapabilities cap;
 	protected D driver;
 
+	/**
+	 * @param cap
+	 */
+	public Context(DesiredCapabilities cap)
+	{
+		this.cap = cap;
+	}
 
 	public Actions actions()
 	{
@@ -305,6 +314,11 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 	protected Options manage()
 	{
 		return driver.manage();
+	}
+
+	protected void setCapability(String name, String value)
+	{
+		cap.setCapability(name, value);
 	}
 
 	/**

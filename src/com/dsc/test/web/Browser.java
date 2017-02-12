@@ -65,10 +65,10 @@ public class Browser extends Context<Browser,WebDriver>
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("test-type");
 		options.addArguments("disable-popup-blocking");
-		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+		DesiredCapabilities cap = DesiredCapabilities.chrome();
+		cap.setCapability(ChromeOptions.CAPABILITY, options);
 
-		return new Browser(new ChromeDriver(cap(capabilities)));
+		return new Browser(new ChromeDriver(cap(cap)),cap);
 	}
 
 	// private static final String WHERE_FIREFOX_BIN = "/usr/bin/firefox";
@@ -79,20 +79,20 @@ public class Browser extends Context<Browser,WebDriver>
 	{
 		// System.setProperty("webdriver.firefox.driver", WHERE_FIREFOX_DRIVER);
 		// System.setProperty("webdriver.firefox.bin", WHERE_FIREFOX_BIN);
-		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-		capabilities.setCapability("marionette", true);
+		DesiredCapabilities cap = DesiredCapabilities.firefox();
+		cap.setCapability("marionette", true);
 
-		return new Browser(new FirefoxDriver(cap(capabilities)));
+		return new Browser(new FirefoxDriver(cap(cap)),cap);
 	}
 
 	public static Browser ie()
 	{
-		return new Browser(new InternetExplorerDriver());
+		return new Browser(new InternetExplorerDriver(),DesiredCapabilities.internetExplorer());
 	}
 
 	public static Browser safari()
 	{
-		return new Browser(new SafariDriver());
+		return new Browser(new SafariDriver(),DesiredCapabilities.safari());
 	}
 
 	/**
@@ -122,8 +122,9 @@ public class Browser extends Context<Browser,WebDriver>
 
 	private String previousWindowHandler;
 
-	public Browser(WebDriver driver)
+	public Browser(WebDriver driver,DesiredCapabilities cap)
 	{
+		super(cap);
 		this.driver = driver;
 	}
 

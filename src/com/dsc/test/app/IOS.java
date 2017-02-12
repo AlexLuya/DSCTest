@@ -13,6 +13,7 @@ import static io.appium.java_client.remote.MobilePlatform.IOS;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -27,7 +28,7 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 {
 	private IOS(String apkPath)
 	{
-		super(apkPath);
+		super(apkPath,DesiredCapabilities.iphone());
 		platform(IOS);
 	}
 
