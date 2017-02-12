@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.ui;
+package com.dsc.test.common.ui.base;
 
 import static com.dsc.util.Log.info;
 import static com.dsc.util.Util.nullIfEmpty;
@@ -17,13 +17,11 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.widget.Consts;
 import com.dsc.util.Util;
 
 // LP BLOG exception or boolean+log
 public class UIObject
 {
-
 	protected static final String	VALUE		= "value";
 	private static final String		CLASS		= "class";
 	private static final String		ERROR_CSS	= "error";

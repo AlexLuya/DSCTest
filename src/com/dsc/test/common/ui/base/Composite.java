@@ -3,14 +3,13 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.ui.widget;
+package com.dsc.test.common.ui.base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
 import com.dsc.test.common.ui.TextBox;
-import com.dsc.test.common.ui.UIObject;
 import com.dsc.util.Util;
 
 public abstract class Composite<T extends Context<? ,? extends WebDriver>> extends Widget<T>

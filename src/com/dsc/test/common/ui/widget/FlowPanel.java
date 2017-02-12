@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
+import com.dsc.test.common.ui.base.Widget;
 
 /**
  * @Author alex

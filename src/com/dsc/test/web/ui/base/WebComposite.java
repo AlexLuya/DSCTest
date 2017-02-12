@@ -3,12 +3,12 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.web.ui;
+package com.dsc.test.web.ui.base;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.common.ui.widget.Composite;
+import com.dsc.test.common.ui.base.Composite;
+import com.dsc.test.common.ui.base.UIObject;
 import com.dsc.test.web.Browser;
 
 public abstract class WebComposite extends Composite<Browser>

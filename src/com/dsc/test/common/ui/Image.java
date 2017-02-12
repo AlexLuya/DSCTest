@@ -3,6 +3,7 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
+import com.dsc.test.common.ui.base.UIObject;
 
 public class Image extends UIObject
 {

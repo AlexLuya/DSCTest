@@ -12,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import com.dsc.test.common.Context;
 import com.dsc.test.common.ui.Button;
 import com.dsc.test.common.ui.Canvas;
+import com.dsc.test.common.ui.base.Composite;
 
 /**
  * @Author alex

@@ -7,7 +7,7 @@ package com.dsc.test.common.pagefactory;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.web.ui.WebComposite;
+import com.dsc.test.web.ui.base.WebComposite;
 
 public class CompositeFactory
 {

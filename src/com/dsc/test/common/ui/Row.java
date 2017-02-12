@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
+import com.dsc.test.common.ui.base.UIObject;
 
 /**
  * @Author alex

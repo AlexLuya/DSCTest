@@ -1,4 +1,4 @@
-package com.dsc.test.common.ui;
+package com.dsc.test.web.ui;
 
 import org.openqa.selenium.WebElement;
 

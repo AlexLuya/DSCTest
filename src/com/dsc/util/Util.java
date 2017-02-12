@@ -12,8 +12,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.dsc.util.common.model.IdName;
-import com.dsc.test.common.ui.UIObject;
-import com.dsc.test.common.ui.widget.Widget;
+import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.Widget;
 import com.dsc.util.common.Pair;
 import com.google.common.collect.Lists;
 

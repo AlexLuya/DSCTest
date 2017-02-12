@@ -2,7 +2,7 @@
  * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.ui;
+package com.dsc.test.web.ui;
 
 import org.openqa.selenium.WebElement;
 
@@ -14,13 +14,13 @@ import com.dsc.test.common.Context;
  * @Version 1.0
  * @Since 1.0
  */
-public class H6 extends H
+public class H4 extends H
 {
 	/**
 	 * @param browser
 	 * @param wrapee
 	 */
-	public H6(Context<? ,?> context, WebElement wrapee)
+	public H4(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}
@@ -31,6 +31,6 @@ public class H6 extends H
 	@Override
 	public int level()
 	{
-		return 6;
+		return 4;
 	}
 }

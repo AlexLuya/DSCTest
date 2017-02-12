@@ -2,13 +2,12 @@
  * Copyright (c) (2016-2017),Deep Space Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.ui;
+package com.dsc.test.common.ui.base;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.web.Validable;
 
 /**
  * @Author alex
@@ -16,13 +15,13 @@ import com.dsc.test.web.Validable;
  * @Version 1.0
  * @Since 1.0
  */
-public class AbstractValidable extends Disableable implements Validable
+public class ValidableBase extends Disableable implements Validable
 {
 
 	/**
 	 * @param wrapee
 	 */
-	public AbstractValidable(Context<? ,?> context,WebElement wrapee)
+	public ValidableBase(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

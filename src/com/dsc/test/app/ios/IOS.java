@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.app;
+package com.dsc.test.app.ios;
 
 import static io.appium.java_client.remote.AutomationName.IOS_XCUI_TEST;
 import static io.appium.java_client.remote.MobileBrowserType.SAFARI;
@@ -15,6 +15,8 @@ import java.net.URL;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
+
+import com.dsc.test.app.App;
 
 import io.appium.java_client.ios.IOSDriver;
 

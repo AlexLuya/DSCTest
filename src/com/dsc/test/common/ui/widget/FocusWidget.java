@@ -7,7 +7,7 @@ package com.dsc.test.common.ui.widget;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.UIObject;
+import com.dsc.test.common.ui.base.UIObject;
 
 /**
  * @Author alex
@@ -28,7 +28,7 @@ public class FocusWidget extends UIObject
 	/**
 	 * (non-Javadoc)
 	 *
-	 * @see com.dsc.test.common.ui.UIObject#ensureTextIs(java.lang.String)
+	 * @see com.dsc.test.common.ui.base.UIObject#ensureTextIs(java.lang.String)
 	 */
 	@Override
 	public boolean ensureTextIs(String text)

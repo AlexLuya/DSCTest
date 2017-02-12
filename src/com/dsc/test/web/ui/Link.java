@@ -3,11 +3,12 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.ui;
+package com.dsc.test.web.ui;
 
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
+import com.dsc.test.common.ui.base.UIObject;
 
 public class Link extends UIObject
 {

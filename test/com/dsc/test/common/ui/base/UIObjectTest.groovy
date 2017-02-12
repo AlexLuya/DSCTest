@@ -2,8 +2,9 @@
  * Copyright (c) (2016-2017),Deep Space Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.ui
+package com.dsc.test.common.ui.base
 
+import com.dsc.test.common.ui.base.UIObject
 import com.dsc.test.web.WebTestStub
 
 /**

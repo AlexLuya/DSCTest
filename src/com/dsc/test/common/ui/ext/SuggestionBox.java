@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.ui.widget;
+package com.dsc.test.common.ui.ext;
 
 import org.openqa.selenium.WebElement;
 

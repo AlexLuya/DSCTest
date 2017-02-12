@@ -7,7 +7,7 @@ package com.dsc.test.common.ui.widget;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.UIObject;
+import com.dsc.test.common.ui.base.UIObject;
 
 /**
  * @Author alex

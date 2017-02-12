@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.ui.widget;
+package com.dsc.test.common.ui.base;
 
 import java.util.List;
 
@@ -14,7 +14,6 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.dsc.test.common.Context;
 import com.dsc.test.common.pagefactory.UIObjectDecorator;
-import com.dsc.test.common.ui.UIObject;
 import com.google.common.collect.Lists;
 
 /**

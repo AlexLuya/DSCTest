@@ -15,7 +15,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.UIObject;
+import com.dsc.test.common.ui.base.UIObject;
 
 public class UIObjectDecorator extends DefaultFieldDecorator
 {
@@ -50,7 +50,7 @@ public class UIObjectDecorator extends DefaultFieldDecorator
 				return decorateElement(field, wrapee);
 			} catch (Exception e)
 			{
-				throw new RuntimeException(wrap("can't create element with id=" + annotatedId(field)), e);
+				throw new RuntimeException(wrap("can't create element with id='" + annotatedId(field)+"'"), e);
 			}
 		}
 

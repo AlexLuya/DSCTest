@@ -3,11 +3,13 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.ui.widget;
+package com.dsc.test.common.ui.ext;
 
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
+import com.dsc.test.common.ui.widget.MouseSensitiveLabel;
+import com.dsc.test.common.ui.widget.PopupPanel;
 
 
 /**

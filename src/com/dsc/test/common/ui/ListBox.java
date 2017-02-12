@@ -14,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import com.dsc.test.common.Context;
+import com.dsc.test.common.ui.base.ValidableBase;
 import com.google.common.collect.Lists;
 
 /**
@@ -24,7 +25,7 @@ import com.google.common.collect.Lists;
  * @Version 1.0
  * @Since 1.0
  */
-public class ListBox extends AbstractValidable
+public class ListBox extends ValidableBase
 {
 
 	/**
