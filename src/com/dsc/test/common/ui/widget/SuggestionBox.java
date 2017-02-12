@@ -19,7 +19,7 @@ import com.dsc.test.common.Context;
  */
 public class SuggestionBox extends RETextBox
 {
-	public SuggestionBox(Context context,WebElement wrapee)
+	public SuggestionBox(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

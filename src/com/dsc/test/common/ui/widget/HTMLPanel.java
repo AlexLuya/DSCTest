@@ -21,7 +21,7 @@ public class HTMLPanel extends UIObject
 	/**
 	 * @param wrapee
 	 */
-	public HTMLPanel(Context context,WebElement wrapee)
+	public HTMLPanel(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

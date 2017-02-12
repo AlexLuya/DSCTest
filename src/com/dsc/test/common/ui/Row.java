@@ -21,7 +21,7 @@ public class Row extends UIObject
 	/**
 	 * @param wrapee
 	 */
-	public Row(Context context,WebElement wrapee)
+	public Row(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

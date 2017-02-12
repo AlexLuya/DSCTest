@@ -11,7 +11,7 @@ import com.dsc.test.common.Context;
 
 public class Button extends ButtonBase
 {
-	public Button(Context context, String id)
+	public Button(Context<? ,?> context, String id)
 	{
 		this(context, context.findElemById(id));
 	}
@@ -20,7 +20,7 @@ public class Button extends ButtonBase
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Button(Context context, WebElement wrapee)
+	public Button(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

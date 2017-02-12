@@ -15,7 +15,6 @@ import com.dsc.util.common.Pair;
  */
 public class RowPair extends Pair<Row>
 {
-	private Object			idInSource	= null;
 	private final String	keyName;
 	private String			testCaseName;
 

@@ -26,7 +26,7 @@ public class PopupPanel extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	//	public PopupPanel(Context context, WebElement wrapee)
+	//	public PopupPanel(Context<? ,?> context, WebElement wrapee)
 	//	{
 	//		super(context, wrapee);
 	//	}
@@ -34,7 +34,7 @@ public class PopupPanel extends UIObject
 	/**
 	 * @param wrapee
 	 */
-	public PopupPanel(Context context,WebElement wrapee)
+	public PopupPanel(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

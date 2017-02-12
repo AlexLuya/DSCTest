@@ -35,7 +35,7 @@ public class ListBox extends AbstractValidable
 	 * @param wrapee
 	 *            the wrapee
 	 */
-	public ListBox(Context context, WebElement wrapee)
+	public ListBox(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

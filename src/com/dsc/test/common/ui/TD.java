@@ -21,7 +21,7 @@ public class TD extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	public TD(Context context, WebElement wrapee)
+	public TD(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

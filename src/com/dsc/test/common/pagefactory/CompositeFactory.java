@@ -12,7 +12,7 @@ import com.dsc.test.web.ui.WebComposite;
 public class CompositeFactory
 {
 
-	public <T extends WebComposite> T create(Context context,Class<T> wrappingClass, WebElement wrapee)
+	public <T extends WebComposite> T create(Context<? ,?> context,Class<T> wrappingClass, WebElement wrapee)
 	{
 		try
 		{

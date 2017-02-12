@@ -14,7 +14,7 @@ import com.dsc.test.common.ui.UIObject;
 
 public class UIObjectFactory
 {
-	public <T extends UIObject> T create(Context context, Class<T> wrapping, WebElement wrapee) throws Exception
+	public <T extends UIObject> T create(Context<? ,?> context, Class<T> wrapping, WebElement wrapee) throws Exception
 	{
 		// create instance by reflection
 		T instance = null;

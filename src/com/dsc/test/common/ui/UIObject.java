@@ -65,7 +65,7 @@ public class UIObject
 		return css().contains(css);
 	}
 
-	public Context context(){
+	public Context<? ,?> context(){
 		return context;
 	}
 
@@ -519,6 +519,7 @@ public class UIObject
 	/**
 	 *
 	 */
+	@SuppressWarnings("deprecation")
 	private void moveOffset(int x, int y)
 	{
 		context.mouseMoveTo(wrapee, x, y);

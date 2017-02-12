@@ -33,7 +33,7 @@ public class OSMap extends Composite<Context<? ,? extends WebDriver>>
 	 * @param browser
 	 * @param wrapee
 	 */
-	public OSMap(Context context, WebElement wrapee)
+	public OSMap(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

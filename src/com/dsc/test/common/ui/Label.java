@@ -11,7 +11,7 @@ import com.dsc.test.common.Context;
 public class Label extends UIObject
 {
 
-	public Label(Context context, WebElement wrapee)
+	public Label(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

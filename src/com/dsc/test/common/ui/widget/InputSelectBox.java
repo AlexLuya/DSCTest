@@ -25,7 +25,7 @@ public class InputSelectBox extends SuggestionBox
 	/**
 	 * @param el
 	 */
-	public InputSelectBox(Context context,WebElement wrapee)
+	public InputSelectBox(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

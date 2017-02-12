@@ -21,7 +21,7 @@ public class H1 extends H
 	 * @param browser
 	 * @param wrapee
 	 */
-	public H1(Context context, WebElement wrapee)
+	public H1(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

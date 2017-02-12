@@ -22,7 +22,7 @@ public class TextBox extends AbstractValidable
 	 * @param wrapee
 	 *            the wrapee
 	 */
-	public TextBox(Context context, WebElement wrapee)
+	public TextBox(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

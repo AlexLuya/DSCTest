@@ -22,7 +22,7 @@ public class Option extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Option(Context context, WebElement wrapee)
+	public Option(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

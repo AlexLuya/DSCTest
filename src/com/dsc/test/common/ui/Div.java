@@ -7,7 +7,7 @@ import com.dsc.test.common.Context;
 public class Div extends Span
 {
 
-	public Div(Context context, WebElement wrapee)
+	public Div(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

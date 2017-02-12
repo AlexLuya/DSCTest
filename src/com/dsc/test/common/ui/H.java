@@ -21,7 +21,7 @@ public abstract class H extends Label
 	 * @param browser
 	 * @param wrapee
 	 */
-	public H(Context context, WebElement wrapee)
+	public H(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

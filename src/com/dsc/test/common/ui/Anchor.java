@@ -11,7 +11,7 @@ import com.dsc.test.common.ui.widget.FocusWidget;
 
 public class Anchor extends FocusWidget
 {
-	public Anchor(Context context,WebElement wrapee)
+	public Anchor(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

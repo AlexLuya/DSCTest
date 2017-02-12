@@ -22,7 +22,7 @@ public class AbstractValidable extends Disableable implements Validable
 	/**
 	 * @param wrapee
 	 */
-	public AbstractValidable(Context context,WebElement wrapee)
+	public AbstractValidable(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

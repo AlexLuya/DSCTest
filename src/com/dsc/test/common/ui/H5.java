@@ -20,7 +20,7 @@ public class H5 extends H
 	 * @param browser
 	 * @param wrapee
 	 */
-	public H5(Context context, WebElement wrapee)
+	public H5(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

@@ -21,12 +21,12 @@ public abstract class FlowPanel extends Widget<Context<? ,? extends WebDriver>>
 	 * @param context
 	 * @param containerId
 	 */
-	public FlowPanel(Context context, String containerId)
+	public FlowPanel(Context<? ,?> context, String containerId)
 	{
 		super(context, containerId);
 	}
 
-	public FlowPanel(Context context, WebElement wrapee)
+	public FlowPanel(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

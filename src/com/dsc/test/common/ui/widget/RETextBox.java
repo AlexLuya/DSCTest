@@ -25,7 +25,7 @@ public class RETextBox extends TextBox
 	/**
 	 * @param el
 	 */
-	public RETextBox(Context context,WebElement wrapee)
+	public RETextBox(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

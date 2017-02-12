@@ -20,7 +20,7 @@ public class H3 extends H
 	 * @param browser
 	 * @param wrapee
 	 */
-	public H3(Context context, WebElement wrapee)
+	public H3(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

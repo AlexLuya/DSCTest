@@ -17,7 +17,7 @@ import com.dsc.test.common.Context;
  */
 public class ButtonBase extends UIObject
 {
-	public ButtonBase(Context context, String id)
+	public ButtonBase(Context<? ,?> context, String id)
 	{
 		this(context, context.findElemById(id));
 	}
@@ -26,7 +26,7 @@ public class ButtonBase extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	public ButtonBase(Context context, WebElement wrapee)
+	public ButtonBase(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

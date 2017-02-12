@@ -6,7 +6,7 @@ import com.dsc.test.common.Context;
 
 public class Image extends UIObject
 {
-	public Image(Context context,WebElement wrapee)
+	public Image(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

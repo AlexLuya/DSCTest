@@ -12,7 +12,7 @@ import com.dsc.test.common.Context;
 public class Link extends UIObject
 {
 
-	public Link(Context context, WebElement wrapee)
+	public Link(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

@@ -20,7 +20,7 @@ public class CheckBox extends UIObject
 	/**
 	 * @param wrapee
 	 */
-	public CheckBox(Context context,WebElement wrapee)
+	public CheckBox(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

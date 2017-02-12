@@ -10,7 +10,7 @@ import com.dsc.test.common.Context;
 
 public class Span extends UIObject
 {
-	public Span(Context context, WebElement wrapee)
+	public Span(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

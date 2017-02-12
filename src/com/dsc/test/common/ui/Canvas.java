@@ -12,7 +12,7 @@ import com.dsc.test.common.Context;
 public class Canvas extends UIObject
 {
 
-	public Canvas(Context context, WebElement wrapee)
+	public Canvas(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

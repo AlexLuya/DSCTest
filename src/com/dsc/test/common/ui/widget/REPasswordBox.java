@@ -20,7 +20,7 @@ public class REPasswordBox extends RETextBox
 	/**
 	 * @param el
 	 */
-	public REPasswordBox(Context context,WebElement wrapee)
+	public REPasswordBox(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

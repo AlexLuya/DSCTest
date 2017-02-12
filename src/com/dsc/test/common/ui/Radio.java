@@ -20,7 +20,7 @@ public class Radio extends CheckBox
 	/**
 	 * @param wrapee
 	 */
-	public Radio(Context context,WebElement wrapee)
+	public Radio(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

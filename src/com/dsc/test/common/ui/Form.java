@@ -21,7 +21,7 @@ public class Form extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Form(Context context, WebElement wrapee)
+	public Form(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

@@ -21,7 +21,7 @@ public class Cell extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Cell(Context context, WebElement wrapee)
+	public Cell(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

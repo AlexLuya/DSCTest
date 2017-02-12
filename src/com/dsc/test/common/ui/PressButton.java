@@ -9,7 +9,7 @@ import com.dsc.test.common.Context;
 public class PressButton extends UIObject
 {
 
-	public PressButton(Context context,WebElement wrapee)
+	public PressButton(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

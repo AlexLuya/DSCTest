@@ -59,6 +59,7 @@ public abstract class Widget<H extends Context<? ,? extends WebDriver>> extends 
 		return children;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public H context(){
 		return (H) super.context();

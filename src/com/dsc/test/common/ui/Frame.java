@@ -20,7 +20,7 @@ public class Frame extends UIObject
 	/**
 	 * @param wrapee
 	 */
-	public Frame(Context context,WebElement wrapee)
+	public Frame(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}

@@ -20,7 +20,7 @@ public class FocusWidget extends UIObject
 	/**
 	 * @param wrapee
 	 */
-	public FocusWidget(Context context, WebElement wrapee)
+	public FocusWidget(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

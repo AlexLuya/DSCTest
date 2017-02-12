@@ -10,6 +10,7 @@ package com.dsc.util.comparer;
  * @Version 1.0
  * @Since 1.0
  */
+@SuppressWarnings("unused")
 public interface Comparer<T>
 {
 

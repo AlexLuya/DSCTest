@@ -22,7 +22,7 @@ public class Disableable extends UIObject
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Disableable(Context context, WebElement wrapee)
+	public Disableable(Context<? ,?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

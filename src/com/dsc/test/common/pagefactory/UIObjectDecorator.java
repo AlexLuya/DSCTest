@@ -19,13 +19,13 @@ import com.dsc.test.common.ui.UIObject;
 
 public class UIObjectDecorator extends DefaultFieldDecorator
 {
-	private final Context context;
+	private final Context<? ,?> context;
 
 	// private CompositeFactory compositeFactory = new CompositeFactoryImpl();
 
 	private UIObjectFactory uiObjectFactory = new UIObjectFactory();
 
-	public UIObjectDecorator(Context context,SearchContext searchContext)
+	public UIObjectDecorator(Context<? ,?> context,SearchContext searchContext)
 	{
 		super(new WebElementLocatorFactory(searchContext));
 		this.context = context;

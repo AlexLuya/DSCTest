@@ -20,7 +20,7 @@ public class MouseSensitiveLabel extends Label
 	/**
 	 * @param el
 	 */
-	public MouseSensitiveLabel(Context context,WebElement wrapee)
+	public MouseSensitiveLabel(Context<? ,?> context,WebElement wrapee)
 	{
 		super(context,wrapee);
 	}
