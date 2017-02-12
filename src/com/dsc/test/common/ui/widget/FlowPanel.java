@@ -31,5 +31,4 @@ public abstract class FlowPanel extends Widget<Context<? ,? extends WebDriver>>
 	{
 		super(context, wrapee);
 	}
-
 }

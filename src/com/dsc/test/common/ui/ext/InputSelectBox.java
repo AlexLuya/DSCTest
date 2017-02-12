@@ -8,7 +8,6 @@ package com.dsc.test.common.ui.ext;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.widget.MouseSensitiveLabel;
 import com.dsc.test.common.ui.widget.PopupPanel;
 
 

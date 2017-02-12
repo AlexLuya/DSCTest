@@ -5,10 +5,11 @@
  **/
 package com.dsc.test.common.ui.widget;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.Widget;
 
 
 /**
@@ -19,7 +20,7 @@ import com.dsc.test.common.ui.base.UIObject;
  * @Version 1.0
  * @Since 1.0
  */
-public class PopupPanel extends UIObject
+public class PopupPanel extends Widget<Context<? ,? extends WebDriver>>
 {
 
 	/**

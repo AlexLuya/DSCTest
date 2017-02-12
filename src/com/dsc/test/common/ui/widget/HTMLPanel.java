@@ -1,13 +1,14 @@
 /**
  * Copyright (c) (2016-2017),Deep Space Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
-**/
+ **/
 package com.dsc.test.common.ui.widget;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.Composite;
 
 /**
  * @Author alex
@@ -15,7 +16,7 @@ import com.dsc.test.common.ui.base.UIObject;
  * @Version 1.0
  * @Since 1.0
  */
-public class HTMLPanel extends UIObject
+public abstract class HTMLPanel extends Composite<Context<? ,? extends WebDriver>>
 {
 
 	/**

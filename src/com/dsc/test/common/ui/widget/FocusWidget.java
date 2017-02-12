@@ -4,10 +4,11 @@
  **/
 package com.dsc.test.common.ui.widget;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.Widget;
 
 /**
  * @Author alex
@@ -15,7 +16,7 @@ import com.dsc.test.common.ui.base.UIObject;
  * @Version 1.0
  * @Since 1.0
  */
-public class FocusWidget extends UIObject
+public class FocusWidget extends Widget<Context<? ,? extends WebDriver>>
 {
 	/**
 	 * @param wrapee
