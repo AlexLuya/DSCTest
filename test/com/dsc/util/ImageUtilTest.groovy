@@ -1,8 +1,13 @@
 /**
- * Copyright (c) (2016-2017),VSI and/or its affiliates.All rights reserved.
+ * Copyright (c) (2016-2017),Deep Space Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
 package com.dsc.util
+
+import static com.dsc.util.FileUtil.*
+import static com.dsc.util.ImageUtil.*
+
+import org.apache.commons.io.FileUtils
 
 import spock.lang.Specification
 

@@ -5,7 +5,7 @@
  **/
 package com.dsc.test.db.sql;
 
-import com.dsc.common.Pair;
+import com.dsc.util.common.Pair;
 
 /**
  * @Author alex
@@ -15,14 +15,8 @@ import com.dsc.common.Pair;
  */
 public class Source extends Pair<String>
 {
-	public final String	testCaseColumn		= "test_case";
 	public String		primaryKeyColumn	= "id";
-
-	public Source(String db, String table, String primaryKeyColumn)
-	{
-		this(db, table);
-		this.primaryKeyColumn = primaryKeyColumn;
-	}
+	public final String	testCaseColumn		= "test_case";
 
 	/**
 	 * @param left
@@ -33,21 +27,15 @@ public class Source extends Pair<String>
 		super(db, table);
 	}
 
+	public Source(String db, String table, String primaryKeyColumn)
+	{
+		this(db, table);
+		this.primaryKeyColumn = primaryKeyColumn;
+	}
+
 	public String db()
 	{
 		return left;
-	}
-
-	public String table()
-	{
-		return right;
-	}
-
-	@Override
-	public String toString()
-	{
-		return String.format("{DB=%s  Table=%s  PrimaryKeyColumn=%s  TestCaseColumn=%s}", db(), table(), primaryKeyColumn(),
-				testCaseColumn());
 	}
 
 	/**
@@ -58,11 +46,23 @@ public class Source extends Pair<String>
 		return primaryKeyColumn;
 	}
 
+	public String table()
+	{
+		return right;
+	}
+
 	/**
 	 * @return
 	 */
 	public String testCaseColumn()
 	{
 		return testCaseColumn;
+	}
+
+	@Override
+	public String toString()
+	{
+		return String.format("{DB=%s  Table=%s  PrimaryKeyColumn=%s  TestCaseColumn=%s}", db(), table(), primaryKeyColumn(),
+				testCaseColumn());
 	}
 }

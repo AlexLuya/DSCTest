@@ -5,7 +5,7 @@
  **/
 package com.dsc.test.db;
 
-import com.dsc.common.Pair;
+import com.dsc.util.common.Pair;
 
 /**
  * @Author alex
@@ -25,6 +25,16 @@ public class RowPair extends Pair<Row>
 		this.keyName = keyName;
 	}
 
+	public Row availabeItem()
+	{
+		if (left == null)
+		{
+			return right;
+		}
+
+		return left;
+	}
+
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -41,14 +51,13 @@ public class RowPair extends Pair<Row>
 		return availabeItem().key();
 	}
 
-	public Row availabeItem()
+	/**
+	 * @param idInSource2
+	 * @return
+	 */
+	public boolean keyEqualsTo(Object key)
 	{
-		if (left == null)
-		{
-			return right;
-		}
-
-		return left;
+		return availabeItem().keyEqualsTo(key);
 	}
 
 	/**
@@ -129,14 +138,5 @@ public class RowPair extends Pair<Row>
 		}
 
 		return cell.stringifiedValue();
-	}
-
-	/**
-	 * @param idInSource2
-	 * @return
-	 */
-	public boolean keyEqualsTo(Object key)
-	{
-		return availabeItem().keyEqualsTo(key);
 	}
 }

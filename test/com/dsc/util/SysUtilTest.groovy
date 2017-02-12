@@ -1,5 +1,7 @@
 package com.dsc.util
 
+import static com.dsc.util.SysUtil.*
+
 import java.text.SimpleDateFormat
 
 import spock.lang.Specification

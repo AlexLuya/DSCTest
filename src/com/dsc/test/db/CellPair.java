@@ -5,7 +5,7 @@
  **/
 package com.dsc.test.db;
 
-import com.dsc.common.Pair;
+import com.dsc.util.common.Pair;
 
 /**
  * @Author alex
