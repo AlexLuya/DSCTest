@@ -9,6 +9,7 @@ import static io.appium.java_client.remote.AutomationName.ANDROID_UIAUTOMATOR2;
 import static io.appium.java_client.remote.AutomationName.SELENDROID;
 import static io.appium.java_client.remote.MobileBrowserType.CHROME;
 import static io.appium.java_client.remote.MobileCapabilityType.AUTOMATION_NAME;
+import static io.appium.java_client.remote.MobileCapabilityType.BROWSER_NAME;
 import static io.appium.java_client.remote.MobilePlatform.ANDROID;
 
 import java.net.MalformedURLException;
@@ -29,11 +30,12 @@ import io.appium.java_client.android.AndroidDriver;
  */
 public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 {
-	private Android(String apkPath)
+	public Android()
 	{
-		super(apkPath,DesiredCapabilities.android());
+		super(DesiredCapabilities.android());
 		platform(ANDROID);
 		setCapability("noSign", "true");
+		setCapability(BROWSER_NAME, CHROME);
 	}
 
 	// usually recommended for versions>HP ???.
@@ -48,11 +50,6 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 	{
 		setCapability(AUTOMATION_NAME, SELENDROID);
 		return this;
-	}
-
-	public Android get(String apkPath)
-	{
-		return new Android(apkPath);
 	}
 
 	public Android needBrowser()

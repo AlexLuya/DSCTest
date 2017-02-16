@@ -1,5 +1,5 @@
 /**
- * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights reserved.
+ * Copyright (c) (2010-2013),Deep Space Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
 **/
 package com.dsc.tool.spock.extractor.mavenplugin;

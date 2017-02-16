@@ -1,11 +1,15 @@
 package com.dsc.test.web
 
+import com.dsc.test.ContextFactory
 import com.dsc.test.web.ui.Link
 import com.dsc.util.Util
 
-public class BrowserTest extends WebTestStub {
+import spock.lang.Specification
+
+public class BrowserTest extends Specification {
 
 	static final String TEST_PAGE="https://www.baidu.com/"
+	Browser browser=ContextFactory.browser()
 
 	def setup(){
 		browser.open(TEST_PAGE)

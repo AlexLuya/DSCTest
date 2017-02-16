@@ -12,6 +12,7 @@ import static com.dsc.util.Util.wrap;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.Random;
 
@@ -140,6 +141,7 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 		return doFindElemById(id);
 	}
 
+
 	public WebElement findElemByLinkText(String text)
 	{
 		if (text == null || text == "")
@@ -157,6 +159,7 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 
 		return driver.findElement(By.linkText(text));
 	}
+
 
 	public WebElement findElemByTag(String tag)
 	{
@@ -256,6 +259,10 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 	{
 		new Actions(driver).moveToElement(target, x, y).perform();
 	}
+
+	public abstract void open() throws MalformedURLException;
+
+	public abstract void open(String urlOrAppFile) throws MalformedURLException;
 
 	public void resetWaitSeconds()
 	{

@@ -8,6 +8,7 @@ package com.dsc.test.app.ios;
 import static io.appium.java_client.remote.AutomationName.IOS_XCUI_TEST;
 import static io.appium.java_client.remote.MobileBrowserType.SAFARI;
 import static io.appium.java_client.remote.MobileCapabilityType.AUTOMATION_NAME;
+import static io.appium.java_client.remote.MobileCapabilityType.BROWSER_NAME;
 import static io.appium.java_client.remote.MobilePlatform.IOS;
 
 import java.net.MalformedURLException;
@@ -28,10 +29,11 @@ import io.appium.java_client.ios.IOSDriver;
  */
 public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 {
-	private IOS(String apkPath)
+	public IOS()
 	{
-		super(apkPath,DesiredCapabilities.iphone());
+		super(DesiredCapabilities.iphone());
 		platform(IOS);
+		setCapability(BROWSER_NAME, SAFARI);
 	}
 
 	// usually recommended for versions>10.X.

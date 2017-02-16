@@ -9,8 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-import com.dsc.test.app.AppTestStub;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
@@ -21,10 +20,10 @@ import io.appium.java_client.android.AndroidKeyCode;
  * @Version 1.0
  * @Since 1.0
  */
-public class AndroidTestExample extends AppTestStub
+public class AndroidTestExampleSusan
 {
 	public static void main(String[] args) throws Exception {
-		AndroidDriver driver;
+		AndroidDriver<RemoteWebElement> driver;
 
 		DesiredCapabilities cap = new DesiredCapabilities();
 
@@ -46,7 +45,7 @@ public class AndroidTestExample extends AppTestStub
 		cap.setCapability("noSign", "True"); // 不重新签名apk
 		cap.setCapability("newCommandTimeout", "30"); // 没有新命令，appium30秒退出
 
-		driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), cap);// 把以上配置传到appium服务端并连接手机
+		driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), cap);// 把以上配置传到appium服务端并连接手机
 		// 隐式等待
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 

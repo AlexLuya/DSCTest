@@ -175,7 +175,14 @@ public class Browser extends Context<Browser,WebDriver>
 		return driver.navigate();
 	}
 
-	public void open(String url)
+	@Override
+	public  void open()
+	{
+		open("about:blank");
+	}
+
+	@Override
+	public  void open(String url)
 	{
 		driver.get(url);
 		driver.manage().window().maximize();
@@ -211,12 +218,12 @@ public class Browser extends Context<Browser,WebDriver>
 		switchToWindow(windowHandles().length - 1);
 	}
 
+
+
 	public void switchToWindow(int index)
 	{
 		switchToWindow(windowHandles()[index]);
 	}
-
-
 
 	public Window window()
 	{

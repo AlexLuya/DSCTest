@@ -2,9 +2,9 @@
  * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.app;
+package com.dsc.test.app
 
-import spock.lang.Specification;
+import spock.lang.Specification
 
 /**
  * @Author alex
@@ -14,5 +14,5 @@ import spock.lang.Specification;
  */
 public class AppTestStub extends Specification
 {
-
+	App app
 }
