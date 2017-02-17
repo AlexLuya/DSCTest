@@ -34,4 +34,8 @@ public class BrowserTest extends Specification {
 		Util.sleep(3000)
 		browser.getCurrentUrl()==TEST_PAGE
 	}
+
+	def cleanup(){
+		browser.close()
+	}
 }

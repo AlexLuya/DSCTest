@@ -28,7 +28,7 @@ public class Homepage extends AppComposite
 
 	public Homepage(App<?, ?> app)
 	{
-		super(app, app.findElemByXpath("/*"));
+		super(app, app.findElemByXpath("//android.widget.FrameLayout[1]"));
 		ensureAvailable();
 	}
 
