@@ -9,13 +9,16 @@ package com.dsc.test.web;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.logging.Level;
 
 import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.WebDriver.Window;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -24,12 +27,13 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.safari.SafariDriver;
 
 import com.dsc.test.common.Context;
 import com.dsc.util.Util;
 
-public class Browser extends Context<Browser,WebDriver>
+public class Browser extends Context<Browser, WebDriver>
 {
 	private static final String	CHROME_DRIVER_DIR			= "DSCTest/chromedrivers";
 
@@ -68,12 +72,8 @@ public class Browser extends Context<Browser,WebDriver>
 		DesiredCapabilities cap = DesiredCapabilities.chrome();
 		cap.setCapability(ChromeOptions.CAPABILITY, options);
 
-		return new Browser(new ChromeDriver(cap(cap)),cap);
+		return new Browser(new ChromeDriver(cap(cap)), cap);
 	}
-
-	// private static final String WHERE_FIREFOX_BIN = "/usr/bin/firefox";
-	// private static final String WHERE_FIREFOX_DRIVER =
-	// "/usr/local/bin/geckodriver";
 
 	public static Browser firfox()
 	{
@@ -82,17 +82,21 @@ public class Browser extends Context<Browser,WebDriver>
 		DesiredCapabilities cap = DesiredCapabilities.firefox();
 		cap.setCapability("marionette", true);
 
-		return new Browser(new FirefoxDriver(cap(cap)),cap);
+		return new Browser(new FirefoxDriver(cap(cap)), cap);
 	}
+
+	// private static final String WHERE_FIREFOX_BIN = "/usr/bin/firefox";
+	// private static final String WHERE_FIREFOX_DRIVER =
+	// "/usr/local/bin/geckodriver";
 
 	public static Browser ie()
 	{
-		return new Browser(new InternetExplorerDriver(),DesiredCapabilities.internetExplorer());
+		return new Browser(new InternetExplorerDriver(), DesiredCapabilities.internetExplorer());
 	}
 
 	public static Browser safari()
 	{
-		return new Browser(new SafariDriver(),DesiredCapabilities.safari());
+		return new Browser(new SafariDriver(), DesiredCapabilities.safari());
 	}
 
 	/**
@@ -122,7 +126,7 @@ public class Browser extends Context<Browser,WebDriver>
 
 	private String previousWindowHandler;
 
-	public Browser(WebDriver driver,DesiredCapabilities cap)
+	public Browser(WebDriver driver, DesiredCapabilities cap)
 	{
 		super(cap);
 		this.driver = driver;
@@ -176,13 +180,13 @@ public class Browser extends Context<Browser,WebDriver>
 	}
 
 	@Override
-	public  void open()
+	public void open()
 	{
 		open("about:blank");
 	}
 
 	@Override
-	public  void open(String url)
+	public void open(String url)
 	{
 		driver.get(url);
 		driver.manage().window().maximize();
@@ -191,6 +195,15 @@ public class Browser extends Context<Browser,WebDriver>
 	public void refresh()
 	{
 		driver.navigate().refresh();
+	}
+
+	public void scrollTo(WebElement element)
+	{
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		HashMap<String, String> scrollObject = new HashMap<>();
+		scrollObject.put("direction", "down");
+		scrollObject.put("element", ((RemoteWebElement) element).getId());
+		js.executeScript("mobile: scroll", scrollObject);
 	}
 
 	public void setCookie(String key, String value)
@@ -217,8 +230,6 @@ public class Browser extends Context<Browser,WebDriver>
 		// mechanism)
 		switchToWindow(windowHandles().length - 1);
 	}
-
-
 
 	public void switchToWindow(int index)
 	{

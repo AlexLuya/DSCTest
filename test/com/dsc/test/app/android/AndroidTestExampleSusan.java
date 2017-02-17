@@ -31,10 +31,9 @@ public class AndroidTestExampleSusan
 		// cap.setCapability("app", "C:\\software\\jrtt.apk");//安装apk
 		// cap.setCapability("browserName", "Chrome");//设置HTML5的自动化，打开谷歌浏览器
 		// cap.setCapability("deviceName", "H60-L03");// 设备名称
-		cap.setCapability("deviceName", "OPPO R7 Plusm");// 设备名称
+		cap.setCapability("deviceName", "Galaxy S4");// 设备名称
 		cap.setCapability("platformName", "Android"); // 安卓自动化还是IOS自动化
-		cap.setCapability("platformVersion", "5.1.1"); // 安卓操作系统版本
-		cap.setCapability("udid", "dba18022"); // 设备的udid (adb devices 查看到的)
+		cap.setCapability("platformVersion", "5.0.1"); // 安卓操作系统版本
 		// cap.setCapability("platformVersion", "4.4.2"); // 安卓操作系统版本
 		// cap.setCapability("udid", "6&33b008c1&0&0001"); // 设备的udid (adb devices 查看到的)
 		cap.setCapability("appPackage", "com.taobao.taobao");// 被测app的包名

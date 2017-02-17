@@ -4,7 +4,11 @@
  **/
 package com.dsc.test.app.android
 
+import com.dsc.test.ContextFactory
 import com.dsc.test.app.AppTestStub
+import com.dsc.test.app.pages.Homepage
+
+import spock.lang.Shared
 
 /**
  * @Author alex
@@ -14,11 +18,48 @@ import com.dsc.test.app.AppTestStub
  */
 public class AndroidTestExample extends AppTestStub
 {
-	def setup(){
-		//		app=Android.get
+	@Shared Android android=ContextFactory.app()
+	@Shared Homepage homepage
+
+	def setupSpec(){
+		android.deviceName("Galaxy S4").platform("5.0.1").open("file/Hybrid_v1.8.1.apk")
+		//UIAutomatorViewer will tell this
+		android.pkg("com.restwla.z88ab174d")
+
+		homepage=new Homepage(android)
 	}
 
-	def "sample test"(){
 
+	def "swipe left"(){
+		given:
+		android.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+
+		when:""
+		int res=2+3
+
+		then:
+		res==5
+	}
+
+	def "swipe right"(){
+		given:
+		android.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+
+		when:""
+		int res=2+3
+
+		then:
+		res==5
+	}
+
+	def "upload"(){
+		given:
+		android.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+
+		when:""
+		int res=2+3
+
+		then:
+		res==5
 	}
 }

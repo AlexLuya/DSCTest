@@ -8,7 +8,7 @@ package com.dsc.test.app.ios;
 import static io.appium.java_client.remote.AutomationName.IOS_XCUI_TEST;
 import static io.appium.java_client.remote.MobileBrowserType.SAFARI;
 import static io.appium.java_client.remote.MobileCapabilityType.AUTOMATION_NAME;
-import static io.appium.java_client.remote.MobileCapabilityType.BROWSER_NAME;
+import static io.appium.java_client.remote.MobileCapabilityType.UDID;
 import static io.appium.java_client.remote.MobilePlatform.IOS;
 
 import java.net.MalformedURLException;
@@ -33,7 +33,19 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	{
 		super(DesiredCapabilities.iphone());
 		platform(IOS);
-		setCapability(BROWSER_NAME, SAFARI);
+		browser(SAFARI);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.app.App#activity(java.lang.String)
+	 */
+	@Override
+	public IOS activity(String activity)
+	{
+		// android only,not applied for IOS
+		return this;
 	}
 
 	// usually recommended for versions>10.X.
@@ -43,10 +55,69 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 		return this;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.app.App#lockScreen(int)
+	 */
+	@Override
+	public void lockScreen(int seconds)
+	{
+		driver.lockDevice(seconds);
+	}
+
 	public IOS needBrowser()
 	{
 		browser(SAFARI);
 		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.app.App#pkg(java.lang.String)
+	 */
+	@Override
+	public IOS pkg(String pkg)
+	{
+		// android only,not applied for IOS
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.app.App#shake()
+	 */
+	@Override
+	public void shake()
+	{
+		driver.shake();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.app.App#UDID(java.lang.String)
+	 */
+	@Override
+	public IOS UDID(String udid)
+	{
+
+		setCapability(UDID, udid);
+
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.app.App#unlockScreen()
+	 */
+	@Override
+	public void unlockScreen()
+	{
+		// Android only,not applied for IOS
 	}
 
 	/*

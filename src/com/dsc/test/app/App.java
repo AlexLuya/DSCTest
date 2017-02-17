@@ -1,5 +1,6 @@
 /**
- * Copyright (c) (2010-2013),Deep Space Century and/or its affiliates.All rights reserved.
+ * Copyright (c) (2010-2013),Deep Space Century and/or its affiliates.All rights
+ * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
 package com.dsc.test.app;
@@ -14,8 +15,10 @@ import static org.openqa.selenium.remote.CapabilityType.TAKES_SCREENSHOT;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 
@@ -60,11 +63,18 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	public App(DesiredCapabilities cap)
 	{
 		super(cap);
+		// setCapability("noReset","true");
+		// Reset state by clearing data rather then uninstalling to prevent
+		// re-installing between sessions.
+		setCapability("fullReset", "false");
+		// NP check whether Appium server started
 		setCapability(AUTOMATION_NAME, "Appium");
 		setCapability(TAKES_SCREENSHOT, "true");
 		// appium exit after 30 seconds idle
 		setCapability(NEW_COMMAND_TIMEOUT, "30");
 	}
+
+	public abstract T activity(String activity);
 
 	/**
 	 * Browser.
@@ -76,8 +86,14 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	@SuppressWarnings("unchecked")
 	public T browser(String browser)
 	{
+		Util.mustNotNull("browser", browser);
 		setCapability(BROWSER_NAME, browser);
 		return (T) this;
+	}
+
+	public Set<String> contexts()
+	{
+		return driver.getContextHandles();
 	}
 
 	/**
@@ -93,6 +109,18 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		setCapability(DEVICE_NAME, name);
 		return (T) this;
 	}
+
+	public void hideKeyboard()
+	{
+		driver.hideKeyboard();
+	}
+
+	public boolean isInstalled(String bundleId)
+	{
+		return driver.isAppInstalled(bundleId);
+	}
+
+	public abstract void lockScreen(int seconds);
 
 	/**
 	 * Multi touch action.
@@ -112,7 +140,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	@Override
 	public void open() throws MalformedURLException
 	{
-		// HP ensure neccessary capabilities got set already
+		// HP ensure necessary capabilities got set already
 		// such as device name
 
 		driver = createDriver(remoteAddress);
@@ -129,9 +157,14 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	public void open(String appFilePath) throws MalformedURLException
 	{
 		Util.mustNotNull("apk path", appFilePath);
-		install(appFilePath);
+
+		// install(appFilePath);
+		setCapability(APP, new File(appFilePath).getAbsolutePath());
+
 		open();
 	}
+
+	public abstract T pkg(String pkg);
 
 	/**
 	 * Platform.
@@ -145,6 +178,31 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	{
 		setCapability(PLATFORM_NAME, platform);
 		return (T) this;
+	}
+
+	// /**
+	// * Install.
+	// *
+	// * @param appFilePath
+	// * the app file path
+	// * @return the t
+	// */
+	// @SuppressWarnings("unchecked")
+	// public T install(String appFilePath)
+	// {
+	// setCapability(APP, new File(appFilePath).getAbsolutePath());
+	// return (T) this;
+	// }
+
+	public void press(WebElement elem)
+	{
+		touch().press(elem);
+	}
+
+	public byte[] pullFile(String fromWhere)
+	{
+		// HP validate args
+		return driver.pullFile(fromWhere);
 	}
 
 	/**
@@ -162,6 +220,29 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		return (T) this;
 	}
 
+	public void remove(String bundleId)
+	{
+		driver.removeApp(bundleId);
+	}
+
+	public void reset()
+	{
+		driver.resetApp();
+	}
+
+	public void runInBackground(int seconds)
+	{
+		driver.runAppInBackground(seconds);
+	}
+
+	public abstract void shake();
+
+	@SuppressWarnings("deprecation")
+	public void swipe(int startx, int starty, int endx, int endy, int duration)
+	{
+		driver.swipe(startx, starty, endx, endy, duration);
+	}
+
 	/**
 	 * Swipe.
 	 *
@@ -174,6 +255,11 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	{
 		// touch().press(from, -10, from.getCenter().y - from.getLocation().y)
 		// .waitAction(2000).moveTo(to, 10, center.y - location.y).release().p
+	}
+
+	public void tap(WebElement elem)
+	{
+		touch().tap(elem);
 	}
 
 	/**
@@ -224,6 +310,10 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		return (T) this;
 	}
 
+	public abstract T UDID(String udid);
+
+	public abstract void unlockScreen();
+
 	/**
 	 * Creates the driver.
 	 *
@@ -234,18 +324,4 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	 *             the malformed URL exception
 	 */
 	protected abstract D createDriver(String remoteAddress) throws MalformedURLException;
-
-	/**
-	 * Install.
-	 *
-	 * @param appFilePath
-	 *            the app file path
-	 * @return the t
-	 */
-	@SuppressWarnings("unchecked")
-	private T install(String appFilePath)
-	{
-		setCapability(APP, new File(appFilePath).getAbsolutePath());
-		return (T) this;
-	}
 }
