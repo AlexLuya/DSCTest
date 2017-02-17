@@ -245,11 +245,8 @@ public class ColumnBase<T extends ColumnBase<T>>
 	{
 		cells = Lists.newArrayList();
 
-		// NP caution
-		ResultSet rs = dataBase
-				.query(String.format("SELECT %s,%s FROM %s ORDER BY %s ASC", primaryKey(), name(), tableName(), name()));
-
-		try
+		try (ResultSet rs = dataBase
+				.query(String.format("SELECT %s,%s FROM %s ORDER BY %s ASC", primaryKey(), name(), tableName(), name()));)
 		{
 			// save rows as cells
 			while (rs.next())
@@ -260,20 +257,6 @@ public class ColumnBase<T extends ColumnBase<T>>
 		} catch (SQLException e)
 		{
 			throw new RuntimeException(e);
-		} finally
-		{
-			if (rs == null)
-			{
-				return;
-			}
-
-			try
-			{
-				rs.close();
-			} catch (SQLException e)
-			{
-				throw new RuntimeException(e);
-			}
 		}
 	}
 

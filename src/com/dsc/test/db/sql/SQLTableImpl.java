@@ -121,8 +121,7 @@ public class SQLTableImpl implements Table
 	@Override
 	public Columns columnsExcept(String... columns)
 	{
-		ResultSet rs = dataBase.query("SELECT * FROM " + schema.table());
-		try
+		try (ResultSet rs = dataBase.query("SELECT * FROM " + schema.table());)
 		{
 			ResultSetMetaData rsmd = rs.getMetaData();
 			// The column count starts from 1
@@ -140,20 +139,7 @@ public class SQLTableImpl implements Table
 		} catch (SQLException e)
 		{
 			throw new RuntimeException(e);
-		} finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				} catch (SQLException e)
-				{
-					throw new RuntimeException(e);
-				}
-			}
 		}
-
 	}
 
 	/*
@@ -201,7 +187,8 @@ public class SQLTableImpl implements Table
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.dsc.test.db.Table#deleteCascadely(java.lang.String, java.lang.Object,
+	 * @see com.dsc.test.db.Table#deleteCascadely(java.lang.String,
+	 * java.lang.Object,
 	 * java.util.List)
 	 */
 	@Override
@@ -212,8 +199,8 @@ public class SQLTableImpl implements Table
 		{
 			dataBase.exec(
 					format("DELETE FROM %s where %s in (select parent.%s from %s AS parent INNER JOIN (SELECT * FROM %s) AS child ON parent.%s=child.%s %s)",
-							child.table, child.foreignKey,child.refereeColumn, name(), child.table, child.refereeColumn, child.foreignKey,
-							whereColumnEquals("parent."+column, cellValue)));
+							child.table, child.foreignKey, child.refereeColumn, name(), child.table, child.refereeColumn,
+							child.foreignKey, whereColumnEquals("parent." + column, cellValue)));
 		}
 
 		// delete records in parent table
@@ -298,12 +285,8 @@ public class SQLTableImpl implements Table
 	{
 		dataBase.ensureConnected();
 
-		PreparedStatement stmt = null;
-
-		try
+		try (PreparedStatement stmt = dataBase.prepareStatement(sql))
 		{
-			stmt = dataBase.prepareStatement(sql);
-
 			for (Object[] tupe : values)
 			{
 				for (int i = 0; i < tupe.length; i++)
@@ -344,15 +327,6 @@ public class SQLTableImpl implements Table
 		} catch (SQLException e)
 		{
 			throw new RuntimeException(e);
-		} finally
-		{
-			try
-			{
-				stmt.close();
-			} catch (SQLException e)
-			{
-				throw new RuntimeException(e);
-			}
 		}
 	}
 
@@ -467,9 +441,9 @@ public class SQLTableImpl implements Table
 							id.toString(), id.getClass().getSimpleName()));
 		}
 	}
-
-	private String whereIdEquals(Object id)
-	{
-		return whereColumnEquals("id", id);
-	}
+	//
+	//	private String whereIdEquals(Object id)
+	//	{
+	//		return whereColumnEquals("id", id);
+	//	}
 }

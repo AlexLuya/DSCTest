@@ -29,26 +29,12 @@ public class Config
 	{
 		Properties props = new Properties();
 
-		InputStream is = null;
-		try
+		try(InputStream is=ClassLoader.getSystemResourceAsStream(CONFIG_INI))
 		{
-			is = ClassLoader.getSystemResourceAsStream(CONFIG_INI);
 			props.load(is);
 		} catch (IOException e)
 		{
 			e.printStackTrace();
-		} finally
-		{
-			if (is != null)
-			{
-				try
-				{
-					is.close();
-				} catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-			}
 		}
 
 		return props;

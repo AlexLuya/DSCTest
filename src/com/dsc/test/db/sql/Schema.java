@@ -6,9 +6,6 @@
 package com.dsc.test.db.sql;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
 
 import com.dsc.test.db.DataBase;
 import com.google.common.collect.Lists;
@@ -202,24 +199,13 @@ public class Schema
 		// RegularExpressionInclusionRule("test"));
 		options.setTableInclusionRule(new IncludeAll());
 
-		Connection conn = null;
-		try
+		try (Connection conn = new DatabaseConnectionOptions(dataBase.connectionUrl()).getConnection(dataBase.user(),
+				dataBase.password()))
 		{
-			DataSource dataSource = new DatabaseConnectionOptions(dataBase.connectionUrl());
-			conn = dataSource.getConnection(dataBase.user(), dataBase.password());
 			return SchemaCrawlerUtility.getCatalog(conn, options);
 		} catch (Exception e)
 		{
 			throw new RuntimeException(e);
-		} finally
-		{
-			try
-			{
-				conn.close();
-			} catch (SQLException e)
-			{
-				throw new RuntimeException(e);
-			}
 		}
 	}
 }

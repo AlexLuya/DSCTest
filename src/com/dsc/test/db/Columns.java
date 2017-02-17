@@ -230,11 +230,8 @@ public class Columns extends ArrayList<Column>
 	{
 		rows = Lists.newArrayList();
 
-		// NP caution
-		ResultSet rs = dataBase.query(format("SELECT %s,%s FROM %s ORDER BY %s ASC", table.primaryKey(), columnNames(),
-				table.name(), table.primaryKey()));
-
-		try
+		try (ResultSet rs = dataBase.query(format("SELECT %s,%s FROM %s ORDER BY %s ASC", table.primaryKey(), columnNames(),
+				table.name(), table.primaryKey())))
 		{
 			// save rows as rows
 			while (rs.next())
@@ -245,20 +242,6 @@ public class Columns extends ArrayList<Column>
 		} catch (SQLException e)
 		{
 			throw new RuntimeException(e);
-		} finally
-		{
-			if (rs == null)
-			{
-				return null;
-			}
-
-			try
-			{
-				rs.close();
-			} catch (SQLException e)
-			{
-				throw new RuntimeException(e);
-			}
 		}
 
 		return rows;

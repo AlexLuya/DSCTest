@@ -91,27 +91,13 @@ public abstract class SQLDataBase implements DataBase
 
 		ensureConnected();
 
-		Statement stmt =null;
-
-		try
+		try (Statement stmt = conn.createStatement())
 		{
-			stmt = conn.createStatement();
 			stmt.execute(sql);
 			return stmt.getUpdateCount();
-		}catch (Exception e)
+		} catch (Exception e)
 		{
-			throw new RuntimeException(e.getMessage()+"...."+sql);
-		} finally{
-			if(stmt!=null)
-			{
-				try
-				{
-					stmt.close();
-				} catch (SQLException e)
-				{
-					throw new RuntimeException(e);
-				}
-			}
+			throw new RuntimeException(e.getMessage() + "...." + sql);
 		}
 	}
 
@@ -131,7 +117,8 @@ public abstract class SQLDataBase implements DataBase
 	}
 
 	/**
-	 * @deprecated replaced by {@link com.dsc.test.db.sql.SQLTableImpl#insert()}.
+	 * @deprecated replaced by
+	 *             {@link com.dsc.test.db.sql.SQLTableImpl#insert()}.
 	 */
 	@Deprecated
 	@Override
@@ -139,11 +126,8 @@ public abstract class SQLDataBase implements DataBase
 	{
 		ensureConnected();
 
-		PreparedStatement stmt = null;
-
-		try
+		try (PreparedStatement stmt = prepareStatement(sql))
 		{
-			stmt = prepareStatement(sql);
 
 			for (Object[] tupe : values)
 			{
@@ -185,15 +169,6 @@ public abstract class SQLDataBase implements DataBase
 		} catch (SQLException e)
 		{
 			throw new RuntimeException(e);
-		} finally
-		{
-			try
-			{
-				stmt.close();
-			} catch (SQLException e)
-			{
-				throw new RuntimeException(e);
-			}
 		}
 	}
 
@@ -244,11 +219,11 @@ public abstract class SQLDataBase implements DataBase
 		// validate argument
 		Util.mustNotNullOrEmpty(sql, "sql");
 
-		PreparedStatement stmt=null;
+		PreparedStatement stmt = null;
 
 		try
 		{
-			stmt=conn.prepareStatement(sql);
+			stmt = conn.prepareStatement(sql);
 		} catch (SQLException e)
 		{
 			throw new RuntimeException(e);
