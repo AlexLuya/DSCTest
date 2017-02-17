@@ -26,6 +26,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -38,6 +39,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.dsc.test.common.pagefactory.UIObjectDecorator;
 import com.dsc.test.common.ui.base.UIObject;
 
 import ru.yandex.qatools.ashot.AShot;
@@ -67,8 +69,8 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 	}
 
 	protected final DesiredCapabilities cap;
-	protected D driver;
 
+	protected D driver;
 	/**
 	 * @param cap
 	 */
@@ -97,6 +99,8 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 	{
 		driver.quit();
 	}
+
+	public abstract UIObjectDecorator decorator(SearchContext searchCxt);
 
 	public boolean ensureNotPresented(String id)
 	{

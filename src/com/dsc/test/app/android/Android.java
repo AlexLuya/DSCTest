@@ -19,10 +19,12 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import com.dsc.test.app.App;
+import com.dsc.test.common.pagefactory.UIObjectDecorator;
 
 import io.appium.java_client.android.AndroidDriver;
 
@@ -46,6 +48,18 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 	{
 		setCapability(APP_ACTIVITY, activity);
 		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * com.dsc.test.common.Context#decorator(org.openqa.selenium.SearchContext)
+	 */
+	@Override
+	public UIObjectDecorator decorator(SearchContext searchCxt)
+	{
+		return new AndroidUIObjectDecorator(this, searchCxt);
 	}
 
 	// usually recommended for versions>HP ???.

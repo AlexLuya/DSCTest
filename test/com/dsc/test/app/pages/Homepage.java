@@ -25,10 +25,16 @@ public class Homepage extends AppComposite
 	Button	callUsButtonText;
 	@AndroidFindBy(id = "com.restwla.z88ab174d:id/button_callout_iconfont")
 	Button	callUsIcon;
+	//	@AndroidFindBy(id = "com.restwla.z88ab174d:id/button_callout_main")
+	//	Button	callUsButton;
+	//	@AndroidFindBy(id = "com.restwla.z88ab174d:id/button_callout_text")
+	//	Button	callUsButtonText;
+	//	@AndroidFindBy(id = "com.restwla.z88ab174d:id/button_callout_iconfont")
+	//	Button	callUsIcon;
 
 	public Homepage(App<?, ?> app)
 	{
-		super(app, app.findElemByXpath("//android.widget.FrameLayout[1]"));
+		super(app, app.findElemByXpath("//*"));
 		ensureAvailable();
 	}
 

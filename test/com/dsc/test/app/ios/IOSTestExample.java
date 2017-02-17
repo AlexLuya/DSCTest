@@ -4,15 +4,13 @@
  **/
 package com.dsc.test.app.ios;
 
-import com.dsc.test.app.AppTestStub;
-
 /**
  * @Author alex
  * @CreateTime Feb 12, 2017 12:12:05 AM
  * @Version 1.0
  * @Since 1.0
  */
-public class IOSTestExample extends AppTestStub
+public class IOSTestExample //extends AppTestStub
 {
 
 }

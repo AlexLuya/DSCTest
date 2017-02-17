@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.WebDriver.Window;
@@ -31,6 +32,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.safari.SafariDriver;
 
 import com.dsc.test.common.Context;
+import com.dsc.test.common.pagefactory.UIObjectDecorator;
 import com.dsc.util.Util;
 
 public class Browser extends Context<Browser, WebDriver>
@@ -135,6 +137,15 @@ public class Browser extends Context<Browser, WebDriver>
 	public void closeCurrentWindow()
 	{
 		driver.close();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.dsc.test.common.Context#decorator(org.openqa.selenium.SearchContext)
+	 */
+	@Override
+	public UIObjectDecorator decorator(SearchContext searchCxt)
+	{
+		return new WebUIObjectDecorator(this, searchCxt);
 	}
 
 	public void deleteAllCookies()

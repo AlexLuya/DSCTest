@@ -40,26 +40,26 @@ public class AndroidTestExample extends AppTestStub
 		then:
 		res==5
 	}
-
-	def "swipe right"(){
-		given:
-		android.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
-
-		when:""
-		int res=2+3
-
-		then:
-		res==5
-	}
-
-	def "upload"(){
-		given:
-		android.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
-
-		when:""
-		int res=2+3
-
-		then:
-		res==5
-	}
+	//
+	//	def "swipe right"(){
+	//		given:
+	//		android.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+	//
+	//		when:""
+	//		int res=2+3
+	//
+	//		then:
+	//		res==5
+	//	}
+	//
+	//	def "upload"(){
+	//		given:
+	//		android.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+	//
+	//		when:""
+	//		int res=2+3
+	//
+	//		then:
+	//		res==5
+	//	}
 }

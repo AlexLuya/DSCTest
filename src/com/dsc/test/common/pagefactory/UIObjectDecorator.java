@@ -11,21 +11,20 @@ import java.lang.reflect.Field;
 
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 
 import com.dsc.test.common.Context;
 import com.dsc.test.common.ui.base.UIObject;
 
-public class UIObjectDecorator extends DefaultFieldDecorator
+public abstract class UIObjectDecorator extends DefaultFieldDecorator
 {
-	private final Context<? ,?> context;
+	private final Context<?, ?>	context;
 
 	// private CompositeFactory compositeFactory = new CompositeFactoryImpl();
 
-	private UIObjectFactory uiObjectFactory = new UIObjectFactory();
+	private UIObjectFactory		uiObjectFactory	= new UIObjectFactory();
 
-	public UIObjectDecorator(Context<? ,?> context,SearchContext searchContext)
+	public UIObjectDecorator(Context<?, ?> context, SearchContext searchContext)
 	{
 		super(new WebElementLocatorFactory(searchContext));
 		this.context = context;
@@ -34,7 +33,7 @@ public class UIObjectDecorator extends DefaultFieldDecorator
 	@Override
 	public Object decorate(ClassLoader classLoader, Field field)
 	{
-		if (findByAnno(field) == null)
+		if (field.getAnnotations().length == 0)
 		{
 			// ignore field without FindBy annotation or non page
 			// elements like:string
@@ -50,7 +49,7 @@ public class UIObjectDecorator extends DefaultFieldDecorator
 				return decorateElement(field, wrapee);
 			} catch (Exception e)
 			{
-				throw new RuntimeException(wrap("can't create element with id='" + annotatedId(field)+"'"), e);
+				throw new RuntimeException(wrap("can't create element with id='" + annotatedId(field) + "'"), e);
 			}
 		}
 
@@ -58,30 +57,32 @@ public class UIObjectDecorator extends DefaultFieldDecorator
 	}
 
 	/**
-	 * @param itself
+	 * @param field
 	 * @return
 	 */
-	protected String annotatedId(Field itself)
+	protected abstract String annotatedId(Field field);
+
+	/**
+	 * @param field
+	 * @return
+	 */
+	protected <T> T findByAnno(Field field)
 	{
-		return findByAnno(itself).id();
+		return field.getAnnotation(findByClass());
 	}
+
+	/**
+	 * @return
+	 */
+	protected abstract <T> Class<T> findByClass();
 
 	private Object decorateElement(final Field field, final WebElement wrapee) throws Exception
 	{
 		@SuppressWarnings("unchecked")
 		UIObject element = uiObjectFactory.create(context, (Class<? extends UIObject>) field.getType(), wrapee);
 
-		element.setAnnotatedId(findByAnno(field).id());
+		element.setAnnotatedId(annotatedId(field));
 
 		return element;
-	}
-
-	/**
-	 * @param field
-	 * @return
-	 */
-	private FindBy findByAnno(Field field)
-	{
-		return field.getAnnotation(FindBy.class);
 	}
 }

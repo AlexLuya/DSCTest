@@ -4,6 +4,11 @@
  **/
 package com.dsc.test.web
 
+import static com.dsc.util.FileUtil.*
+import static com.dsc.util.ImageUtil.*
+import static com.dsc.util.Util.*
+import static java.lang.String.*
+
 import java.awt.image.BufferedImage
 import java.text.SimpleDateFormat
 

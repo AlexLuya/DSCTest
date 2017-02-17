@@ -20,10 +20,9 @@ public class UIObjectFactory
 	public <T extends UIObject> T create(Context<?, ?> context, Class<T> wrapping, WebElement wrapee) throws Exception
 	{
 		// create instance by reflection
-		T instance = null;
 		try
 		{
-			instance = findConstructor(context.getClass(), wrapping).newInstance(context, wrapee);
+			return findConstructor(context.getClass(), wrapping).newInstance(context, wrapee);
 		} catch (NoSuchMethodException e)
 		{
 			throw new RuntimeException(msgOfNoSuchConstructor(wrapping), e.getCause());
@@ -34,15 +33,6 @@ public class UIObjectFactory
 		{
 			throw new RuntimeException(msgOfCanNotInstantiation(wrapping), e.getCause());
 		}
-
-		// ensure element presented in the page
-		// ensurePresented(instance);
-
-		return instance;
-		// return
-		// findImplementingClass(wrapping).getDeclaredConstructor(browser.getClass(),
-		// WebElement.class).newInstance(context(),
-		// wrapee);
 	}
 
 	/**
@@ -70,48 +60,6 @@ public class UIObjectFactory
 
 		return null;
 	}
-	// /**
-	// * @param context
-	// * @param wrapping
-	// * @return
-	// * @throws NoSuchMethodException
-	// */
-	// private <T extends UIObject> Constructor<T> findConstructor(Class<?>
-	// context, Class<T> wrapping) throws NoSuchMethodException
-	// {
-	//
-	// Constructor<T> constructor = wrapping.getDeclaredConstructor(context,
-	// WebElement.class);
-	//
-	// if (constructor == null)
-	// {
-	// return findConstructor(context.getSuperclass(), wrapping);
-	// }
-	//
-	// return constructor;
-	// }
-
-	// private void ensurePresented(Object obj)
-	// {
-	// Method method = null;
-	// try
-	// {
-	// method = obj.getClass().getMethod("ensurePresented");
-	// } catch (SecurityException e)
-	// {
-	// // exception handling omitted for brevity
-	// } catch (NoSuchMethodException e)
-	// {
-	// // exception handling omitted for brevity
-	// }
-	//
-	// try
-	// {
-	// method.invoke(obj);
-	// } catch (Exception e)
-	// {
-	// }
-	// }
 
 	private String msgOfCanNotInstantiation(Class<?> clz)
 	{
@@ -135,18 +83,4 @@ public class UIObjectFactory
 				+ "③ Parameters order mismatched---expected (Context,WebElement) but got (WebElement,Context)\n",
 				clz.getSimpleName(), clz.getSimpleName(), clz.getSimpleName(), clz.getSimpleName());
 	}
-
-	// @SuppressWarnings("unchecked")
-	// private <E extends UIObject> Class<? extends E>
-	// findImplementingClass(final Class<E> elementClass)
-	// {
-	// try
-	// {
-	// return (Class<? extends E>) Class.forName(elementClass.getName());
-	// } catch (ClassNotFoundException e)
-	// {
-	// throw new RuntimeException("Unable to load class for " +
-	// elementClass.getName(), e);
-	// }
-	// }
 }

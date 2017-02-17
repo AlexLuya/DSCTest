@@ -13,7 +13,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.pagefactory.UIObjectDecorator;
 import com.google.common.collect.Lists;
 
 /**
@@ -37,7 +36,7 @@ public abstract class Widget<H extends Context<? ,? extends WebDriver>> extends 
 	{
 		super(context, wrapee);
 		// initialize all fields
-		PageFactory.initElements(new UIObjectDecorator(context(),this.element()), this);
+		PageFactory.initElements(context().decorator(this.element()), this);
 	}
 
 	/**
