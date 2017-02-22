@@ -1,5 +1,8 @@
 package com.dsc.tool.spock.extractor
 
+import static com.dsc.tool.spock.extractor.AstUtil.*
+import static com.dsc.tool.spock.extractor.ClassParser.*
+
 import com.dsc.tool.spock.extractor.domain.Block
 import com.dsc.tool.spock.extractor.domain.Ignored
 import com.dsc.tool.spock.extractor.domain.Scenario

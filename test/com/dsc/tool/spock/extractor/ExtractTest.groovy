@@ -1,7 +1,6 @@
 package com.dsc.tool.spock.extractor
 
 import com.dsc.tool.spock.extractor.domain.Block
-import com.dsc.tool.spock.extractor.domain.Ignored
 import com.dsc.tool.spock.extractor.domain.Scenario
 import com.dsc.tool.spock.extractor.domain.Spec
 import com.dsc.tool.spock.extractor.domain.Statement
@@ -14,7 +13,6 @@ import com.dsc.tool.spock.extractor.test.OnlyExpectWithSubject
 import com.dsc.tool.spock.extractor.test.OnlyExpectWithTitle
 import com.dsc.tool.spock.extractor.test.OnlyExpectWithoutDescriptionSpec
 import com.dsc.tool.spock.extractor.test.WhenThenWithDescriptionSpec
-import com.dsc.tool.spock.extractor.test.WithIgnoredSpec
 import com.dsc.tool.spock.extractor.test.WithIssueSpec
 import com.dsc.tool.spock.extractor.test.WithNoBlocksSpec
 import com.dsc.tool.spock.extractor.test.WithSeeSpec
@@ -29,7 +27,7 @@ class ExtractTest extends Specification {
 		List<Spec> specs = Extract.specsOf(OnlyExpectWithDescriptionSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.extractor.test.OnlyExpectWithDescriptionSpec", scenarios: [
+		specs[0] == new Spec(name: "com.dsc.tool.spock.extractor.test.OnlyExpectWithDescriptionSpec", scenarios: [
 			new Scenario(name: "adding test", statements: [new Statement(block: Block.EXPECT, description: "adding works")])
 		])
 	}
@@ -39,7 +37,7 @@ class ExtractTest extends Specification {
 		List<Spec> specs = Extract.specsOf(OnlyExpectWithoutDescriptionSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.extractor.test.OnlyExpectWithoutDescriptionSpec", scenarios: [
+		specs[0] == new Spec(name: "com.dsc.tool.spock.extractor.test.OnlyExpectWithoutDescriptionSpec", scenarios: [
 			new Scenario(name: "adding test", statements: [new Statement(block: Block.EXPECT)])
 		])
 	}
@@ -49,7 +47,7 @@ class ExtractTest extends Specification {
 		List<Spec> specs = Extract.specsOf(WhenThenWithDescriptionSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.extractor.test.WhenThenWithDescriptionSpec", scenarios: [
+		specs[0] == new Spec(name: "com.dsc.tool.spock.extractor.test.WhenThenWithDescriptionSpec", scenarios: [
 			new Scenario(name: "length should be positive", statements: [
 				new Statement(block: Block.WHEN, description: "get length of string"),
 				new Statement(block: Block.THEN, description: "length is positive")
@@ -62,7 +60,7 @@ class ExtractTest extends Specification {
 		List<Spec> specs = Extract.specsOf(WithWhereSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.extractor.test.WithWhereSpec", scenarios: [
+		specs[0] == new Spec(name: "com.dsc.tool.spock.extractor.test.WithWhereSpec", scenarios: [
 			new Scenario(name: "length should be positive", statements: [
 				new Statement(block: Block.WHEN),
 				new Statement(block: Block.THEN),
@@ -76,7 +74,7 @@ class ExtractTest extends Specification {
 		List<Spec> specs = Extract.specsOf(GivenExpectAndSetupExpectCleanupSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.extractor.test.GivenExpectAndSetupExpectCleanupSpec",
+		specs[0] == new Spec(name: "com.dsc.tool.spock.extractor.test.GivenExpectAndSetupExpectCleanupSpec",
 		scenarios: [
 			new Scenario(name: "length should be positive", statements: [
 				new Statement(block: Block.GIVEN, description: "A string"),
@@ -95,7 +93,7 @@ class ExtractTest extends Specification {
 		List<Spec> specs = Extract.specsOf(WithNoBlocksSpec.class)
 		then:
 		specs.size() == 1
-		specs[0] == new Spec(name: "com.dsc.spock.extractor.test.WithNoBlocksSpec", scenarios: [
+		specs[0] == new Spec(name: "com.dsc.tool.spock.extractor.test.WithNoBlocksSpec", scenarios: [
 			new Scenario(name: "adding test", statements: [new Statement(block: Block.EXPECT, description: "adding works")])
 		])
 	}
@@ -113,7 +111,7 @@ class ExtractTest extends Specification {
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.extractor.test.OnlyExpectWithTitle",
+				name: "com.dsc.tool.spock.extractor.test.OnlyExpectWithTitle",
 				title: "Tests of adding",
 				scenarios: [
 					new Scenario(
@@ -130,7 +128,7 @@ class ExtractTest extends Specification {
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.extractor.test.OnlyExpectWithAnd",
+				name: "com.dsc.tool.spock.extractor.test.OnlyExpectWithAnd",
 				scenarios: [
 					new Scenario(
 					name: "adding test",
@@ -147,7 +145,7 @@ class ExtractTest extends Specification {
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.extractor.test.OnlyExpectWithNarrative",
+				name: "com.dsc.tool.spock.extractor.test.OnlyExpectWithNarrative",
 				description: "Long description of tests",
 				scenarios: [
 					new Scenario(
@@ -164,7 +162,7 @@ class ExtractTest extends Specification {
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.extractor.test.OnlyExpectWithSubject",
+				name: "com.dsc.tool.spock.extractor.test.OnlyExpectWithSubject",
 				subjects: [String, Long, int, Byte] as Set,
 				scenarios: [
 					new Scenario(
@@ -181,7 +179,7 @@ class ExtractTest extends Specification {
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.extractor.test.WithSeeSpec",
+				name: "com.dsc.tool.spock.extractor.test.WithSeeSpec",
 				links: ['http://google.com', 'http://oracle.com'] as Set,
 				scenarios: [
 					new Scenario(
@@ -207,7 +205,7 @@ class ExtractTest extends Specification {
 		then:
 		specs.size() == 1
 		specs[0] == new Spec(
-				name: "com.dsc.spock.extractor.test.WithIssueSpec",
+				name: "com.dsc.tool.spock.extractor.test.WithIssueSpec",
 				issues: ['http://mantis.test/1', 'http://bugzilla.test/145'] as Set,
 				scenarios: [
 					new Scenario(
@@ -224,28 +222,28 @@ class ExtractTest extends Specification {
 						block: Block.EXPECT)])
 				])
 	}
-
-	def "should generate spec with ignore annotation on class and methods"() {
-		when:
-		List<Spec> specs = Extract.specsOf(WithIgnoredSpec.class)
-		then:
-		specs.size() == 1
-		specs[0] == new Spec(
-				name: "com.dsc.spock.extractor.test.WithIgnoredSpec",
-				ignored: new Ignored("Ignore spec description"),
-				scenarios: [
-					new Scenario(
-					name: "length of empty string is zero",
-					ignored: new Ignored("ignored scenario"),
-					statements: [
-						new Statement(
-						block: Block.EXPECT)]),
-					new Scenario(
-					name: "length should be positive",
-					ignored: new Ignored([:]),
-					statements: [
-						new Statement(
-						block: Block.EXPECT)])
-				])
-	}
+	//
+	//	def "should generate spec with ignore annotation on class and methods"() {
+	//		when:
+	//		List<Spec> specs = Extract.specsOf(WithIgnoredSpec.class)
+	//		then:
+	//		specs.size() == 1
+	//		specs[0] == new Spec(
+	//				name: "com.dsc.tool.spock.extractor.test.WithIgnoredSpec",
+	//				ignored: new Ignored("Ignore spec description"),
+	//				scenarios: [
+	//					new Scenario(
+	//					name: "length of empty string is zero",
+	//					ignored: new Ignored("ignored scenario"),
+	//					statements: [
+	//						new Statement(
+	//						block: Block.EXPECT)]),
+	//					new Scenario(
+	//					name: "length should be positive",
+	//					ignored: new Ignored([:]),
+	//					statements: [
+	//						new Statement(
+	//						block: Block.EXPECT)])
+	//				])
+	//	}
 }

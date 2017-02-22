@@ -31,7 +31,7 @@ public abstract class Composite<T extends Context<? ,? extends WebDriver>> exten
 
 	@Override
 	public void ensureAvailable(){
-		super.ensureAvailable();
+		//		super.ensureAvailable();
 		ensureChildrenAvailable();
 	}
 

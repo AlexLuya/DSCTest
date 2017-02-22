@@ -31,6 +31,9 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.7'
     compile 'org.spockframework:spock-core:1.0-groovy-2.4'
 	
+    // https://mvnrepository.com/artifact/org.apache.jmeter/ApacheJMeter_core
+    compile group: 'org.apache.jmeter', name: 'ApacheJMeter_core', version: '3.1'
+	
 	compile fileTree(dir: 'lib', include: '*.jar')
 	compile fileTree(dir: 'lib/appium', include: '*.jar')
 	compile fileTree(dir: 'lib/db', include: '*.jar')
@@ -44,4 +47,5 @@ dependencies {
 	testCompile files('lib/schemacrawler/schemacrawler-14.09.03.jar')
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
     testCompile 'junit:junit:4.12'
+	
 }
