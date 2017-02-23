@@ -33,6 +33,11 @@ dependencies {
 	
     // https://mvnrepository.com/artifact/org.apache.jmeter/ApacheJMeter_core
     compile group: 'org.apache.jmeter', name: 'ApacheJMeter_core', version: '3.1'
+	// https://mvnrepository.com/artifact/org.apache.jmeter/jorphan
+	compile group: 'org.apache.jmeter', name: 'jorphan', version: '3.1'
+	// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+	//compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.1.0'
+	
 	
 	compile fileTree(dir: 'lib', include: '*.jar')
 	compile fileTree(dir: 'lib/appium', include: '*.jar')

@@ -4,7 +4,6 @@
  **/
 package com.dsc.test.app.android
 
-import com.dsc.test.ContextFactory
 import com.dsc.test.app.AppTestStub
 import com.dsc.test.app.pages.Homepage
 
@@ -18,21 +17,20 @@ import spock.lang.Shared
  */
 public class AndroidTestExample extends AppTestStub
 {
-	@Shared Android android=ContextFactory.app()
 	@Shared Homepage homepage
 
 	def setupSpec(){
-		android.deviceName("Galaxy S4").platform("5.0.1").open("file/Hybrid_v1.8.1.apk")
+		app.deviceName("Galaxy S4").platform("5.0.1").open("file/Hybrid_v1.8.1.apk")
 		//UIAutomatorViewer will tell this
-		android.pkg("com.restwla.z88ab174d")
+		app.pkg("com.restwla.z88ab174d")
 
-		homepage=new Homepage(android)
+		homepage=new Homepage(app)
 	}
 
 
 	def "swipe left"(){
 		given:
-		android.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
 
 		when:""
 		int res=2+3
@@ -43,7 +41,7 @@ public class AndroidTestExample extends AppTestStub
 	//
 	//	def "swipe right"(){
 	//		given:
-	//		android.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+	//		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
 	//
 	//		when:""
 	//		int res=2+3
@@ -54,7 +52,7 @@ public class AndroidTestExample extends AppTestStub
 	//
 	//	def "upload"(){
 	//		given:
-	//		android.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+	//		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
 	//
 	//		when:""
 	//		int res=2+3

@@ -4,6 +4,9 @@
  **/
 package com.dsc.test.app
 
+import com.dsc.test.ContextFactory
+
+import spock.lang.Shared
 import spock.lang.Specification
 
 /**
@@ -14,5 +17,9 @@ import spock.lang.Specification
  */
 public class AppTestStub extends Specification
 {
-	App app
+	@Shared App app=ContextFactory.app()
+
+	def cleanupSpec(){
+		app.close()
+	}
 }

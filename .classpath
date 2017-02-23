@@ -27,15 +27,12 @@
 	<classpathentry kind="lib" path="lib/jackson-core-2.4.3.jar"/>
 	<classpathentry kind="lib" path="lib/json-io-2.7.5.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="lib/slf4j-api-1.7.7.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.7.jar"/>
 	<classpathentry kind="lib" path="lib/spock-dbunit-0.2.jar"/>
 	<classpathentry kind="lib" path="lib/db/hsqldb-2.3.4.jar"/>
 	<classpathentry kind="lib" path="lib/db/javassist-3.12.1.GA.jar"/>
-	<classpathentry kind="lib" path="lib/db/slf4j-api-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/driver/postgresql-9.4.1209.jar"/>
 	<classpathentry kind="lib" path="lib/driver/mysql-connector-java-5.1.39-bin.jar"/>
-	<classpathentry kind="lib" path="lib/selenium-combined-3.0.1-nodeps.jar"/>
 	<classpathentry kind="lib" path="lib/maven/maven-core-3.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/maven/maven-plugin-annotations-3.4.jar"/>
 	<classpathentry kind="lib" path="lib/maven/maven-plugin-api-3.3.1.jar"/>
@@ -44,7 +41,12 @@
 	<classpathentry kind="lib" path="lib/schemacrawler/schemacrawler-14.09.03.jar"/>
 	<classpathentry kind="lib" path="lib/ashot-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/appium-5.0.0.jar" sourcepath="lib/src/appium-5.0.0-sources.jar"/>
-	<classpathentry kind="lib" path="lib/jmeter/lib/ext/ApacheJMeter_core.jar"/>
+	<classpathentry kind="lib" path="lib/jmeter/lib/ext/ApacheJMeter_core.jar" sourcepath="lib/src/jmeter/core"/>
+	<classpathentry kind="lib" path="lib/jmeter/lib/jorphan.jar"/>
+	<classpathentry kind="lib" path="lib/jmeter/lib/ext/ApacheJMeter_http.jar"/>
+	<classpathentry kind="lib" path="lib/jmeter/lib/ext/ApacheJMeter_java.jar" sourcepath="lib/src/jmeter/protocol"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.13.jar"/>
+	<classpathentry kind="lib" path="lib/selenium-combined-3.1.0-nodeps.jar" sourcepath="lib/src/selenium-3.1.0"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>

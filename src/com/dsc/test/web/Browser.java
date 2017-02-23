@@ -22,7 +22,6 @@ import org.openqa.selenium.WebDriver.Window;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -77,15 +76,15 @@ public class Browser extends Context<Browser, WebDriver>
 		return new Browser(new ChromeDriver(cap(cap)), cap);
 	}
 
-	public static Browser firfox()
-	{
-		// System.setProperty("webdriver.firefox.driver", WHERE_FIREFOX_DRIVER);
-		// System.setProperty("webdriver.firefox.bin", WHERE_FIREFOX_BIN);
-		DesiredCapabilities cap = DesiredCapabilities.firefox();
-		cap.setCapability("marionette", true);
-
-		return new Browser(new FirefoxDriver(cap(cap)), cap);
-	}
+	//	public static Browser firfox()
+	//	{
+	//		System.setProperty("webdriver.firefox.driver", WHERE_FIREFOX_DRIVER);
+	//		System.setProperty("webdriver.firefox.bin", WHERE_FIREFOX_BIN);
+	//		DesiredCapabilities cap = DesiredCapabilities.firefox();
+	//		cap.setCapability("marionette", true);
+	//
+	//		return new Browser(new FirefoxDriver(cap(cap)), cap);
+	//	}
 
 	// private static final String WHERE_FIREFOX_BIN = "/usr/bin/firefox";
 	// private static final String WHERE_FIREFOX_DRIVER =

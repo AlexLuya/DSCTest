@@ -19,22 +19,17 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
  */
 public class Homepage extends AppComposite
 {
-	@AndroidFindBy(id = "id/button_callout_main")
+	@AndroidFindBy(id = "com.restwla.z88ab174d:id/button_callout_main")
 	Button	callUsButton;
-	@AndroidFindBy(id = "button_callout_text")
+	@AndroidFindBy(id = "com.restwla.z88ab174d:id/button_callout_text")
 	Button	callUsButtonText;
-	@AndroidFindBy(id = "id/button_callout_iconfont")
+	@AndroidFindBy(id = "com.restwla.z88ab174d:id/button_callout_iconfont")
 	Button	callUsIcon;
-	//	@AndroidFindBy(id = "com.restwla.z88ab174d:id/button_callout_main")
-	//	Button	callUsButton;
-	//	@AndroidFindBy(id = "com.restwla.z88ab174d:id/button_callout_text")
-	//	Button	callUsButtonText;
-	//	@AndroidFindBy(id = "com.restwla.z88ab174d:id/button_callout_iconfont")
-	//	Button	callUsIcon;
 
 	public Homepage(App<?, ?> app)
 	{
 		super(app, app.findElemByXpath("//*"));
+		callUsButton.click();
 		ensureAvailable();
 	}
 

@@ -19,7 +19,6 @@ import com.dsc.test.common.ui.base.UIObject;
  */
 public abstract class AppComposite extends Composite<App<?, ?>>
 {
-
 	/**
 	 * @param context
 	 * @param id
@@ -46,5 +45,4 @@ public abstract class AppComposite extends Composite<App<?, ?>>
 	{
 		super(context, wrapee);
 	}
-
 }
