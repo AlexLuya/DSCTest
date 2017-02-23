@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.pagefactory;
+package com.dsc.test.web.pagefactory;
 
 import java.lang.reflect.Field;
 

@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.pagefactory;
+package com.dsc.test.common;
 
 import static com.dsc.util.Util.wrap;
 
@@ -12,10 +12,9 @@ import java.lang.reflect.Parameter;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.Context;
 import com.dsc.test.common.ui.base.UIObject;
 
-public class UIObjectFactory
+public class UIFieldFactory
 {
 	public <T extends UIObject> T create(Context<?, ?> context, Class<T> wrapping, WebElement wrapee) throws Exception
 	{

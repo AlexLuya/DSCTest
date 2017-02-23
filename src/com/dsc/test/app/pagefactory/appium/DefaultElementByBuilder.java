@@ -14,8 +14,21 @@
  * limitations under the License.
  */
 
-package io.appium.java_client.pagefactory;
+package com.dsc.test.app.pagefactory.appium;
 
+import io.appium.java_client.pagefactory.AndroidFindAll;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AndroidFindBys;
+import io.appium.java_client.pagefactory.HowToUseLocators;
+import io.appium.java_client.pagefactory.LocatorGroupStrategy;
+import io.appium.java_client.pagefactory.SelendroidFindAll;
+import io.appium.java_client.pagefactory.SelendroidFindBy;
+import io.appium.java_client.pagefactory.SelendroidFindBys;
+import io.appium.java_client.pagefactory.WindowsFindBy;
+import io.appium.java_client.pagefactory.iOSFindAll;
+import io.appium.java_client.pagefactory.iOSFindBy;
+import io.appium.java_client.pagefactory.iOSFindBys;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import io.appium.java_client.pagefactory.bys.ContentMappedBy;
 import io.appium.java_client.pagefactory.bys.ContentType;
 import io.appium.java_client.pagefactory.bys.builder.AppiumByBuilder;

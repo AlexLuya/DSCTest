@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.common.pagefactory;
+package com.dsc.test.web.pagefactory;
 
 import static com.dsc.util.Util.wrap;
 
@@ -11,20 +11,22 @@ import java.lang.reflect.Field;
 
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 
-import com.dsc.test.common.Context;
+import com.dsc.test.common.UIFieldFactory;
 import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.web.Browser;
 
-public abstract class UIObjectDecorator extends DefaultFieldDecorator
+public class WebFieldDecorator extends DefaultFieldDecorator
 {
-	private final Context<?, ?>	context;
+	private final Browser	context;
 
 	// private CompositeFactory compositeFactory = new CompositeFactoryImpl();
 
-	private UIObjectFactory		uiObjectFactory	= new UIObjectFactory();
+	private UIFieldFactory	uiObjectFactory	= new UIFieldFactory();
 
-	public UIObjectDecorator(Context<?, ?> context, SearchContext searchContext)
+	public WebFieldDecorator(Browser context, SearchContext searchContext)
 	{
 		super(new WebElementLocatorFactory(searchContext));
 		this.context = context;
@@ -56,25 +58,33 @@ public abstract class UIObjectDecorator extends DefaultFieldDecorator
 		return super.decorate(classLoader, field);
 	}
 
-	/**
-	 * @param field
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * com.dsc.test.common.pagefactory.UIFieldDecorator#annotatedId(java.lang.
+	 * reflect.Field)
 	 */
-	protected abstract String annotatedId(Field field);
+	protected String annotatedId(Field field)
+	{
+		return ((FindBy) findByAnno(field)).id();
+	}
 
-	/**
-	 * @param field
-	 * @return
-	 */
 	protected <T> T findByAnno(Field field)
 	{
 		return field.getAnnotation(findByClass());
 	}
 
-	/**
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.common.pagefactory.UIFieldDecorator#findByClass()
 	 */
-	protected abstract <T> Class<T> findByClass();
+	@SuppressWarnings("unchecked")
+	protected <T> Class<T> findByClass()
+	{
+		return (Class<T>) FindBy.class;
+	}
 
 	private Object decorateElement(final Field field, final WebElement wrapee) throws Exception
 	{

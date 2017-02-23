@@ -29,9 +29,10 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.pagefactory.FieldDecorator;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.pagefactory.UIObjectDecorator;
+import com.dsc.test.web.pagefactory.WebFieldDecorator;
 import com.dsc.util.Util;
 
 public class Browser extends Context<Browser, WebDriver>
@@ -142,9 +143,9 @@ public class Browser extends Context<Browser, WebDriver>
 	 * @see com.dsc.test.common.Context#decorator(org.openqa.selenium.SearchContext)
 	 */
 	@Override
-	public UIObjectDecorator decorator(SearchContext searchCxt)
+	public FieldDecorator decorator(SearchContext searchCxt)
 	{
-		return new WebUIObjectDecorator(this, searchCxt);
+		return new WebFieldDecorator(this, searchCxt);
 	}
 
 	public void deleteAllCookies()

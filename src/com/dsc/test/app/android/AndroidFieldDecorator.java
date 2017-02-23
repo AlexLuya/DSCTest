@@ -2,15 +2,16 @@
  * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test.web;
+package com.dsc.test.app.android;
 
 import java.lang.reflect.Field;
 
 import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.support.FindBy;
 
-import com.dsc.test.common.Context;
-import com.dsc.test.common.pagefactory.UIObjectDecorator;
+import com.dsc.test.app.App;
+import com.dsc.test.app.pagefactory.AppFiledDecorator;
+
+import io.appium.java_client.pagefactory.AndroidFindBy;
 
 /**
  * @Author alex
@@ -18,14 +19,14 @@ import com.dsc.test.common.pagefactory.UIObjectDecorator;
  * @Version 1.0
  * @Since 1.0
  */
-public class WebUIObjectDecorator extends UIObjectDecorator
+public class AndroidFieldDecorator extends AppFiledDecorator
 {
 
 	/**
 	 * @param context
 	 * @param searchContext
 	 */
-	public WebUIObjectDecorator(Context<?, ?> context, SearchContext searchContext)
+	public AndroidFieldDecorator(App<?, ?> context, SearchContext searchContext)
 	{
 		super(context, searchContext);
 	}
@@ -36,7 +37,7 @@ public class WebUIObjectDecorator extends UIObjectDecorator
 	@Override
 	protected String annotatedId(Field field)
 	{
-		return ((FindBy)findByAnno(field)).id();
+		return ((AndroidFindBy)findByAnno(field)).id();
 	}
 
 	/* (non-Javadoc)
@@ -46,6 +47,6 @@ public class WebUIObjectDecorator extends UIObjectDecorator
 	@Override
 	protected <T> Class<T> findByClass()
 	{
-		return (Class<T>) FindBy.class;
+		return (Class<T>) AndroidFindBy.class;
 	}
 }

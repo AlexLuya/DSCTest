@@ -14,30 +14,31 @@
  * limitations under the License.
  */
 
-package io.appium.java_client.pagefactory;
+package com.dsc.test.app.pagefactory.appium;
 
-import io.appium.java_client.pagefactory.interceptors.InterceptorOfASingleElement;
+import java.lang.reflect.Method;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 
-import java.lang.reflect.Method;
+import io.appium.java_client.pagefactory.interceptors.InterceptorOfASingleElement;
 
 /**
  * Intercepts requests to {@link io.appium.java_client.MobileElement}.
  */
 class ElementInterceptor extends InterceptorOfASingleElement {
 
-    ElementInterceptor(ElementLocator locator, WebDriver driver) {
-        super(locator, driver);
-    }
+	ElementInterceptor(ElementLocator locator, WebDriver driver) {
+		super(locator, driver);
+	}
 
-    @Override protected Object getObject(WebElement element, Method method, Object[] args)
-        throws Throwable {
-        try {
-            return method.invoke(element, args);
-        } catch (Throwable t) {
-            throw ThrowableUtil.extractReadableException(t);
-        }
-    }
+	@Override protected Object getObject(WebElement element, Method method, Object[] args)
+			throws Throwable {
+		try {
+			return method.invoke(element, args);
+		} catch (Throwable t) {
+			throw ThrowableUtil.extractReadableException(t);
+		}
+	}
 }

@@ -29,7 +29,6 @@ public class Homepage extends AppComposite
 	public Homepage(App<?, ?> app)
 	{
 		super(app, app.findElemByXpath("//*"));
-		callUsButton.click();
 		ensureAvailable();
 	}
 

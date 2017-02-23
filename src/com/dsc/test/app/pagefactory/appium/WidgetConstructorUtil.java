@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package io.appium.java_client.pagefactory;
+package com.dsc.test.app.pagefactory.appium;
 
 import org.openqa.selenium.WebElement;
+
+import io.appium.java_client.pagefactory.Widget;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;

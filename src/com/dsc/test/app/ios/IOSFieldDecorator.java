@@ -9,8 +9,8 @@ import java.lang.reflect.Field;
 
 import org.openqa.selenium.SearchContext;
 
-import com.dsc.test.common.Context;
-import com.dsc.test.common.pagefactory.UIObjectDecorator;
+import com.dsc.test.app.App;
+import com.dsc.test.app.pagefactory.AppFiledDecorator;
 
 import io.appium.java_client.pagefactory.iOSFindBy;
 
@@ -20,14 +20,14 @@ import io.appium.java_client.pagefactory.iOSFindBy;
  * @Version 1.0
  * @Since 1.0
  */
-public class IOSUIObjectDecorator extends UIObjectDecorator
+public class IOSFieldDecorator extends AppFiledDecorator
 {
 
 	/**
 	 * @param context
 	 * @param searchContext
 	 */
-	public IOSUIObjectDecorator(Context<?, ?> context, SearchContext searchContext)
+	public IOSFieldDecorator(App<?, ?> context, SearchContext searchContext)
 	{
 		super(context, searchContext);
 	}

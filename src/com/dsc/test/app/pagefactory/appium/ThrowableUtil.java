@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.appium.java_client.pagefactory;
+package com.dsc.test.app.pagefactory.appium;
 
 import org.openqa.selenium.InvalidSelectorException;
 import org.openqa.selenium.StaleElementReferenceException;

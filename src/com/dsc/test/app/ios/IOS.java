@@ -17,9 +17,9 @@ import java.net.URL;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.pagefactory.FieldDecorator;
 
 import com.dsc.test.app.App;
-import com.dsc.test.common.pagefactory.UIObjectDecorator;
 
 import io.appium.java_client.ios.IOSDriver;
 
@@ -54,9 +54,9 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	 * @see com.dsc.test.common.Context#decorator(org.openqa.selenium.SearchContext)
 	 */
 	@Override
-	public UIObjectDecorator decorator(SearchContext searchCxt)
+	public FieldDecorator decorator(SearchContext searchCxt)
 	{
-		return new IOSUIObjectDecorator(this,searchCxt);
+		return new IOSFieldDecorator(this,searchCxt);
 	}
 
 	// usually recommended for versions>10.X.

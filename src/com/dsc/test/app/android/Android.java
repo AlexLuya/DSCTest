@@ -22,9 +22,9 @@ import java.nio.file.Paths;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.pagefactory.FieldDecorator;
 
 import com.dsc.test.app.App;
-import com.dsc.test.common.pagefactory.UIObjectDecorator;
 
 import io.appium.java_client.android.AndroidDriver;
 
@@ -57,9 +57,9 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 	 * com.dsc.test.common.Context#decorator(org.openqa.selenium.SearchContext)
 	 */
 	@Override
-	public UIObjectDecorator decorator(SearchContext searchCxt)
+	public FieldDecorator decorator(SearchContext searchCxt)
 	{
-		return new AndroidUIObjectDecorator(this, searchCxt);
+		return new AndroidFieldDecorator(this, searchCxt);
 	}
 
 	// usually recommended for versions>HP ???.
