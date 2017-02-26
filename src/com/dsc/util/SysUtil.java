@@ -57,7 +57,7 @@ public class SysUtil
 
 	public static void enableTimeSyncAfter(int seconds)
 	{
-		Util.sleep(seconds * 1000);
+		Util.sleep(seconds);
 		switchTimeSync(true);
 	}
 

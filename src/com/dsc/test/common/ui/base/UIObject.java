@@ -10,6 +10,8 @@ import static com.dsc.util.Util.nullIfEmpty;
 import static com.dsc.util.Util.wrap;
 import static java.lang.String.format;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -22,22 +24,23 @@ import com.dsc.util.Util;
 // LP BLOG exception or boolean+log
 public class UIObject
 {
-	protected static final String	VALUE		= "value";
-	private static final String		CLASS		= "class";
-	private static final String		ERROR_CSS	= "error";
-	private static final String		ID			= "id";
+	protected static final String			VALUE							= "value";
+	private static final String				CLASS							= "class";
+	private static final int				DEFAULT_DURATION_MILLISECONDS	= 500;
+	private static final String				ERROR_CSS						= "error";
+	private static final String				ID								= "id";
 
 	// String PATTERN="pattern";
-	private static final String		SRC			= "src";
-	private static final String		TITLE		= "title";
-	private static final String		WARN_CSS	= "warning";
+	private static final String				SRC								= "src";
+	private static final String				TITLE							= "title";
+	private static final String				WARN_CSS						= "warning";
 
-	protected String				annotatedId;
+	protected String						annotatedId;
 
-	protected WebElement			wrapee;
-	private Context<?,? extends WebDriver>				context;
+	protected WebElement					wrapee;
+	private Context<?, ? extends WebDriver>	context;
 
-	public UIObject(Context<?,? extends WebDriver> context, String id)
+	public UIObject(Context<?, ? extends WebDriver> context, String id)
 	{
 		this(context, context.findElemById(id));
 	}
@@ -46,7 +49,7 @@ public class UIObject
 	 * @param context
 	 * @param wrapee
 	 */
-	public UIObject(Context<?,? extends WebDriver> context, WebElement wrapee)
+	public UIObject(Context<?, ? extends WebDriver> context, WebElement wrapee)
 	{
 		this.context = context;
 		this.wrapee = wrapee;
@@ -63,7 +66,8 @@ public class UIObject
 		return css().contains(css);
 	}
 
-	public Context<? ,?> context(){
+	public Context<?, ?> context()
+	{
 		return context;
 	}
 
@@ -200,6 +204,19 @@ public class UIObject
 	{
 		info("calls !#containsCss() in #notContainsCss()");
 		return !containsCss(css);
+	}
+
+	public boolean presented()
+	{
+		try
+		{
+			ensureAvailable();
+		} catch (Exception e)
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -382,22 +399,30 @@ public class UIObject
 		return true;
 	}
 
+	/**
+	 * @param name
+	 */
+	protected void input(String text)
+	{
+		wrapee.sendKeys(text);
+	}
+
 	protected boolean isSyncErrorIndicated(final String text)
 	{
 		info("#isSyncErrorIndicated() call #containsText() and #isShowingError()");
 		return containsText(text) && isShowingError();
 	}
 
+	// protected boolean isPresented(String id)
+	// {
+	// return context.isPresented(id);
+	// }
+
 	protected boolean isSyncWarningIndicated(final String text)
 	{
 		info("#isSyncErrorIndicated() call #containsText() and #isShowWarning()");
 		return containsText(text) && isShowingWarning();
 	}
-
-	// protected boolean isPresented(String id)
-	// {
-	// return context.isPresented(id);
-	// }
 
 	protected void removeAttribute(String name)
 	{
@@ -413,14 +438,6 @@ public class UIObject
 		context.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", wrapee, name, value);
 	}
 
-	/**
-	 * @param name
-	 */
-	protected void setText(String text)
-	{
-		wrapee.sendKeys(text);
-	}
-
 	protected String src()
 	{
 		return stringAttr(SRC);
@@ -432,24 +449,97 @@ public class UIObject
 		return src().endsWith(src);
 	}
 
+	protected void swipeDigonal(int endX, int endY, int distance)
+	{
+		throw new RuntimeException("swipeDigonal() NOT ready due to alex is busy");
+	}
+
+	protected void swipeDown(int distance)
+	{
+		if (distance < 0)
+		{
+			throw new RuntimeException("distance must >=0,using swipeUp() if wanting to swipe up");
+		}
+
+		int endY = centerYOrAvaiable() + distance;
+		//
+		if (endY > windowHeight())
+		{
+			endY = context.height() - 1;
+		}
+
+		swipeWithDefaultDuration(centerXOrAvaiable(), endY);
+	}
+
+	protected void swipeLeft(int distance)
+	{
+		if (distance < 0)
+		{
+			throw new RuntimeException("distance must >=0,using swipeRight() if wanting to swipe right");
+		}
+
+		int endX = centerXOrAvaiable() - distance;
+		//
+		if (endX < 1)
+		{
+			endX = 1;
+		}
+
+		swipeWithDefaultDuration(endX, centerYOrAvaiable());
+	}
+
+	protected void swipeRight(int distance)
+	{
+		if (distance < 0)
+		{
+			throw new RuntimeException("distance must >=0,using swipeLeft() if wanting to swipe left");
+		}
+
+		int endX = centerXOrAvaiable() + distance;
+		//
+		if (endX >= windowWidth())
+		{
+			endX = windowWidth() - 1;
+		}
+
+		swipeWithDefaultDuration(endX, centerYOrAvaiable());
+	}
+
+	protected void swipeUp(int distance)
+	{
+		if (distance < 0)
+		{
+			throw new RuntimeException("distance must >=0,using swipeDown() if wanting to swipe down");
+		}
+
+		int endY = centerYOrAvaiable() - distance;
+		//
+		if (endY < 1)
+		{
+			endY = 1;
+		}
+
+		swipeWithDefaultDuration(centerXOrAvaiable(), endY);
+	}
+
 	/**
 	 * @return inner text content or null
 	 */
 	protected String text()
 	{
 		// DON'T do it like blew,return null is acceptable
-		//		if (doGetText() == null)
-		//		{
-		//			return waitUntil(textPresented());
-		//		}
+		// if (doGetText() == null)
+		// {
+		// return waitUntil(textPresented());
+		// }
 
 		// wait 3 seconds for text being presented
-		//due to it will be retrieved async
+		// due to it will be retrieved async
 		int wait = 1;
-		while (doGetText() == null && wait < 300)
+		while (doGetText() == null && wait < 3)
 		{
-			//wait 10 milliseconds each time
-			Util.sleep(10 * wait++);
+			// wait 10 milliseconds each time
+			Util.sleep(0.01 * wait++);
 		}
 
 		return doGetText();
@@ -477,6 +567,52 @@ public class UIObject
 	protected <O> O waitUntil(ExpectedCondition<O> isTrue)
 	{
 		return context.waitUntil(isTrue);
+	}
+
+	private int centerX()
+	{
+		Point topLeft = wrapee.getLocation();
+		Dimension size = wrapee.getSize();
+
+		return topLeft.getX() + size.getWidth() / 2;
+	}
+
+	private int centerXOrAvaiable()
+	{
+		if (centerX() < 0)
+		{
+			return 0;
+		}
+
+		if (centerY() > windowWidth())
+		{
+			return windowWidth() - 1;
+		}
+
+		return centerX();
+	}
+
+	private int centerY()
+	{
+		Point topLeft = wrapee.getLocation();
+		Dimension size = wrapee.getSize();
+
+		return topLeft.getY() + size.getHeight() / 2;
+	}
+
+	private int centerYOrAvaiable()
+	{
+		if (centerY() < 0)
+		{
+			return 0;
+		}
+
+		if (centerY() > context.height())
+		{
+			return context.height() - 1;
+		}
+
+		return centerY();
 	}
 
 	/**
@@ -538,29 +674,49 @@ public class UIObject
 		return nullIfEmpty(attr(attr));
 	}
 
-	//	private ExpectedCondition<String> textPresented()
-	//	{
-	//		return new ExpectedCondition<String>()
-	//		{
-	//			@Override
-	//			public String apply(WebDriver driver)
-	//			{
-	//				info("wait text is presented in-------------------------%s", id());
+	private void swipe(int endx, int endy, int duration)
+	{
+		context.swipe(centerXOrAvaiable(), centerYOrAvaiable(), endx, endy, duration);
+	}
+
+	private void swipeWithDefaultDuration(int endx, int endy)
+	{
+		swipe(endx, endy, DEFAULT_DURATION_MILLISECONDS);
+	}
+
+	private int windowHeight()
+	{
+		return context.height();
+	}
+
+	private int windowWidth()
+	{
+		return context.width();
+	}
+
+	// private ExpectedCondition<String> textPresented()
+	// {
+	// return new ExpectedCondition<String>()
+	// {
+	// @Override
+	// public String apply(WebDriver driver)
+	// {
+	// info("wait text is presented in-------------------------%s", id());
 	//
-	//				try
-	//				{
-	//					return doGetText();
-	//				} catch (StaleElementReferenceException e)
-	//				{
-	//					return null;
-	//				}
-	//			}
+	// try
+	// {
+	// return doGetText();
+	// } catch (StaleElementReferenceException e)
+	// {
+	// return null;
+	// }
+	// }
 	//
-	//			@Override
-	//			public String toString()
-	//			{
-	//				return String.format("text to be present in element %s", id());
-	//			}
-	//		};
-	//	}
+	// @Override
+	// public String toString()
+	// {
+	// return String.format("text to be present in element %s", id());
+	// }
+	// };
+	// }
 }

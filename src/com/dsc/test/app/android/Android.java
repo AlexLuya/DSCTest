@@ -76,13 +76,22 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 		return this;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dsc.test.app.App#isLocked()
+	 */
+	@Override
+	public boolean isLocked()
+	{
+		return driver.isLocked();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.dsc.test.app.App#lockScreen(int)
+	 * @see com.dsc.test.app.App#lockDevice(int)
 	 */
 	@Override
-	public void lockScreen(int seconds)
+	public void lockDevice(int seconds)
 	{
 		driver.lockDevice();
 	}
@@ -93,16 +102,16 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 		return this;
 	}
 
+	//	@Override
+	//	public Android launch(String pkg)
+	//	{
+	//		setCapability(APP_PACKAGE, pkg);
+	//		return this;
+	//	}
+
 	public void openNotification()
 	{
 		driver.openNotifications();
-	}
-
-	@Override
-	public Android pkg(String pkg)
-	{
-		setCapability(APP_PACKAGE, pkg);
-		return this;
 	}
 
 	public void pushFile(String file, String toWhere) throws IOException
@@ -142,10 +151,10 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.dsc.test.app.App#unlockScreen()
+	 * @see com.dsc.test.app.App#unlockDevice()
 	 */
 	@Override
-	public void unlockScreen()
+	public void unlockDevice()
 	{
 		driver.unlockDevice();
 	}
@@ -159,5 +168,14 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 	protected AndroidDriver<RemoteWebElement> createDriver(String remoteAddress) throws MalformedURLException
 	{
 		return new AndroidDriver<>(new URL(remoteAddress), cap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.dsc.test.app.App#pkgOrBundleId()
+	 */
+	@Override
+	protected String pkgOrBundleId()
+	{
+		return APP_PACKAGE;
 	}
 }

@@ -5,6 +5,7 @@
 package com.dsc.test.app.android
 
 import com.dsc.test.app.AppTestStub
+import com.dsc.test.app.pages.CallUsView
 import com.dsc.test.app.pages.Homepage
 
 import spock.lang.Shared
@@ -20,44 +21,110 @@ public class AndroidTestExample extends AppTestStub
 	@Shared Homepage homepage
 
 	def setupSpec(){
-		app.deviceName("Galaxy S4").platform("5.0.1").open("file/Hybrid_v1.8.1.apk")
-		//UIAutomatorViewer will tell this
-		app.pkg("com.restwla.z88ab174d")
+		app.deviceName("1501-M02").version("5.1").open("file/Hybrid_v1.8.1.apk")
+		//		app.deviceName("1501-M02").version("5.1").activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon").open("com.restwla.z88ab174d")
 
 		homepage=new Homepage(app)
 	}
-
 
 	def "swipe left"(){
 		given:
 		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
 
-		when:""
-		int res=2+3
+		when:"swipe left"
+		homepage.slideShow.swipeLeft(300)
 
 		then:
-		res==5
+		true
 	}
-	//
-	//	def "swipe right"(){
-	//		given:
-	//		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
-	//
-	//		when:""
-	//		int res=2+3
-	//
-	//		then:
-	//		res==5
-	//	}
-	//
-	//	def "upload"(){
-	//		given:
-	//		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
-	//
-	//		when:""
-	//		int res=2+3
-	//
-	//		then:
-	//		res==5
-	//	}
+
+	def "swipe right"(){
+		given:
+		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+
+		when:"swipe left"
+		homepage.slideShow.swipeLeft(300)
+		and:"swipe back"
+		homepage.slideShow.swipeRight(300)
+
+		then:
+		true
+	}
+
+	def "swipe up"(){
+	}
+
+	def "swipe down"(){
+	}
+
+	def "swipe diagonal"(){
+	}
+
+	def "click"(){
+		given:
+		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+
+		when:
+		CallUsView callUsView=homepage.clickCallUs()
+
+		then:
+		callUsView.presented()==true
+	}
+
+	def "hideKeyBoard"(){
+		given:
+		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+
+		when:
+		homepage.clickMe().clickSignUpWithEmail().inputEmail("email@domain.com")
+		and:""
+		app.hideKeyboard()
+
+		then:
+		app.isKeyboardHidden()==true
+	}
+
+	def "pullFiles"(){
+
+	}
+
+	def "press"(){
+		when:
+		app.press(homepage.getWrapped())
+
+		then:
+		true
+	}
+
+	def "tap"(){
+		when:
+		app.tap(homepage.getWrapped())
+
+		then:
+		true
+	}
+
+	def "toNative"(){
+
+	}
+
+	def "toWebView"(){
+
+	}
+
+	def "lock device"(){
+		when:
+		app.lockDevice(1)
+
+		then:
+		true
+	}
+
+	def "pull file"(){
+
+	}
+
+	def "unlock scree"(){
+
+	}
 }

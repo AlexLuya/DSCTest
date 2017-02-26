@@ -9,8 +9,10 @@ import static io.appium.java_client.remote.MobileCapabilityType.APP;
 import static io.appium.java_client.remote.MobileCapabilityType.AUTOMATION_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.BROWSER_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.DEVICE_NAME;
+import static io.appium.java_client.remote.MobileCapabilityType.FULL_RESET;
 import static io.appium.java_client.remote.MobileCapabilityType.NEW_COMMAND_TIMEOUT;
 import static io.appium.java_client.remote.MobileCapabilityType.PLATFORM_NAME;
+import static io.appium.java_client.remote.MobileCapabilityType.PLATFORM_VERSION;
 import static org.openqa.selenium.remote.CapabilityType.TAKES_SCREENSHOT;
 
 import java.io.File;
@@ -19,6 +21,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 
@@ -26,7 +29,6 @@ import com.dsc.test.common.Context;
 import com.dsc.util.Util;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 
@@ -66,7 +68,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		// setCapability("noReset","true");
 		// Reset state by clearing data rather then uninstalling to prevent
 		// re-installing between sessions.
-		setCapability("fullReset", "false");
+		setCapability(FULL_RESET, "false");
 		// NP check whether Appium server started
 		setCapability(AUTOMATION_NAME, "Appium");
 		setCapability(TAKES_SCREENSHOT, "true");
@@ -110,6 +112,11 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		return (T) this;
 	}
 
+	public Keyboard getKeyboard()
+	{
+		return driver.getKeyboard();
+	}
+
 	public void hideKeyboard()
 	{
 		driver.hideKeyboard();
@@ -120,7 +127,22 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		return driver.isAppInstalled(bundleId);
 	}
 
-	public abstract void lockScreen(int seconds);
+	public boolean isKeyboardHidden()
+	{
+		try
+		{
+			driver.hideKeyboard();
+		} catch (Exception e)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	public abstract boolean isLocked();
+
+	public abstract void lockDevice(int seconds);
 
 	/**
 	 * Multi touch action.
@@ -154,49 +176,23 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	 * @see com.dsc.test.common.Context#open(java.lang.String)
 	 */
 	@Override
-	public void open(String appFilePath) throws MalformedURLException
+	public void open(String appIdOrFile) throws MalformedURLException
 	{
-		Util.mustNotNull("apk path", appFilePath);
+		Util.mustNotNull("app id or file", appIdOrFile);
 
-		// install(appFilePath);
-		setCapability(APP, new File(appFilePath).getAbsolutePath());
+		//		setCapability(pkgOrBundleId(), appIdOrFile);
+		setCapability(APP, new File(appIdOrFile).getAbsolutePath());
 
 		open();
+
+		if (!driver.isAppInstalled(appIdOrFile))
+		{
+		}
 	}
-
-	public abstract T pkg(String pkg);
-
-	/**
-	 * Platform.
-	 *
-	 * @param platform
-	 *            the platform
-	 * @return the t
-	 */
-	@SuppressWarnings("unchecked")
-	public T platform(String platform)
-	{
-		setCapability(PLATFORM_NAME, platform);
-		return (T) this;
-	}
-
-	// /**
-	// * Install.
-	// *
-	// * @param appFilePath
-	// * the app file path
-	// * @return the t
-	// */
-	// @SuppressWarnings("unchecked")
-	// public T install(String appFilePath)
-	// {
-	// setCapability(APP, new File(appFilePath).getAbsolutePath());
-	// return (T) this;
-	// }
 
 	public void press(WebElement elem)
 	{
-		touch().press(elem);
+		touch().press(elem).release().perform();
 	}
 
 	public byte[] pullFile(String fromWhere)
@@ -220,11 +216,6 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		return (T) this;
 	}
 
-	public void remove(String bundleId)
-	{
-		driver.removeApp(bundleId);
-	}
-
 	public void reset()
 	{
 		driver.resetApp();
@@ -237,29 +228,16 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 
 	public abstract void shake();
 
+	@Override
 	@SuppressWarnings("deprecation")
 	public void swipe(int startx, int starty, int endx, int endy, int duration)
 	{
 		driver.swipe(startx, starty, endx, endy, duration);
 	}
 
-	/**
-	 * Swipe.
-	 *
-	 * @param from
-	 *            the from
-	 * @param to
-	 *            the to
-	 */
-	public void swipe(MobileElement from, MobileElement to)
-	{
-		// touch().press(from, -10, from.getCenter().y - from.getLocation().y)
-		// .waitAction(2000).moveTo(to, 10, center.y - location.y).release().p
-	}
-
 	public void tap(WebElement elem)
 	{
-		touch().tap(elem);
+		touch().tap(elem).release().perform();
 	}
 
 	/**
@@ -312,7 +290,12 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 
 	public abstract T UDID(String udid);
 
-	public abstract void unlockScreen();
+	public void uninstall(String bundleId)
+	{
+		driver.removeApp(bundleId);
+	}
+
+	public abstract void unlockDevice();
 
 	/**
 	 * Creates the driver.
@@ -324,4 +307,29 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	 *             the malformed URL exception
 	 */
 	protected abstract D createDriver(String remoteAddress) throws MalformedURLException;
+
+	/**
+	 * @return
+	 */
+	protected abstract String pkgOrBundleId();
+
+	/**
+	 * Platform.
+	 *
+	 * @param platform
+	 *            the platform
+	 * @return the t
+	 */
+	@SuppressWarnings("unchecked")
+	protected T platform(String platform)
+	{
+		setCapability(PLATFORM_NAME, platform);
+		return (T) this;
+	}
+	@SuppressWarnings("unchecked")
+	protected T version(String version)
+	{
+		setCapability(PLATFORM_VERSION, version);
+		return (T) this;
+	}
 }

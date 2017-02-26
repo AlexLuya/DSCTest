@@ -6,6 +6,7 @@
 package com.dsc.test.app.ios;
 
 import static io.appium.java_client.remote.AutomationName.IOS_XCUI_TEST;
+import static io.appium.java_client.remote.IOSMobileCapabilityType.BUNDLE_ID;
 import static io.appium.java_client.remote.MobileBrowserType.SAFARI;
 import static io.appium.java_client.remote.MobileCapabilityType.AUTOMATION_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.UDID;
@@ -50,13 +51,16 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 		return this;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.dsc.test.common.Context#decorator(org.openqa.selenium.SearchContext)
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * com.dsc.test.common.Context#decorator(org.openqa.selenium.SearchContext)
 	 */
 	@Override
 	public FieldDecorator decorator(SearchContext searchCxt)
 	{
-		return new IOSFieldDecorator(this,searchCxt);
+		return new IOSFieldDecorator(this, searchCxt);
 	}
 
 	// usually recommended for versions>10.X.
@@ -69,10 +73,21 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.dsc.test.app.App#lockScreen(int)
+	 * @see com.dsc.test.app.App#isLocked()
 	 */
 	@Override
-	public void lockScreen(int seconds)
+	public boolean isLocked()
+	{
+		throw new RuntimeException("'isLocked()' is android only,not applied for IOS");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.app.App#lockDevice(int)
+	 */
+	@Override
+	public void lockDevice(int seconds)
 	{
 		driver.lockDevice(seconds);
 	}
@@ -80,18 +95,6 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	public IOS needBrowser()
 	{
 		browser(SAFARI);
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.app.App#pkg(java.lang.String)
-	 */
-	@Override
-	public IOS pkg(String pkg)
-	{
-		// android only,not applied for IOS
 		return this;
 	}
 
@@ -114,7 +117,6 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	@Override
 	public IOS UDID(String udid)
 	{
-
 		setCapability(UDID, udid);
 
 		return this;
@@ -123,12 +125,12 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.dsc.test.app.App#unlockScreen()
+	 * @see com.dsc.test.app.App#unlockDevice()
 	 */
 	@Override
-	public void unlockScreen()
+	public void unlockDevice()
 	{
-		// Android only,not applied for IOS
+		// android only,not applied for IOS
 	}
 
 	/*
@@ -140,5 +142,16 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	protected IOSDriver<RemoteWebElement> createDriver(String remoteAddress) throws MalformedURLException
 	{
 		return new IOSDriver<>(new URL(remoteAddress), cap);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.app.App#pkgOrBundleId()
+	 */
+	@Override
+	protected String pkgOrBundleId()
+	{
+		return BUNDLE_ID;
 	}
 }

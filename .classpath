@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="lib/guava/error_prone_annotations-2.0.2.jar"/>
-	<classpathentry kind="lib" path="lib/guava/guava-20.0-20160420.185054-187.jar"/>
+	<classpathentry kind="lib" path="lib/guava/guava-20.0-20160420.185054-187.jar" sourcepath="lib/src/guava-20.0-20160420.185054-187-sources.jar"/>
 	<classpathentry kind="lib" path="lib/guava/guava-gwt-20.0-20160420.185313-187.jar"/>
 	<classpathentry kind="lib" path="lib/guava/j2objc-annotations-0.1.jar"/>
 	<classpathentry kind="lib" path="lib/spock/cglib-3.1.jar"/>

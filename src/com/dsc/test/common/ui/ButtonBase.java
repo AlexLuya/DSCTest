@@ -35,7 +35,7 @@ public class ButtonBase extends UIObject
 	@Override
 	public void click()
 	{
-		wrapee.click();
+		super.click();
 	}
 
 	/*

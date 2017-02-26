@@ -12,5 +12,7 @@ package com.dsc.test.app.ios;
  */
 public class IOSTestExample //extends AppTestStub
 {
+	def "shake"(){
 
+	}
 }

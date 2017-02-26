@@ -31,7 +31,7 @@ public class BrowserTest extends Specification {
 		browser.switchBackToPreviousWindow()
 
 		then:"browser do switched back to previous window"
-		Util.sleep(3000)
+		Util.sleep(3)
 		browser.getCurrentUrl()==TEST_PAGE
 	}
 

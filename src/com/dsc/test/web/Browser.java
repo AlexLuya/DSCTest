@@ -77,15 +77,15 @@ public class Browser extends Context<Browser, WebDriver>
 		return new Browser(new ChromeDriver(cap(cap)), cap);
 	}
 
-	//	public static Browser firfox()
-	//	{
-	//		System.setProperty("webdriver.firefox.driver", WHERE_FIREFOX_DRIVER);
-	//		System.setProperty("webdriver.firefox.bin", WHERE_FIREFOX_BIN);
-	//		DesiredCapabilities cap = DesiredCapabilities.firefox();
-	//		cap.setCapability("marionette", true);
+	// public static Browser firfox()
+	// {
+	// System.setProperty("webdriver.firefox.driver", WHERE_FIREFOX_DRIVER);
+	// System.setProperty("webdriver.firefox.bin", WHERE_FIREFOX_BIN);
+	// DesiredCapabilities cap = DesiredCapabilities.firefox();
+	// cap.setCapability("marionette", true);
 	//
-	//		return new Browser(new FirefoxDriver(cap(cap)), cap);
-	//	}
+	// return new Browser(new FirefoxDriver(cap(cap)), cap);
+	// }
 
 	// private static final String WHERE_FIREFOX_BIN = "/usr/bin/firefox";
 	// private static final String WHERE_FIREFOX_DRIVER =
@@ -139,8 +139,11 @@ public class Browser extends Context<Browser, WebDriver>
 		driver.close();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.dsc.test.common.Context#decorator(org.openqa.selenium.SearchContext)
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * com.dsc.test.common.Context#decorator(org.openqa.selenium.SearchContext)
 	 */
 	@Override
 	public FieldDecorator decorator(SearchContext searchCxt)
@@ -225,6 +228,27 @@ public class Browser extends Context<Browser, WebDriver>
 	public void setCookie(String key, String value, String path)
 	{
 		manage().addCookie(new Cookie(key, value, path));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.common.Context#swipe(int, int, int, int, int)
+	 */
+	@Override
+	public void swipe(int startx, int starty, int endx, int endy, int duration)
+	{
+		// for safari
+		// int xOffset = endx - startx;
+		// int yOffset = endy - starty;
+		// new TouchAction(this).press(startx,
+		// starty).waitAction(duration).moveTo(xOffset,
+		// yOffset).release().perform();
+
+		//for other browsers
+		//		new TouchAction(this).press(startx, starty).waitAction(duration).moveTo(endx, endy).release().perform();
+
+		throw new RuntimeException("swiping ONLY avaialbe in app,browser DON'T SUPPORT this due to alex needs a break");
 	}
 
 	public void switchBackToPreviousWindow()

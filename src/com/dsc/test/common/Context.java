@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
@@ -31,6 +32,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Options;
+import org.openqa.selenium.WebDriver.Window;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -55,7 +57,7 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
  * @Version 1.0
  * @Since 1.0
  */
-public abstract class Context<T extends Context<T, D>,D extends WebDriver>
+public abstract class Context<T extends Context<T, D>, D extends WebDriver>
 {
 	private static final int	DEFAULT_WAIT_SECONDS	= 3;
 	private static int			REAL_WAIT_SECONDS		= DEFAULT_WAIT_SECONDS;
@@ -68,9 +70,10 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 		return REAL_WAIT_SECONDS;
 	}
 
-	protected final DesiredCapabilities cap;
+	protected final DesiredCapabilities	cap;
 
-	protected D driver;
+	protected D							driver;
+
 	/**
 	 * @param cap
 	 */
@@ -145,7 +148,6 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 		return doFindElemById(id);
 	}
 
-
 	public WebElement findElemByLinkText(String text)
 	{
 		if (text == null || text == "")
@@ -163,7 +165,6 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 
 		return driver.findElement(By.linkText(text));
 	}
-
 
 	public WebElement findElemByTag(String tag)
 	{
@@ -210,6 +211,11 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 	public UIObject getUIObjectById(String id)
 	{
 		return new UIObject(this, findElemById(id));
+	}
+
+	public int height()
+	{
+		return size().getHeight();
 	}
 
 	public void hitEnterKey()
@@ -290,6 +296,8 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 		REAL_WAIT_SECONDS = defaultWaitSeconds;
 	}
 
+	public abstract void swipe(int startx, int starty, int endx, int endy, int duration);
+
 	public void switchToWindow(String nameOrHandler)
 	{
 		// this will switch to expected window/tab but visually,it may won't
@@ -320,6 +328,14 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 	public <V> V waitUntil(ExpectedCondition<V> isTrue) throws TimeoutException
 	{
 		return new WebDriverWait(driver, Context.defaultWaitSeconds()).until(isTrue);
+	}
+
+	/**
+	 * @return
+	 */
+	public int width()
+	{
+		return size().getWidth();
 	}
 
 	protected Options manage()
@@ -389,6 +405,14 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 		return "screenshot-" + new Date().getTime() + new Random().nextLong();
 	}
 
+	/**
+	 * @return
+	 */
+	private Dimension size()
+	{
+		return window().getSize();
+	}
+
 	private File takeScreenshotOf(WebElement elem)
 	{
 		File screenshot = takeScreenshot();
@@ -412,5 +436,13 @@ public abstract class Context<T extends Context<T, D>,D extends WebDriver>
 		}
 
 		return screenshot;
+	}
+
+	/**
+	 * @return
+	 */
+	private Window window()
+	{
+		return manage().window();
 	}
 }

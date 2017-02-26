@@ -11,10 +11,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.dsc.util.common.model.IdName;
 import com.dsc.test.common.ui.base.UIObject;
 import com.dsc.test.common.ui.base.Widget;
 import com.dsc.util.common.Pair;
+import com.dsc.util.common.model.IdName;
 import com.google.common.collect.Lists;
 
 // import com.dsc.athena.test.Statics;
@@ -281,11 +281,11 @@ public class Util
 	// return null;
 	// }
 
-	public static void sleep(int millisecond)
+	public static void sleep(double d)
 	{
 		try
 		{
-			Thread.sleep(millisecond);
+			Thread.sleep((long) (d*1000));
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
@@ -298,7 +298,7 @@ public class Util
 	public static void sleep(int seconds, String elementId)
 	{
 		Log.info("Waiting %d seconds for ******'%s'****** to be displayed fully", seconds, elementId);
-		sleep(seconds * 1000);
+		sleep(seconds);
 	}
 
 	public static String[] split(String str, String seprator)
