@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 
 import com.dsc.test.app.App;
 import com.dsc.test.common.ui.base.Composite;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 
 /**
  * @Author alex
@@ -32,7 +32,7 @@ public abstract class AppComposite extends Composite<App<?, ?>>
 	 * @param context
 	 * @param object
 	 */
-	public AppComposite(App<?, ?> context, UIObject object)
+	public AppComposite(App<?, ?> context, GeneralUIField object)
 	{
 		super(context, object);
 	}

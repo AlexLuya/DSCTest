@@ -8,7 +8,7 @@ package com.dsc.test.web.ui.base;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.ui.base.Composite;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 import com.dsc.test.web.Browser;
 
 public abstract class WebComposite extends Composite<Browser>
@@ -19,7 +19,7 @@ public abstract class WebComposite extends Composite<Browser>
 		super(browser, id);
 	}
 
-	public WebComposite(Browser browser, UIObject object){
+	public WebComposite(Browser browser, GeneralUIField object){
 		super(browser,object);
 	}
 

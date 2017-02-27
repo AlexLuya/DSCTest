@@ -5,11 +5,9 @@
  **/
 package com.dsc.test.app.ui;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.app.App;
+import com.dsc.test.app.ui.base.AppComposite;
+import com.dsc.test.common.ui.base.GeneralUIField;
 
 /**
  * @Author alex
@@ -17,16 +15,27 @@ import com.dsc.test.common.ui.base.UIObject;
  * @Version 1.0
  * @Since 1.0
  */
-public class StatusBar extends UIObject
+public class StatusBar extends AppComposite
 {
 
 	/**
 	 * @param context
-	 * @param wrapee
+	 * @param object
 	 */
-	public StatusBar(Context<?, ? extends WebDriver> context, WebElement wrapee)
+	public StatusBar(App<?, ?> context, GeneralUIField object)
 	{
-		super(context, wrapee);
+		super(context, object);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.common.ui.base.Composite#ensureChildrenAvailable()
+	 */
+	@Override
+	protected void ensureChildrenAvailable()
+	{
+		// HP
 	}
 
 }

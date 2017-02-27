@@ -5,9 +5,9 @@
  **/
 package com.dsc.test.app.ui;
 
-import org.openqa.selenium.WebElement;
-
 import com.dsc.test.app.App;
+
+import io.appium.java_client.MobileElement;
 
 /**
  * @Author alex
@@ -21,7 +21,7 @@ public class SlideShow extends Carousel
 	 * @param context
 	 * @param wrapee
 	 */
-	public SlideShow(App<?, ?> context, WebElement wrapee)
+	public SlideShow(App<?, ?> context, MobileElement wrapee)
 	{
 		super(context, wrapee);
 	}

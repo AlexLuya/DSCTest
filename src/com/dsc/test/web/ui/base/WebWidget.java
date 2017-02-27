@@ -7,7 +7,7 @@ package com.dsc.test.web.ui.base;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 import com.dsc.test.common.ui.base.Widget;
 import com.dsc.test.web.Browser;
 
@@ -24,7 +24,7 @@ public class WebWidget extends Widget<Browser>
 		this(browser, browser.findElemById(containerId));
 	}
 
-	public WebWidget(Browser browser, UIObject wrapee){
+	public WebWidget(Browser browser, GeneralUIField wrapee){
 		this(browser,wrapee.element());
 	}
 

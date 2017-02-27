@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.UIField;
 import com.dsc.test.common.ui.base.Widget;
 import com.dsc.util.common.Pair;
 import com.dsc.util.common.model.IdName;
@@ -52,6 +52,14 @@ public class Util
 		return false;
 	}
 
+	public static <T extends UIField<?>> void ensureItemsAvailable(List<T> items)
+	{
+		for (UIField<?> item : items)
+		{
+			item.ensureAvailable();
+		}
+	}
+
 	public static String fileExt(String file)
 	{
 		if (file == null || !file.contains(".") || file.indexOf('.') == file.length() - 1)
@@ -62,9 +70,9 @@ public class Util
 		return file.substring(file.lastIndexOf('.') + 1);
 	}
 
-	public static UIObject  findChildByText(Widget<?> parent, String text)
+	public static UIField<?> findChildByText(Widget<?> parent, String text)
 	{
-		for (UIObject child : parent.children())
+		for (UIField<?> child : parent.children())
 		{
 			if (child.textIs(text))
 			{
@@ -104,6 +112,7 @@ public class Util
 
 		return null;
 	}
+
 	@SuppressWarnings("unchecked")
 	public static <T extends IdName> String joinedNames(List<T> list)
 	{
@@ -116,7 +125,7 @@ public class Util
 
 		if (null != args && args.length > 0)
 		{
-			return  format(body, args);
+			return format(body, args);
 		}
 
 		return body;
@@ -130,7 +139,7 @@ public class Util
 		}
 	}
 
-	public static void mustNotNull(String name,Object[] array) throws IllegalArgumentException
+	public static void mustNotNull(String name, Object[] array) throws IllegalArgumentException
 	{
 		mustNotNull(array, name);
 
@@ -245,6 +254,18 @@ public class Util
 		return selectedOptionText(options, optionId, false);
 	}
 
+	// public static <T> T annoByName(Field field,String name){
+	// Annotation[] annotations = field.getAnnotations();
+	//
+	// for(Annotation anno : annotations){
+	// if(anno.getClass().getSimpleName().equals(name)){
+	// return (T) anno;
+	// }
+	// }
+	//
+	// return null;
+	// }
+
 	/**
 	 * Selected option text.
 	 *
@@ -269,23 +290,11 @@ public class Util
 		return null;
 	}
 
-	// public static <T> T annoByName(Field field,String name){
-	// Annotation[] annotations = field.getAnnotations();
-	//
-	// for(Annotation anno : annotations){
-	// if(anno.getClass().getSimpleName().equals(name)){
-	// return (T) anno;
-	// }
-	// }
-	//
-	// return null;
-	// }
-
 	public static void sleep(double d)
 	{
 		try
 		{
-			Thread.sleep((long) (d*1000));
+			Thread.sleep((long) (d * 1000));
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
@@ -338,9 +347,9 @@ public class Util
 		}
 	}
 
-	public static UIObject twoLevelsFindByText(Widget<?> parent, String text)
+	public static UIField<?> twoLevelsFindByText(Widget<?> parent, String text)
 	{
-		for (UIObject child : parent.children())
+		for (UIField<?> child : parent.children())
 		{
 			if (child.textIs(text) || findChildByText((Widget<?>) child, text) != null)
 			{
@@ -352,16 +361,15 @@ public class Util
 		return null;
 	}
 
-
 	public static String wrap(String wrapee)
 	{
 		return "★★★   " + wrapee;
 	}
 
-	public static String wrap(String format,Object... args)
+	public static String wrap(String format, Object... args)
 	{
 		mustNotNull(format, "format");
 
-		return wrap(format(format,args));
+		return wrap(format(format, args));
 	}
 }

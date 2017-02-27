@@ -65,6 +65,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	public App(DesiredCapabilities cap)
 	{
 		super(cap);
+		setWaitSeconds(5);
 		// setCapability("noReset","true");
 		// Reset state by clearing data rather then uninstalling to prevent
 		// re-installing between sessions.
@@ -132,6 +133,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		try
 		{
 			driver.hideKeyboard();
+			driver.getKeyboard().pressKey("c");;
 		} catch (Exception e)
 		{
 			return true;

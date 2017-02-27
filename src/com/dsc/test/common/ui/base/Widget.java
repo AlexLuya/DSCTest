@@ -21,15 +21,15 @@ import com.google.common.collect.Lists;
  * @Version 1.0
  * @Since 1.0
  */
-public abstract class Widget<H extends Context<? ,? extends WebDriver>> extends UIObject
+public abstract class Widget<H extends Context<? ,? extends WebDriver>> extends GeneralUIField
 {
+	public Widget(H context,  GeneralUIField wrapee){
+		this(context,wrapee.element());
+	}
+
 	public Widget(H context, String containerId)
 	{
 		this(context, context.findElemById(containerId));
-	}
-
-	public Widget(H context,  UIObject wrapee){
-		this(context,wrapee.element());
 	}
 
 	public Widget(H context, WebElement wrapee)
@@ -44,14 +44,14 @@ public abstract class Widget<H extends Context<? ,? extends WebDriver>> extends 
 	 *
 	 * @return
 	 */
-	public List<UIObject> children()
+	public List<GeneralUIField> children()
 	{
-		List<UIObject> children = Lists.newArrayList();
+		List<GeneralUIField> children = Lists.newArrayList();
 
 		// boxing as UIObject
 		for (WebElement elem : wrapee.findElements(By.xpath("*")))
 		{
-			children.add(new UIObject(context(), elem));
+			children.add(new GeneralUIField(context(), elem));
 		}
 
 		return children;
@@ -63,14 +63,14 @@ public abstract class Widget<H extends Context<? ,? extends WebDriver>> extends 
 		return (H) super.context();
 	}
 
-	protected UIObject child(int index)
+	protected GeneralUIField child(int index)
 	{
 		return children().get(index);
 	}
 
-	protected UIObject child(String id)
+	protected GeneralUIField child(String id)
 	{
-		for (UIObject child : children())
+		for (GeneralUIField child : children())
 		{
 			if (id.equals(child.id()))
 			{

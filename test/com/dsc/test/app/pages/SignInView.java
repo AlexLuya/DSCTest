@@ -5,10 +5,12 @@
  **/
 package com.dsc.test.app.pages;
 
+import java.util.List;
+
 import com.dsc.test.app.App;
-import com.dsc.test.app.ui.NavigateItem;
 import com.dsc.test.app.ui.base.AppComposite;
 
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
 /**
@@ -20,7 +22,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 public class SignInView extends AppComposite
 {
 	@AndroidFindBy(id = "com.restwla.z88ab174d:id/customlabel_cell_horizontal_house")
-	NavigateItem signUpWithEmail;
+	List<MobileElement> navigateItems;// =context().findElemById("com.restwla.z88ab174d:id/customlabel_cell_horizontal_house");
 
 	/**
 	 * @param context
@@ -32,8 +34,9 @@ public class SignInView extends AppComposite
 		ensureAvailable();
 	}
 
-	public SignUpWithEmailView clickSignUpWithEmail(){
-		signUpWithEmail.click();
+	public SignUpWithEmailView clickSignUpWithEmail()
+	{
+		navigateItems.get(3).click();
 		return new SignUpWithEmailView(context());
 	}
 
@@ -45,6 +48,6 @@ public class SignInView extends AppComposite
 	@Override
 	protected void ensureChildrenAvailable()
 	{
-		signUpWithEmail.ensureAvailable();
+		//		Util.ensureItemsAvailable(navigateItems);
 	}
 }

@@ -7,9 +7,9 @@ package com.dsc.test.common.ui.ext;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 
-public class PressButton extends UIObject
+public class PressButton extends GeneralUIField
 {
 
 	public PressButton(Context<? ,?> context,WebElement wrapee)

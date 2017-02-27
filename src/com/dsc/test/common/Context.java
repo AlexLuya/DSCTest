@@ -42,7 +42,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
@@ -147,7 +147,6 @@ public abstract class Context<T extends Context<T, D>, D extends WebDriver>
 
 		return doFindElemById(id);
 	}
-
 	public WebElement findElemByLinkText(String text)
 	{
 		if (text == null || text == "")
@@ -204,13 +203,31 @@ public abstract class Context<T extends Context<T, D>, D extends WebDriver>
 		return driver.findElement(By.xpath(xpath));
 	}
 
+	public WebElement findElemsById(String id)
+	{
+		if (id == null || id == "")
+		{
+			throw new IllegalArgumentException("id mustn't be null");
+		}
+
+		try
+		{
+			waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+		} catch (TimeoutException e)
+		{
+			throw new NoSuchElementException("Can't find the element with ----------------id:---------------" + id, e);
+		}
+
+		return doFindElemById(id);
+	}
+
 	/**
 	 * @param id
 	 * @return
 	 */
-	public UIObject getUIObjectById(String id)
+	public GeneralUIField getUIObjectById(String id)
 	{
-		return new UIObject(this, findElemById(id));
+		return new GeneralUIField(this, findElemById(id));
 	}
 
 	public int height()

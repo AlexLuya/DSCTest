@@ -22,7 +22,7 @@ import com.dsc.test.common.Context;
 import com.dsc.util.Util;
 
 // LP BLOG exception or boolean+log
-public class UIObject
+public class UIField<T extends WebElement>
 {
 	protected static final String			VALUE							= "value";
 	private static final String				CLASS							= "class";
@@ -37,19 +37,20 @@ public class UIObject
 
 	protected String						annotatedId;
 
-	protected WebElement					wrapee;
+	protected T					wrapee;
 	private Context<?, ? extends WebDriver>	context;
 
-	public UIObject(Context<?, ? extends WebDriver> context, String id)
+	@SuppressWarnings("unchecked")//NP remove this check
+	public UIField(Context<?, ? extends WebDriver> context, String id)
 	{
-		this(context, context.findElemById(id));
+		this(context, (T) context.findElemById(id));
 	}
 
 	/**
 	 * @param context
 	 * @param wrapee
 	 */
-	public UIObject(Context<?, ? extends WebDriver> context, WebElement wrapee)
+	public UIField(Context<?, ? extends WebDriver> context, T wrapee)
 	{
 		this.context = context;
 		this.wrapee = wrapee;

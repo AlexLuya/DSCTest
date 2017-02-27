@@ -15,7 +15,7 @@ import com.dsc.test.common.Context;
  * @Version 2.5
  * @Since 1.0
  */
-public class Disableable extends UIObject
+public class Disableable extends GeneralUIField
 {
 
 	/**

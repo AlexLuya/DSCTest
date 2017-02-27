@@ -36,11 +36,17 @@ public class SignUpWithEmailView extends AppComposite
 	public SignUpWithEmailView(App<?, ?> context)
 	{
 		super(context, context.findElemByXpath("//*"));
+		ensureAvailable();
 	}
 
 	public void clickSignUp()
 	{
 		signUp.click();
+	}
+
+	public String email()
+	{
+		return email.text();
 	}
 
 	public void inputEmail(String text)

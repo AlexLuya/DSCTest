@@ -6,10 +6,11 @@
 package com.dsc.test.app.ui;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
+import com.dsc.test.app.ui.base.AppUIField;
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+
+import io.appium.java_client.MobileElement;
 
 /**
  * @Author alex
@@ -17,14 +18,14 @@ import com.dsc.test.common.ui.base.UIObject;
  * @Version 1.0
  * @Since 1.0
  */
-public class SeekBar extends UIObject
+public class SeekBar extends AppUIField
 {
 
 	/**
 	 * @param context
 	 * @param wrapee
 	 */
-	public SeekBar(Context<?, ? extends WebDriver> context, WebElement wrapee)
+	public SeekBar(Context<?, ? extends WebDriver> context, MobileElement wrapee)
 	{
 		super(context, wrapee);
 	}

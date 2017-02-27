@@ -8,9 +8,9 @@ package com.dsc.test.web.ui;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 
-public class Link extends UIObject
+public class Link extends GeneralUIField
 {
 
 	public Link(Context<? ,?> context, WebElement wrapee)

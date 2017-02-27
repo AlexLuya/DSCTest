@@ -12,11 +12,11 @@ import java.lang.reflect.Parameter;
 
 import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.UIField;
 
 public class UIFieldFactory
 {
-	public <T extends UIObject> T create(Context<?, ?> context, Class<T> wrapping, WebElement wrapee) throws Exception
+	public <T extends UIField<?>> T create(Context<?, ?> context, Class<T> wrapping, WebElement wrapee) throws Exception
 	{
 		// create instance by reflection
 		try
@@ -41,7 +41,7 @@ public class UIFieldFactory
 	 * @throws NoSuchMethodException
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends UIObject> Constructor<T> findConstructor(Class<?> context, Class<T> wrapping) throws NoSuchMethodException
+	private <T extends UIField<?>> Constructor<T> findConstructor(Class<?> context, Class<T> wrapping) throws NoSuchMethodException
 	{
 
 		Constructor<?>[] constructors = wrapping.getConstructors();

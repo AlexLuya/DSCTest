@@ -5,10 +5,10 @@
  **/
 package com.dsc.test.app.ui;
 
-import org.openqa.selenium.WebElement;
-
 import com.dsc.test.app.App;
-import com.dsc.test.app.ui.base.AppWidget;
+import com.dsc.test.app.ui.base.AppUIField;
+
+import io.appium.java_client.MobileElement;
 
 /**
  * @Author alex
@@ -17,17 +17,16 @@ import com.dsc.test.app.ui.base.AppWidget;
  * @Since 1.0
  */
 //carousel可以无休止的往一个一个方向滑动，首尾相接的；slideshow的话有头有尾。
-public class Carousel extends AppWidget
+public class Carousel extends AppUIField
 {
 	/**
 	 * @param context
 	 * @param wrapee
 	 */
-	public Carousel(App<?, ?> context, WebElement wrapee)
+	public Carousel(App<?, ?> context, MobileElement wrapee)
 	{
 		super(context, wrapee);
 	}
-
 
 	// make it visible
 	@Override

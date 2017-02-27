@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 
 /**
  * @Author alex
@@ -16,7 +16,7 @@ import com.dsc.test.common.ui.base.UIObject;
  * @Version 1.0
  * @Since 1.0
  */
-public class Row extends UIObject
+public class Row extends GeneralUIField
 {
 
 	/**

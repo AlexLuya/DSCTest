@@ -8,7 +8,7 @@ package com.dsc.test.app.ui.base;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.app.App;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 import com.dsc.test.common.ui.base.Widget;
 
 /**
@@ -21,20 +21,20 @@ public abstract class AppWidget extends Widget<App<?, ?>>
 {
 	/**
 	 * @param context
+	 * @param object
+	 */
+	public AppWidget(App<?, ?> context, GeneralUIField object)
+	{
+		super(context, object);
+	}
+
+	/**
+	 * @param context
 	 * @param id
 	 */
 	public AppWidget(App<?, ?> context, String id)
 	{
 		super(context, id);
-	}
-
-	/**
-	 * @param context
-	 * @param object
-	 */
-	public AppWidget(App<?, ?> context, UIObject object)
-	{
-		super(context, object);
 	}
 
 	/**
@@ -45,6 +45,4 @@ public abstract class AppWidget extends Widget<App<?, ?>>
 	{
 		super(context, wrapee);
 	}
-
-
 }

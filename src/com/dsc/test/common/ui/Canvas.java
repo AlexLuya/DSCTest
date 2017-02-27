@@ -8,9 +8,9 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 
-public class Canvas extends UIObject
+public class Canvas extends GeneralUIField
 {
 
 	public Canvas(Context<? ,?> context, WebElement wrapee)

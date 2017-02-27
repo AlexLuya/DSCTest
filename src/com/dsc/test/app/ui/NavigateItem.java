@@ -1,13 +1,14 @@
 /**
- * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights reserved.
+ * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights
+ * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
 package com.dsc.test.app.ui;
 
-import org.openqa.selenium.WebElement;
-
 import com.dsc.test.app.App;
 import com.dsc.test.app.ui.base.AppComposite;
+
+import io.appium.java_client.MobileElement;
 
 /**
  * @Author alex
@@ -21,7 +22,7 @@ public class NavigateItem extends AppComposite
 	 * @param context
 	 * @param wrapee
 	 */
-	public NavigateItem(App<?, ?> context, WebElement wrapee)
+	public NavigateItem(App<?, ?> context, MobileElement wrapee)
 	{
 		super(context, wrapee);
 	}
@@ -32,6 +33,7 @@ public class NavigateItem extends AppComposite
 	@Override
 	protected void ensureChildrenAvailable()
 	{
-
+		// HP
 	}
+
 }

@@ -29,7 +29,7 @@ public class FocusWidget extends Widget<Context<? ,? extends WebDriver>>
 	/**
 	 * (non-Javadoc)
 	 *
-	 * @see com.dsc.test.common.ui.base.UIObject#ensureTextIs(java.lang.String)
+	 * @see com.dsc.test.common.ui.base.GeneralUIField#ensureTextIs(java.lang.String)
 	 */
 	@Override
 	public boolean ensureTextIs(String text)

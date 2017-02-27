@@ -15,7 +15,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 
 import com.dsc.test.common.UIFieldFactory;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 import com.dsc.test.web.Browser;
 
 public class WebFieldDecorator extends DefaultFieldDecorator
@@ -44,7 +44,7 @@ public class WebFieldDecorator extends DefaultFieldDecorator
 
 		WebElement wrapee = proxyForLocator(classLoader, factory.createLocator(field));
 
-		if (UIObject.class.isAssignableFrom(field.getType()))
+		if (GeneralUIField.class.isAssignableFrom(field.getType()))
 		{
 			try
 			{
@@ -89,7 +89,7 @@ public class WebFieldDecorator extends DefaultFieldDecorator
 	private Object decorateElement(final Field field, final WebElement wrapee) throws Exception
 	{
 		@SuppressWarnings("unchecked")
-		UIObject element = uiObjectFactory.create(context, (Class<? extends UIObject>) field.getType(), wrapee);
+		GeneralUIField element = uiObjectFactory.create(context, (Class<? extends GeneralUIField>) field.getType(), wrapee);
 
 		element.setAnnotatedId(annotatedId(field));
 

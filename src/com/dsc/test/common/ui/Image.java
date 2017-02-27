@@ -3,9 +3,9 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 
-public class Image extends UIObject
+public class Image extends GeneralUIField
 {
 	public Image(Context<? ,?> context,WebElement wrapee)
 	{

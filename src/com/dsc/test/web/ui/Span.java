@@ -7,9 +7,9 @@ package com.dsc.test.web.ui;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
 
-public class Span extends UIObject
+public class Span extends GeneralUIField
 {
 	public Span(Context<? ,?> context, WebElement wrapee)
 	{

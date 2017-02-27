@@ -6,10 +6,11 @@
 package com.dsc.test.app.ui;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
-import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.app.App;
+import com.dsc.test.app.ui.base.AppUIField;
+
+import io.appium.java_client.MobileElement;
 
 /**
  * @Author alex
@@ -17,29 +18,29 @@ import com.dsc.test.common.ui.base.UIObject;
  * @Version 1.0
  * @Since 1.0
  */
-public class Switch extends UIObject
+public class Switch extends AppUIField
 {
 
 	/**
 	 * @param context
 	 * @param wrapee
 	 */
-	public Switch(Context<?, ? extends WebDriver> context, WebElement wrapee)
+	public Switch(App<?, ? extends WebDriver> context, MobileElement wrapee)
 	{
 		super(context, wrapee);
 	}
 
-	public boolean isOff(){
-
-	}
-	public boolean isOn(){
-
-	}
-	public void off(){
-
-	}
-	public void on(){
-
-	}
+	//	public boolean isOff(){
+	//
+	//	}
+	//	public boolean isOn(){
+	//
+	//	}
+	//	public void off(){
+	//
+	//	}
+	//	public void on(){
+	//
+	//	}
 
 }

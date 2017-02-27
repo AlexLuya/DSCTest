@@ -20,7 +20,7 @@ public abstract class Composite<T extends Context<? ,? extends WebDriver>> exten
 		super(context, id);
 	}
 
-	public Composite(T context, UIObject object){
+	public Composite(T context, GeneralUIField object){
 		super(context,object);
 	}
 
@@ -35,10 +35,10 @@ public abstract class Composite<T extends Context<? ,? extends WebDriver>> exten
 		ensureChildrenAvailable();
 	}
 
-	protected void doEnsureAvailable(UIObject... objs){
+	protected void doEnsureAvailable(GeneralUIField... objs){
 		Util.mustNotNull(objs, "objs");
 
-		for (UIObject obj : objs) {
+		for (GeneralUIField obj : objs) {
 			obj.ensureAvailable();
 		}
 	}

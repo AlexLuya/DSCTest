@@ -1,14 +1,16 @@
 /**
- * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights reserved.
+ * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights
+ * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
 package com.dsc.test.app.ui;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
+import com.dsc.test.app.ui.base.AppUIField;
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.UIObject;
+
+import io.appium.java_client.MobileElement;
 
 /**
  * @Author alex
@@ -16,14 +18,14 @@ import com.dsc.test.common.ui.base.UIObject;
  * @Version 1.0
  * @Since 1.0
  */
-public class PanelControl extends UIObject
+public class PanelControl extends AppUIField
 {
 
 	/**
 	 * @param context
 	 * @param wrapee
 	 */
-	public PanelControl(Context<?, ? extends WebDriver> context, WebElement wrapee)
+	public PanelControl(Context<?, ? extends WebDriver> context, MobileElement wrapee)
 	{
 		super(context, wrapee);
 	}

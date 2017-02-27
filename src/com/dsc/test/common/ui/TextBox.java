@@ -59,6 +59,7 @@ public class TextBox extends ValidableBase
 	 * @param text
 	 *            the text
 	 */
+	@Override
 	public void input(String text)
 	{
 		clear();

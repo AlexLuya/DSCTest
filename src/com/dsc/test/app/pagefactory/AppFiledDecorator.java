@@ -15,7 +15,8 @@ import org.openqa.selenium.WebElement;
 import com.dsc.test.app.App;
 import com.dsc.test.app.pagefactory.appium.AppiumFieldDecorator;
 import com.dsc.test.common.UIFieldFactory;
-import com.dsc.test.common.ui.base.UIObject;
+import com.dsc.test.common.ui.base.GeneralUIField;
+import com.dsc.test.common.ui.base.UIField;
 
 /**
  * @Author alex
@@ -52,7 +53,7 @@ public abstract class AppFiledDecorator extends AppiumFieldDecorator
 
 		WebElement wrapee = proxyForAnElement(widgetLocatorFactory.createLocator(field));
 
-		if (UIObject.class.isAssignableFrom(field.getType()))
+		if (UIField.class.isAssignableFrom(field.getType()))
 		{
 			try
 			{
@@ -89,7 +90,7 @@ public abstract class AppFiledDecorator extends AppiumFieldDecorator
 	private Object decorateElement(final Field field, final WebElement wrapee) throws Exception
 	{
 		@SuppressWarnings("unchecked")
-		UIObject element = uiObjectFactory.create(app, (Class<? extends UIObject>) field.getType(), wrapee);
+		UIField<?> element = uiObjectFactory.create(app, (Class<? extends GeneralUIField>) field.getType(), wrapee);
 
 		element.setAnnotatedId(annotatedId(field));
 

@@ -5,8 +5,8 @@
 package com.dsc.test.app.android
 
 import com.dsc.test.app.AppTestStub
-import com.dsc.test.app.pages.CallUsView
 import com.dsc.test.app.pages.Homepage
+import com.dsc.test.app.pages.SignUpWithEmailView
 
 import spock.lang.Shared
 
@@ -26,105 +26,108 @@ public class AndroidTestExample extends AppTestStub
 
 		homepage=new Homepage(app)
 	}
+	//
+	//	def "swipe left"(){
+	//		given:
+	//		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+	//
+	//		when:"swipe left"
+	//		homepage.slideShow.swipeLeft(300)
+	//
+	//		then:
+	//		true
+	//	}
+	//
+	//	def "swipe right"(){
+	//		given:
+	//		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+	//
+	//		when:"swipe left"
+	//		homepage.slideShow.swipeLeft(300)
+	//		and:"swipe back"
+	//		homepage.slideShow.swipeRight(300)
+	//
+	//		then:
+	//		true
+	//	}
+	//
+	//	def "swipe up"(){
+	//	}
+	//
+	//	def "swipe down"(){
+	//	}
+	//
+	//	def "swipe diagonal"(){
+	//	}
+	//
+	//	def "click"(){
+	//		given:
+	//		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+	//
+	//		when:
+	//		CallUsView callUsView=homepage.clickCallUs()
+	//
+	//		then:
+	//		callUsView.presented()==true
+	//	}
 
-	def "swipe left"(){
-		given:
-		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+	def "chekc text"(){
+		String email = "email@domain.com"
 
-		when:"swipe left"
-		homepage.slideShow.swipeLeft(300)
-
-		then:
-		true
-	}
-
-	def "swipe right"(){
-		given:
-		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
-
-		when:"swipe left"
-		homepage.slideShow.swipeLeft(300)
-		and:"swipe back"
-		homepage.slideShow.swipeRight(300)
-
-		then:
-		true
-	}
-
-	def "swipe up"(){
-	}
-
-	def "swipe down"(){
-	}
-
-	def "swipe diagonal"(){
-	}
-
-	def "click"(){
 		given:
 		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
 
 		when:
-		CallUsView callUsView=homepage.clickCallUs()
-
-		then:
-		callUsView.presented()==true
-	}
-
-	def "hideKeyBoard"(){
-		given:
-		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
-
-		when:
-		homepage.clickMe().clickSignUpWithEmail().inputEmail("email@domain.com")
+		SignUpWithEmailView signUpView = homepage.clickMe().clickSignUpWithEmail()
+		signUpView.inputEmail(email)
 		and:""
 		app.hideKeyboard()
 
 		then:
-		app.isKeyboardHidden()==true
+		signUpView.email()==email
 	}
-
-	def "pullFiles"(){
-
-	}
-
-	def "press"(){
-		when:
-		app.press(homepage.getWrapped())
-
-		then:
-		true
-	}
-
-	def "tap"(){
-		when:
-		app.tap(homepage.getWrapped())
-
-		then:
-		true
-	}
-
-	def "toNative"(){
-
-	}
-
-	def "toWebView"(){
-
-	}
-
-	def "lock device"(){
-		when:
-		app.lockDevice(1)
-
-		then:
-		true
-	}
-
-	def "pull file"(){
-
-	}
-
-	def "unlock scree"(){
-
-	}
+	//
+	//	def "pullFiles"(){
+	//
+	//	}
+	//
+	//	def "press"(){
+	//		when:
+	//		app.press(homepage.getWrapped())
+	//
+	//		then:
+	//		true
+	//	}
+	//
+	//	def "tap"(){
+	//		when:
+	//		app.tap(homepage.getWrapped())
+	//
+	//		then:
+	//		true
+	//	}
+	//
+	//	def "toNative"(){
+	//
+	//	}
+	//
+	//	def "toWebView"(){
+	//
+	//	}
+	//
+	//	def "lock device"(){
+	//		when:
+	//		app.lockDevice(1)
+	//
+	//		then:
+	//		true
+	//	}
+	//
+	//	def "pull file"(){
+	//
+	//	}
+	//
+	//	def "unlock scree"(){
+	//
+	//	}
 }

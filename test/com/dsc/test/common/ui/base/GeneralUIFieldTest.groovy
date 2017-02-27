@@ -4,7 +4,7 @@
  **/
 package com.dsc.test.common.ui.base
 
-import com.dsc.test.common.ui.base.UIObject
+import com.dsc.test.common.ui.base.GeneralUIField
 import com.dsc.test.web.WebTestStub
 
 /**
@@ -13,7 +13,7 @@ import com.dsc.test.web.WebTestStub
  * @Version 1.0
  * @Since 1.0
  */
-class UIObjectTest extends WebTestStub {
+class GeneralUIFieldTest extends WebTestStub {
 	static final String BAIDU_MAP="http://map.baidu.com/"
 
 	def setup(){
@@ -21,7 +21,7 @@ class UIObjectTest extends WebTestStub {
 	}
 
 	def "dragAndDrop"(){
-		UIObject object=new UIObject(browser, browser.findElemByTag("canvas"))
+		GeneralUIField object=new GeneralUIField(browser, browser.findElemByTag("canvas"))
 
 		when:"perform draging and dropping"
 		object.dragAndDrop(-500, 500)
