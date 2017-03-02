@@ -27,6 +27,8 @@ import com.dsc.test.api.base.ColumnCfg;
 import com.dsc.test.api.base.HttpMethod;
 import com.dsc.test.api.base.Response;
 import com.dsc.test.api.base.Test;
+import com.dsc.test.common.report.Report;
+import com.dsc.test.common.report.Summary;
 import com.google.common.collect.Lists;
 
 import io.restassured.RestAssured;
@@ -265,20 +267,22 @@ public class APITestImpl implements API
 	 */
 	@SuppressWarnings("resource")
 	@Override
-	public String resultAsExcel() throws IOException
+	public Summary resultAsExcel() throws IOException
 	{
-		//run all tests
-		for (Test test : tests) {
+		// run all tests
+		for (Test test : tests)
+		{
 			exec(test);
 		}
 
 		FileOutputStream testContent = new FileOutputStream(
-				new File(String.format("%s-API-testing-resulting-%s.xlsx", caseName, currentDateTime())));
+				Report.forAPITesting(String.format("%s-report-%s.xlsx", caseName, currentDateTime())));
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet sheet = workbook.createSheet("api testing");
 
 		// create head
-		createRow(sheet, 0, new String[] { "Case", "URL", "Method", "Data", "Expectation", "Result", "Diff" });
+		createRow(sheet, 0, Test.HEADS);
+		// NP freeze first row
 
 		// create content
 		for (int i = 0; i < tests.size(); i++)
@@ -291,7 +295,7 @@ public class APITestImpl implements API
 		testContent.close();
 		workbook.close();
 
-		return null;
+		return new Summary(tests);
 	}
 
 	/*
@@ -386,9 +390,11 @@ public class APITestImpl implements API
 		if (test.invalidField() != null)
 		{
 			result = new Response("Ignored due to Must-have field: " + test.invalidField() + " is null or emtpy");
+		} else
+		{
+			result = new Response(doExcel(test));
+			test.setTime(result.getTime());
 		}
-
-		result = new Response(doExcel(test));
 
 		test.setResult(result.asString());
 
