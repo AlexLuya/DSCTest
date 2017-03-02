@@ -1,6 +1,5 @@
 /**
- * Copyright (c) (2016-2017),Deep Space Century and/or its affiliates.All rights
- * reserved.
+ * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
 package com.dsc.test.common.ui.base;
@@ -21,25 +20,58 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.dsc.test.common.Context;
 import com.dsc.util.Util;
 
+/**
+ * The Class UIField.
+ *
+ * @param <T>
+ *            the generic type
+ */
 // LP BLOG exception or boolean+log
 public class UIField<T extends WebElement>
 {
+
+	/** The Constant VALUE. */
 	protected static final String			VALUE							= "value";
+
+	/** The Constant CLASS. */
 	private static final String				CLASS							= "class";
+
+	/** The Constant DEFAULT_DURATION_MILLISECONDS. */
 	private static final int				DEFAULT_DURATION_MILLISECONDS	= 500;
+
+	/** The Constant ERROR_CSS. */
 	private static final String				ERROR_CSS						= "error";
+
+	/** The Constant ID. */
 	private static final String				ID								= "id";
 
+	/** The Constant SRC. */
 	// String PATTERN="pattern";
 	private static final String				SRC								= "src";
+
+	/** The Constant TITLE. */
 	private static final String				TITLE							= "title";
+
+	/** The Constant WARN_CSS. */
 	private static final String				WARN_CSS						= "warning";
 
+	/** The annotated id. */
 	protected String						annotatedId;
 
+	/** The wrapee. */
 	protected T					wrapee;
+
+	/** The context. */
 	private Context<?, ? extends WebDriver>	context;
 
+	/**
+	 * Instantiates a new UI field.
+	 *
+	 * @param context
+	 *            the context
+	 * @param id
+	 *            the id
+	 */
 	@SuppressWarnings("unchecked")//NP remove this check
 	public UIField(Context<?, ? extends WebDriver> context, String id)
 	{
@@ -47,8 +79,12 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
+	 * Instantiates a new UI field.
+	 *
 	 * @param context
+	 *            the context
 	 * @param wrapee
+	 *            the wrapee
 	 */
 	public UIField(Context<?, ? extends WebDriver> context, T wrapee)
 	{
@@ -56,35 +92,58 @@ public class UIField<T extends WebElement>
 		this.wrapee = wrapee;
 	}
 
+	/**
+	 * Click.
+	 */
 	public void click()
 	{
 		wrapee.click();
 	}
 
+	/**
+	 * Contains css.
+	 *
+	 * @param css
+	 *            the css
+	 * @return true, if successful
+	 */
 	public boolean containsCss(String css)
 	{
 		info("checks whether %s's css:'%s' contains '%s' in #containsCss()", id(), css(), css);
 		return css().contains(css);
 	}
 
+	/**
+	 * Context.
+	 *
+	 * @return the context
+	 */
 	public Context<?, ?> context()
 	{
 		return context;
 	}
 
+	/**
+	 * Double click.
+	 */
 	public void doubleClick()
 	{
 		context.actions().doubleClick(wrapee).perform();
 	}
 
 	/**
-	 * @return
+	 * Element.
+	 *
+	 * @return the web element
 	 */
 	public WebElement element()
 	{
 		return wrapee;
 	}
 
+	/**
+	 * Ensure available.
+	 */
 	public void ensureAvailable()
 	{
 		try
@@ -96,11 +155,20 @@ public class UIField<T extends WebElement>
 		}
 	}
 
+	/**
+	 * Ensure hidden.
+	 */
 	public void ensureHidden()
 	{
 		context.ensureNotPresented(getAnnotatedId());
 	}
 
+	/**
+	 * Ensure inner html is.
+	 *
+	 * @param html
+	 *            the html
+	 */
 	public void ensureInnerHtmlIs(String html)
 	{
 		if (!html.equals(html()))
@@ -110,8 +178,10 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
-	 * @param name
-	 * @return
+	 * Ensure title is.
+	 *
+	 * @param title
+	 *            the title
 	 */
 	public void ensureTitleIs(String title)
 	{
@@ -122,6 +192,8 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
+	 * Gets the annotated id.
+	 *
 	 * @return the annotatedId
 	 */
 	public String getAnnotatedId()
@@ -130,83 +202,144 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
-	 * @return
+	 * Gets the wrapped.
+	 *
+	 * @return the wrapped
 	 */
 	public WebElement getWrapped()
 	{
 		return wrapee;
 	}
 
+	/**
+	 * Height.
+	 *
+	 * @return the int
+	 */
 	public int height()
 	{
 		return wrapee.getSize().getHeight();
 	}
 
+	/**
+	 * Id.
+	 *
+	 * @return the string
+	 */
 	public String id()
 	{
 		return id(wrapee);
 	}
 
+	/**
+	 * Id.
+	 *
+	 * @param elem
+	 *            the elem
+	 * @return the string
+	 */
 	public String id(WebElement elem)
 	{
 		return elem.getAttribute(ID);
 	}
 
 	/**
-	 * @return
+	 * Inner text.
+	 *
+	 * @return the string
 	 */
 	public String innerText()
 	{
 		return stringAttr("innerText");
 	}
 
+	/**
+	 * Checks if is hidden.
+	 *
+	 * @return true, if is hidden
+	 */
 	public boolean isHidden()
 	{
 		info("calls #containsCss(HIDE) in #isHidden()");
 		return containsCss(Consts.HIDE);
 	}
 
+	/**
+	 * Checks if is showing error.
+	 *
+	 * @return true, if is showing error
+	 */
 	public boolean isShowingError()
 	{
 		info("calls #containsCss(ERROR_CSS) in #isShowingError()");
 		return containsCss(ERROR_CSS);
 	}
 
+	/**
+	 * Checks if is showing warning.
+	 *
+	 * @return true, if is showing warning
+	 */
 	public boolean isShowingWarning()
 	{
 		info("calls #containsCss(WARN_CSS) in #isShowingWarning()");
 		return containsCss(WARN_CSS);
 	}
 
+	/**
+	 * Checks if is visible.
+	 *
+	 * @return true, if is visible
+	 */
 	public boolean isVisible()
 	{
 		return wrapee.isDisplayed();
 	}
 
+	/**
+	 * Left.
+	 *
+	 * @return the int
+	 */
 	public int left()
 	{
 		return wrapee.getLocation().getX();
 	}
 
+	/**
+	 * Mouse out.
+	 */
 	public void mouseOut()
 	{
 		moveOffset(-1, -1);
 	}
 
 	/**
-	 *
+	 * Mouse over.
 	 */
 	public void mouseOver()
 	{
 		moveOffset(0, 0);
 	}
 
+	/**
+	 * Not has css.
+	 *
+	 * @param css
+	 *            the css
+	 * @return true, if successful
+	 */
 	public boolean notHasCss(String css)
 	{
 		info("calls !#containsCss() in #notContainsCss()");
 		return !containsCss(css);
 	}
 
+	/**
+	 * Presented.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean presented()
 	{
 		try
@@ -221,6 +354,8 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
+	 * Sets the annotated id.
+	 *
 	 * @param annotatedId
 	 *            the annotatedId to set
 	 */
@@ -229,32 +364,67 @@ public class UIField<T extends WebElement>
 		this.annotatedId = annotatedId;
 	}
 
+	/**
+	 * Text is.
+	 *
+	 * @param text
+	 *            the text
+	 * @return true, if successful
+	 */
 	public boolean textIs(String text)
 	{
 		info("check whether %s's actual text: '%s' equals to expected text: '%s'", id(), text(), text);
 		return text().equals(text);
 	}
 
+	/**
+	 * Title.
+	 *
+	 * @return the string
+	 */
 	public String title()
 	{
 		return stringAttr(TITLE);
 	}
 
+	/**
+	 * Top.
+	 *
+	 * @return the int
+	 */
 	public int top()
 	{
 		return wrapee.getLocation().getY();
 	}
 
+	/**
+	 * Wait for seconds.
+	 *
+	 * @param seconds
+	 *            the seconds
+	 */
 	public void waitForSeconds(int seconds)
 	{
 		Util.sleep(seconds, annotatedId);
 	}
 
+	/**
+	 * Width.
+	 *
+	 * @return the int
+	 */
 	public int width()
 	{
 		return wrapee.getSize().getWidth();
 	}
 
+	/**
+	 * Async text presented.
+	 *
+	 * @param text
+	 *            the text
+	 * @return true, if successful
+	 */
 	protected boolean asyncTextPresented(String text)
 	{
 		info("checks whether async text: '%s' is presented in #asyncTextPresented()", text);
@@ -262,14 +432,24 @@ public class UIField<T extends WebElement>
 		return waitUntil(ExpectedConditions.textToBePresentInElement(wrapee, text));
 	}
 
+	/**
+	 * Attr.
+	 *
+	 * @param attrName
+	 *            the attr name
+	 * @return the string
+	 */
 	protected String attr(String attrName)
 	{
 		return wrapee.getAttribute(attrName);
 	}
 
 	/**
+	 * Contains text.
+	 *
 	 * @param text
-	 * @return
+	 *            the text
+	 * @return true, if successful
 	 */
 	protected boolean containsText(String text)
 	{
@@ -277,11 +457,23 @@ public class UIField<T extends WebElement>
 		return text().contains(text);
 	}
 
+	/**
+	 * Css.
+	 *
+	 * @return the string
+	 */
 	protected String css()
 	{
 		return stringAttr(CLASS);
 	}
 
+	/**
+	 * Css has changed from.
+	 *
+	 * @param css
+	 *            the css
+	 * @return true, if successful
+	 */
 	protected boolean cssHasChangedFrom(final String css)
 	{
 		info("chech whether %s's css has changed to '%s' from '%s'", id(), css, css());
@@ -307,6 +499,14 @@ public class UIField<T extends WebElement>
 		});
 	}
 
+	/**
+	 * Drag and drop.
+	 *
+	 * @param xOffset
+	 *            the x offset
+	 * @param yOffset
+	 *            the y offset
+	 */
 	protected void dragAndDrop(int xOffset, int yOffset)
 	{
 		Actions slide = context.actions();
@@ -317,6 +517,12 @@ public class UIField<T extends WebElement>
 		// slide.release();
 	}
 
+	/**
+	 * Ensure attr not null or empty.
+	 *
+	 * @param attr
+	 *            the attr
+	 */
 	protected void ensureAttrNotNullOrEmpty(String attr)
 	{
 		Util.mustNotNullOrEmpty(attr, "attribute name");
@@ -327,6 +533,13 @@ public class UIField<T extends WebElement>
 		}
 	}
 
+	/**
+	 * Ensure inner text is.
+	 *
+	 * @param text
+	 *            the text
+	 * @return true, if successful
+	 */
 	protected boolean ensureInnerTextIs(String text)
 	{
 		if (!text.equals(text()))
@@ -338,8 +551,10 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
+	 * Ensure src end with.
+	 *
 	 * @param src
-	 * @return
+	 *            the src
 	 */
 	protected void ensureSrcEndWith(String src)
 	{
@@ -349,6 +564,13 @@ public class UIField<T extends WebElement>
 		}
 	}
 
+	/**
+	 * Ensure text ends with.
+	 *
+	 * @param expected
+	 *            the expected
+	 * @return true, if successful
+	 */
 	protected boolean ensureTextEndsWith(String expected)
 	{
 		if (!text().endsWith(expected))
@@ -360,11 +582,25 @@ public class UIField<T extends WebElement>
 		return true;
 	}
 
+	/**
+	 * Ensure text is.
+	 *
+	 * @param text
+	 *            the text
+	 * @return true, if successful
+	 */
 	protected boolean ensureTextIs(int text)
 	{
 		return ensureTextIs(Integer.toString(text));
 	}
 
+	/**
+	 * Ensure text is.
+	 *
+	 * @param expected
+	 *            the expected
+	 * @return true, if successful
+	 */
 	/*
 	 * @deprecated using text()=="expected text" instead if using spockframework
 	 * it will print out more intuitive error message like this:
@@ -384,11 +620,25 @@ public class UIField<T extends WebElement>
 		return true;
 	}
 
+	/**
+	 * Ensure text is part of.
+	 *
+	 * @param whole
+	 *            the whole
+	 * @return true, if successful
+	 */
 	protected boolean ensureTextIsPartOf(String whole)
 	{
 		return whole.contains(text());
 	}
 
+	/**
+	 * Ensure text starts with.
+	 *
+	 * @param expected
+	 *            the expected
+	 * @return true, if successful
+	 */
 	protected boolean ensureTextStartsWith(String expected)
 	{
 		if (!text().startsWith(expected))
@@ -401,13 +651,23 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
-	 * @param name
+	 * Input.
+	 *
+	 * @param text
+	 *            the text
 	 */
 	protected void input(String text)
 	{
 		wrapee.sendKeys(text);
 	}
 
+	/**
+	 * Checks if is sync error indicated.
+	 *
+	 * @param text
+	 *            the text
+	 * @return true, if is sync error indicated
+	 */
 	protected boolean isSyncErrorIndicated(final String text)
 	{
 		info("#isSyncErrorIndicated() call #containsText() and #isShowingError()");
@@ -419,12 +679,25 @@ public class UIField<T extends WebElement>
 	// return context.isPresented(id);
 	// }
 
+	/**
+	 * Checks if is sync warning indicated.
+	 *
+	 * @param text
+	 *            the text
+	 * @return true, if is sync warning indicated
+	 */
 	protected boolean isSyncWarningIndicated(final String text)
 	{
 		info("#isSyncErrorIndicated() call #containsText() and #isShowWarning()");
 		return containsText(text) && isShowingWarning();
 	}
 
+	/**
+	 * Removes the attribute.
+	 *
+	 * @param name
+	 *            the name
+	 */
 	protected void removeAttribute(String name)
 	{
 		info("remove attribute: '%s'", name);
@@ -432,6 +705,14 @@ public class UIField<T extends WebElement>
 		context.executeScript("arguments[0].removeAttribute(arguments[1]);", wrapee, name);
 	}
 
+	/**
+	 * Sets the attribute.
+	 *
+	 * @param name
+	 *            the name
+	 * @param value
+	 *            the value
+	 */
 	protected void setAttribute(String name, String value)
 	{
 		info("set attribute: '%s' to: '%s'", name, value);
@@ -439,22 +720,50 @@ public class UIField<T extends WebElement>
 		context.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", wrapee, name, value);
 	}
 
+	/**
+	 * Src.
+	 *
+	 * @return the string
+	 */
 	protected String src()
 	{
 		return stringAttr(SRC);
 	}
 
+	/**
+	 * Src ends with.
+	 *
+	 * @param src
+	 *            the src
+	 * @return true, if successful
+	 */
 	protected boolean srcEndsWith(String src)
 	{
 		info("check whether %s's actual src: '%s' ends with: '%s'", id(), src(), src);
 		return src().endsWith(src);
 	}
 
+	/**
+	 * Swipe digonal.
+	 *
+	 * @param endX
+	 *            the end X
+	 * @param endY
+	 *            the end Y
+	 * @param distance
+	 *            the distance
+	 */
 	protected void swipeDigonal(int endX, int endY, int distance)
 	{
 		throw new RuntimeException("swipeDigonal() NOT ready due to alex is busy");
 	}
 
+	/**
+	 * Swipe down.
+	 *
+	 * @param distance
+	 *            the distance
+	 */
 	protected void swipeDown(int distance)
 	{
 		if (distance < 0)
@@ -472,6 +781,12 @@ public class UIField<T extends WebElement>
 		swipeWithDefaultDuration(centerXOrAvaiable(), endY);
 	}
 
+	/**
+	 * Swipe left.
+	 *
+	 * @param distance
+	 *            the distance
+	 */
 	protected void swipeLeft(int distance)
 	{
 		if (distance < 0)
@@ -489,6 +804,12 @@ public class UIField<T extends WebElement>
 		swipeWithDefaultDuration(endX, centerYOrAvaiable());
 	}
 
+	/**
+	 * Swipe right.
+	 *
+	 * @param distance
+	 *            the distance
+	 */
 	protected void swipeRight(int distance)
 	{
 		if (distance < 0)
@@ -506,6 +827,12 @@ public class UIField<T extends WebElement>
 		swipeWithDefaultDuration(endX, centerYOrAvaiable());
 	}
 
+	/**
+	 * Swipe up.
+	 *
+	 * @param distance
+	 *            the distance
+	 */
 	protected void swipeUp(int distance)
 	{
 		if (distance < 0)
@@ -524,6 +851,8 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
+	 * Text.
+	 *
 	 * @return inner text content or null
 	 */
 	protected String text()
@@ -547,29 +876,57 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
-	 * @return
+	 * Text content.
+	 *
+	 * @return the string
 	 */
 	protected String textContent()
 	{
 		return stringAttr("textContent");
 	}
 
+	/**
+	 * Text is not.
+	 *
+	 * @param text
+	 *            the text
+	 * @return true, if successful
+	 */
 	protected boolean textIsNot(String text)
 	{
 		info("#textIsNot() calls !#textIs()");
 		return !textIs(text);
 	}
 
+	/**
+	 * Value.
+	 *
+	 * @return the string
+	 */
 	protected String value()
 	{
 		return stringAttr(VALUE);
 	}
 
+	/**
+	 * Wait until.
+	 *
+	 * @param <O>
+	 *            the generic type
+	 * @param isTrue
+	 *            the is true
+	 * @return the o
+	 */
 	protected <O> O waitUntil(ExpectedCondition<O> isTrue)
 	{
 		return context.waitUntil(isTrue);
 	}
 
+	/**
+	 * Center X.
+	 *
+	 * @return the int
+	 */
 	private int centerX()
 	{
 		Point topLeft = wrapee.getLocation();
@@ -578,6 +935,11 @@ public class UIField<T extends WebElement>
 		return topLeft.getX() + size.getWidth() / 2;
 	}
 
+	/**
+	 * Center X or avaiable.
+	 *
+	 * @return the int
+	 */
 	private int centerXOrAvaiable()
 	{
 		if (centerX() < 0)
@@ -593,6 +955,11 @@ public class UIField<T extends WebElement>
 		return centerX();
 	}
 
+	/**
+	 * Center Y.
+	 *
+	 * @return the int
+	 */
 	private int centerY()
 	{
 		Point topLeft = wrapee.getLocation();
@@ -601,6 +968,11 @@ public class UIField<T extends WebElement>
 		return topLeft.getY() + size.getHeight() / 2;
 	}
 
+	/**
+	 * Center Y or avaiable.
+	 *
+	 * @return the int
+	 */
 	private int centerYOrAvaiable()
 	{
 		if (centerY() < 0)
@@ -617,7 +989,9 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
-	 * @return
+	 * Do get text.
+	 *
+	 * @return the string
 	 */
 	private String doGetText()
 	{
@@ -644,7 +1018,9 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
-	 * @return
+	 * Html.
+	 *
+	 * @return the string
 	 */
 	private String html()
 	{
@@ -652,7 +1028,12 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
+	 * Move offset.
 	 *
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	@SuppressWarnings("deprecation")
 	private void moveOffset(int x, int y)
@@ -660,6 +1041,11 @@ public class UIField<T extends WebElement>
 		context.mouseMoveTo(wrapee, x, y);
 	}
 
+	/**
+	 * Msg of not presented in page.
+	 *
+	 * @return the string
+	 */
 	private String msgOfNotPresentedInPage()
 	{
 		return format(
@@ -670,26 +1056,61 @@ public class UIField<T extends WebElement>
 						annotatedId, annotatedId);
 	}
 
+	/**
+	 * String attr.
+	 *
+	 * @param attr
+	 *            the attr
+	 * @return the string
+	 */
 	private String stringAttr(String attr)
 	{
 		return nullIfEmpty(attr(attr));
 	}
 
+	/**
+	 * Swipe.
+	 *
+	 * @param endx
+	 *            the endx
+	 * @param endy
+	 *            the endy
+	 * @param duration
+	 *            the duration
+	 */
 	private void swipe(int endx, int endy, int duration)
 	{
 		context.swipe(centerXOrAvaiable(), centerYOrAvaiable(), endx, endy, duration);
 	}
 
+	/**
+	 * Swipe with default duration.
+	 *
+	 * @param endx
+	 *            the endx
+	 * @param endy
+	 *            the endy
+	 */
 	private void swipeWithDefaultDuration(int endx, int endy)
 	{
 		swipe(endx, endy, DEFAULT_DURATION_MILLISECONDS);
 	}
 
+	/**
+	 * Window height.
+	 *
+	 * @return the int
+	 */
 	private int windowHeight()
 	{
 		return context.height();
 	}
 
+	/**
+	 * Window width.
+	 *
+	 * @return the int
+	 */
 	private int windowWidth()
 	{
 		return context.width();

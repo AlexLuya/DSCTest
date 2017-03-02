@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.dsc.test.api.base.ColumnCfg;
+import com.dsc.test.common.report.Summary;
 
 /**
  * @Author alex
@@ -56,7 +57,7 @@ public interface API
 
 	API put(String data);
 
-	String resultAsExcel() throws IOException;
+	Summary resultAsExcel() throws IOException;
 
 	JSONObject returnJson();
 

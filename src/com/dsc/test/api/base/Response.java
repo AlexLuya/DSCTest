@@ -63,6 +63,14 @@ public class Response
 	}
 
 	/**
+	 * @return
+	 */
+	public long getTime()
+	{
+		return raw.getTime();
+	}
+
+	/**
 	 *
 	 */
 	private boolean failed()

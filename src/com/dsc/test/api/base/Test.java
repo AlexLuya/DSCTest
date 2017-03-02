@@ -20,8 +20,10 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Test
 {
-	private static final String	HTTP	= "http";
-	private static final String	WWW		= "http";
+	public static final String[]	HEADS	= new String[] { "Case", "URL", "Method", "Data", "Expectation", "Result", "Time",
+	"Diff" };
+	private static final String		HTTP	= "http";
+	private static final String		WWW		= "http";
 
 	private static HttpMethod method(List<Object> fields, int method)
 	{
@@ -64,7 +66,8 @@ public class Test
 	public String		result;
 	public String		url;
 	private String		domain;
-	private int			port;
+	private int			port=80;
+	private long		time=0;
 
 	/**
 	 * @param fields
@@ -153,19 +156,38 @@ public class Test
 	}
 
 	/**
+	 * @param time
+	 *            the time to set
+	 */
+	public final void setTime(long time)
+	{
+		this.time = time;
+	}
+
+	/**
 	 * @return
 	 */
 	public String[] stringfyFields()
 	{
-		return new String[] { caseName, url, method.toString(), stringfy(data), expectation, result, diff() };
+		return new String[] { caseName, url, method.toString(), stringfy(data), expectation, result,
+				Float.toString(time()), diff() };
 	}
+
+	/**
+	 * @return
+	 */
+	public float time()
+	{
+		return (float) time / 1000;
+	}
+
 
 	/**
 	 * @param data
 	 */
 	private void setUpData(Object data)
 	{
-		//		String[] params=
+		// HP String[] params=
 	}
 
 	/**
