@@ -7,7 +7,10 @@ package com.dsc.util;
 
 import static java.lang.String.format;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -50,6 +53,11 @@ public class Util
 		}
 
 		return false;
+	}
+
+	public static String currentDateTime()
+	{
+		return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-ms", Locale.CHINA).format(new Date());
 	}
 
 	public static <T extends UIField<?>> void ensureItemsAvailable(List<T> items)
@@ -129,6 +137,14 @@ public class Util
 		}
 
 		return body;
+	}
+
+	public static void mustBePositive(double value, String name) throws IllegalArgumentException
+	{
+		if (value < 0)
+		{
+			throw new IllegalArgumentException(name + " must >=0,but it is " + value);
+		}
 	}
 
 	public static void mustNotNull(Object obj, String name) throws IllegalArgumentException
@@ -313,6 +329,11 @@ public class Util
 	public static String[] split(String str, String seprator)
 	{
 		return str.split(seprator);
+	}
+
+	public static String stringfy(Object obj)
+	{
+		return obj == null ? null : obj.toString();
 	}
 
 	/**

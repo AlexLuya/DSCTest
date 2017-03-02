@@ -13,10 +13,15 @@ package com.dsc.test.api.base;
  */
 public class ColumnCfg
 {
-	public int	caseName;
-	public int	data;
-	public int	expectation;
-	public int	method;
-	public int	result;
-	public int	url;
+	public static ColumnCfg defaultCfg()
+	{
+		return new ColumnCfg();
+	}
+
+	public int	caseName	= 1;// generally,0 column is module
+	public int	data		= 4;
+	public int	expectation	= 5;
+	public int	method		= 3;
+	public int	result		= 6;
+	public int	url			= 2;
 }

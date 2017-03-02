@@ -5,6 +5,8 @@
  **/
 package com.dsc.test.api;
 
+import java.io.IOException;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -20,35 +22,47 @@ public interface API
 {
 	API test = new APITestImpl();
 
-	public API authorize(String token);
+	API basicAuth(String user, String password);
 
-	public API authorize(String user, String password);
+	API cookie(String name, Object value);
 
-	public API delete(String data);
+	API delete(String data);
 
-	public API domain(String domain);
+	API domain(String domain);
 
-	public API excel(String file);
+	API excel(String file);
 
-	public API excel(String file, ColumnCfg column);
+	API excel(String file, ColumnCfg column);
 
-	public API excel(String file, String sheet, ColumnCfg column);
+	API excel(String file, int ignoredRows, ColumnCfg column);
 
-	public API got(String data);
+	API excel(String file, int ignoredRows, String sheet, ColumnCfg column);
 
-	public API name(String name);
+	API excel(String file, String sheet, ColumnCfg column);
 
-	public API port(int port);
+	API formParam(String name, Object value);
 
-	public API post(String data);
+	API get(String data);
 
-	public API put(String data);
+	API header(String name, Object value);
 
-	public String resultAsCSV();
+	API name(String name);
 
-	public JSONObject returnJson();
+	API patch(String data);
 
-	public JSONArray returnJsonArray();
+	API port(int port);
 
-	public String returnString();
+	API post(String data);
+
+	API put(String data);
+
+	String resultAsExcel() throws IOException;
+
+	JSONObject returnJson();
+
+	JSONArray returnJsonArray();
+
+	String returnString();
+
+	String upload(String file);
 }

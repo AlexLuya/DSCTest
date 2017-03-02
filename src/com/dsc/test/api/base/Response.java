@@ -5,6 +5,11 @@
  **/
 package com.dsc.test.api.base;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.google.common.base.Strings;
+
 /**
  * @Author alex
  * @CreateTime 02.03.2017 13:58:49
@@ -29,6 +34,26 @@ public class Response
 		this.message = message;
 	}
 
+	public JSONObject asJson()
+	{
+		if (failed())
+		{
+			return null;
+		}
+
+		return new JSONObject(asString());
+	}
+
+	public JSONArray asJsonArray()
+	{
+		if (failed())
+		{
+			return null;
+		}
+
+		return new JSONArray(asString());
+	}
+
 	/**
 	 * @return
 	 */
@@ -37,4 +62,26 @@ public class Response
 		return message != null ? message : raw.asString();
 	}
 
+	/**
+	 *
+	 */
+	private boolean failed()
+	{
+		if (message != null)
+		{
+			return true;
+		}
+
+		if (raw.getStatusCode() != 200)
+		{
+			return true;
+		}
+
+		if (Strings.isNullOrEmpty(asString()))
+		{
+			return true;
+		}
+
+		return false;
+	}
 }
