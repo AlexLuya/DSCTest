@@ -5,6 +5,11 @@
  **/
 package com.dsc.test.api;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.dsc.test.api.base.ColumnCfg;
+
 /**
  * @Author alex
  * @CreateTime 22.02.2017 09:33:30
@@ -13,24 +18,37 @@ package com.dsc.test.api;
  */
 public interface API
 {
+	API test = new APITestImpl();
 
 	public API authorize(String token);
 
 	public API authorize(String user, String password);
 
-	public API DELETE(String data);
+	public API delete(String data);
 
 	public API domain(String domain);
 
-	public API GET(String data);
+	public API excel(String file);
+
+	public API excel(String file, ColumnCfg column);
+
+	public API excel(String file, String sheet, ColumnCfg column);
+
+	public API got(String data);
+
+	public API name(String name);
 
 	public API port(int port);
 
-	public API POST(String data);
+	public API post(String data);
 
-	// public API properties(String file);
+	public API put(String data);
 
-	// public API restfull(String url);
+	public String resultAsCSV();
 
-	public String run() throws Exception;
+	public JSONObject returnJson();
+
+	public JSONArray returnJsonArray();
+
+	public String returnString();
 }

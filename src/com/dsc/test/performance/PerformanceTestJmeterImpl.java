@@ -5,7 +5,7 @@
  **/
 package com.dsc.test.performance;
 
-import com.dsc.test.api.APITestJmeterImpl;
+import com.dsc.test.api.APITestImpl;
 
 /**
  * @Author alex
@@ -13,7 +13,7 @@ import com.dsc.test.api.APITestJmeterImpl;
  * @Version 1.0
  * @Since 1.0
  */
-public class PerformanceTestJmeterImpl extends APITestJmeterImpl
+public class PerformanceTestJmeterImpl extends APITestImpl
 {
 
 	//	public static void main(String[] argv) throws Exception
