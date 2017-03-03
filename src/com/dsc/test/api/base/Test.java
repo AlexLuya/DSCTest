@@ -66,7 +66,7 @@ public class Test
 	public String		result;
 	public String		url;
 	private String		domain;
-	private int			port=80;
+	private int		port=80;
 	private long		time=0;
 
 	/**

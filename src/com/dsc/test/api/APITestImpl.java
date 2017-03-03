@@ -142,7 +142,7 @@ public class APITestImpl implements API
 	{
 		mustNotNullOrEmpty(file, "excel file path");
 		mustBePositive(ignoredRows, "ignored rows");
-		mustNotNull(sheet, "excel file path");
+		mustNotNull(sheet, "sheet");
 		mustNotNull(column, "excel column config");
 
 		Path fileName = Paths.get(file).getFileName();
