@@ -255,10 +255,10 @@ public class Util
 			finds.add(matcher.group(0));
 		}
 
-		if (finds.size() == 0)
-		{
-			return null;
-		}
+		// if (finds.size() == 0)
+		// {
+		// return null;
+		// }
 
 		return finds.toArray(new String[finds.size()]);
 	}
@@ -291,18 +291,6 @@ public class Util
 		return selectedOptionText(options, optionId, false);
 	}
 
-	// public static <T> T annoByName(Field field,String name){
-	// Annotation[] annotations = field.getAnnotations();
-	//
-	// for(Annotation anno : annotations){
-	// if(anno.getClass().getSimpleName().equals(name)){
-	// return (T) anno;
-	// }
-	// }
-	//
-	// return null;
-	// }
-
 	/**
 	 * Selected option text.
 	 *
@@ -326,6 +314,18 @@ public class Util
 
 		return null;
 	}
+
+	// public static <T> T annoByName(Field field,String name){
+	// Annotation[] annotations = field.getAnnotations();
+	//
+	// for(Annotation anno : annotations){
+	// if(anno.getClass().getSimpleName().equals(name)){
+	// return (T) anno;
+	// }
+	// }
+	//
+	// return null;
+	// }
 
 	public static void sleep(double d)
 	{
@@ -355,6 +355,16 @@ public class Util
 	public static String stringfy(Object obj)
 	{
 		return obj == null ? null : obj.toString();
+	}
+
+	public static String stripLeadingAndTailWhitespace(String str)
+	{
+		if (str == null)
+		{
+			return null;
+		}
+
+		return str.replaceAll("^\\s+|\\s+$", "");
 	}
 
 	/**

@@ -53,6 +53,9 @@
 	<classpathentry kind="lib" path="lib/rest-assured-3.0.2.jar" sourcepath="lib/src/rest-assured-3.0.2-sources.jar"/>
 	<classpathentry kind="lib" path="lib/spock-excel-reader-1.2.1-modified.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-3.15.jar"/>
+	<classpathentry kind="lib" path="lib/httpmime-4.3.jar"/>
+	<classpathentry kind="lib" path="lib/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.15.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>

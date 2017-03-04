@@ -72,7 +72,7 @@ public class APITestImpl implements API
 	@Override
 	public API cookie(String name, Object value)
 	{
-		mustNotNullOrEmpty(name, "cookie nname");
+		mustNotNullOrEmpty(name, "cookie name");
 		mustNotNull(value, "cookie value");
 
 		given.cookie(name, value);
@@ -145,8 +145,8 @@ public class APITestImpl implements API
 		mustNotNull(sheet, "sheet");
 		mustNotNull(column, "excel column config");
 
-		Path fileName = Paths.get(file).getFileName();
-		ExcelDataReader excel = new ExcelDataReader(fileName.toString(), fileName.getParent().toString());
+		Path path = Paths.get(file);
+		ExcelDataReader excel = new ExcelDataReader(path.getParent().toString(), path.getFileName().toString());
 
 		for (int i = ignoredRows; excel.getDataFromRow(i) != null; i++)
 		{
@@ -215,7 +215,7 @@ public class APITestImpl implements API
 	@Override
 	public API name(String name)
 	{
-		mustNotNullOrEmpty(name, "test case name");
+		mustNotNullOrEmpty(caseName = name, "test case name");
 		return this;
 	}
 
@@ -276,13 +276,14 @@ public class APITestImpl implements API
 		}
 
 		FileOutputStream testContent = new FileOutputStream(
-				Report.forAPITesting(String.format("%s-report-%s.xlsx", caseName, currentDateTime())));
+				Report.forAPITesting(String.format("%s-api-testing-report-%s.xlsx", caseName, currentDateTime())));
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet sheet = workbook.createSheet("api testing");
 
 		// create head
 		createRow(sheet, 0, Test.HEADS);
 		// HP freeze first row
+		//HP for mat first row
 
 		// create content
 		for (int i = 0; i < tests.size(); i++)
@@ -353,9 +354,8 @@ public class APITestImpl implements API
 	{
 		Row row = sheet.createRow(i);
 
-		for (String field : fields)
-		{
-			row.createCell(i).setCellValue(field);
+		for (int j = 0; j < fields.length; j++) {
+			row.createCell(j).setCellValue(fields[j]);
 		}
 	}
 

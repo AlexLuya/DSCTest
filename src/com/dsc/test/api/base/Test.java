@@ -5,9 +5,11 @@
  **/
 package com.dsc.test.api.base;
 
+import static com.dsc.util.Util.notNullOrEmpty;
 import static com.dsc.util.Util.nullOrEmpty;
 import static com.dsc.util.Util.params;
 import static com.dsc.util.Util.stringfy;
+import static com.dsc.util.Util.stripLeadingAndTailWhitespace;
 
 import java.util.List;
 
@@ -43,6 +45,7 @@ public class Test
 	{
 		if (idx >= fields.size())
 		{
+			// HP tell column
 			throw null;
 		}
 
@@ -56,7 +59,7 @@ public class Test
 			return null;
 		}
 
-		return (String) fields.get(idx);
+		return stripLeadingAndTailWhitespace((String) fields.get(idx));
 	}
 
 	public String		caseName;
@@ -124,7 +127,7 @@ public class Test
 	 */
 	public boolean invalid()
 	{
-		if (invalidFields() != null)
+		if (!"".equals(invalidFields()))
 		{
 			result = "Ignored due to Must-have field: " + invalidFields() + " is null or emtpy";
 		}
@@ -172,6 +175,11 @@ public class Test
 	 */
 	private int dataCount()
 	{
+		if (data == null)
+		{
+			return 0;
+		}
+
 		return stringfy(data).split(",").length;
 	}
 
@@ -230,14 +238,13 @@ public class Test
 		if (data == null)
 		{
 			result = "data==null,so nothing to replace:" + String.join(",", params(url)) + " in the url";
-		}
-
-		if (paramCount() != dataCount())
+		} else if (paramCount() != dataCount())
 		{
 			result = String.format("param count:%d!=%d:data count", paramCount(), dataCount());
+		} else
+		{
+			url = StringUtils.replaceEach(url, params(url), stringfy(data).split(","));
 		}
-
-		url = StringUtils.replaceEach(url, params(url), stringfy(data).split(","));
 	}
 
 	/**
@@ -245,11 +252,19 @@ public class Test
 	 */
 	private void setUpUrl(String url)
 	{
-		if (url.startsWith(HTTP) || url.startsWith(WWW) || url.startsWith(domain))
+		if (url == null)
 		{
+			return;
+		} else if (url.startsWith(HTTP) || url.startsWith(WWW) || url.startsWith(domain))
+		{
+			//HP use library to validate URL
 			this.url = url;
+		} else if (notNullOrEmpty(domain))
+		{
+			this.url = domain + ":" + port;
+		} else
+		{
+			result = "Neither 'url' nor 'domain' contains like:'www.xxx.com'";
 		}
-
-		this.url = domain + ":" + port;
 	}
 }
