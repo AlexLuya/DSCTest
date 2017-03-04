@@ -216,7 +216,7 @@ public class APITestImpl implements API
 	public API name(String name)
 	{
 		mustNotNullOrEmpty(name, "test case name");
-		return null;
+		return this;
 	}
 
 	/*
@@ -282,7 +282,7 @@ public class APITestImpl implements API
 
 		// create head
 		createRow(sheet, 0, Test.HEADS);
-		// NP freeze first row
+		// HP freeze first row
 
 		// create content
 		for (int i = 0; i < tests.size(); i++)
