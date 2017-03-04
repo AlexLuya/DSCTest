@@ -385,17 +385,14 @@ public class APITestImpl implements API
 
 	private Response exec(Test test)
 	{
-		Response result = null;
-
-		if (test.invalidField() != null)
+		if (test.invalid())
 		{
-			result = new Response("Ignored due to Must-have field: " + test.invalidField() + " is null or emtpy");
-		} else
-		{
-			result = new Response(doExcel(test));
-			test.setTime(result.getTime());
+			return new Response(test.result);
 		}
 
+		// exec then set result to response
+		Response result = new Response(doExcel(test));
+		test.setTime(result.getTime());
 		test.setResult(result.asString());
 
 		return result;

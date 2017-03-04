@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -240,6 +242,25 @@ public class Util
 	public static boolean nullOrEmpty(String str)
 	{
 		return str == null || str.trim().isEmpty();
+	}
+
+	public static String[] params(String url)
+	{
+		// Pattern pattern = Pattern.compile("\\{(.*?)\\}");
+		Matcher matcher = Pattern.compile("\\{\\w+\\}").matcher(url);
+
+		List<String> finds = Lists.newArrayList();
+		while (matcher.find())
+		{
+			finds.add(matcher.group(0));
+		}
+
+		if (finds.size() == 0)
+		{
+			return null;
+		}
+
+		return finds.toArray(new String[finds.size()]);
 	}
 
 	/**

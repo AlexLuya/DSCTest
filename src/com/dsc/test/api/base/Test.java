@@ -6,6 +6,7 @@
 package com.dsc.test.api.base;
 
 import static com.dsc.util.Util.nullOrEmpty;
+import static com.dsc.util.Util.params;
 import static com.dsc.util.Util.stringfy;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class Test
 	public static final String[]	HEADS	= new String[] { "Case", "URL", "Method", "Data", "Expectation", "Result", "Time",
 	"Diff" };
 	private static final String		HTTP	= "http";
-	private static final String		WWW		= "http";
+	private static final String		WWW		= "www";
 
 	private static HttpMethod method(List<Object> fields, int method)
 	{
@@ -42,8 +43,7 @@ public class Test
 	{
 		if (idx >= fields.size())
 		{
-			// HP
-			throw new IllegalStateException(String.format("", idx));
+			throw null;
 		}
 
 		return fields.get(idx);
@@ -66,8 +66,8 @@ public class Test
 	public String		result;
 	public String		url;
 	private String		domain;
-	private int		port=80;
-	private long		time=0;
+	private int			port	= 80;
+	private long		time	= 0;
 
 	/**
 	 * @param fields
@@ -122,29 +122,14 @@ public class Test
 	/**
 	 * @return
 	 */
-	public String invalidField()
+	public boolean invalid()
 	{
-		if (nullOrEmpty(url))
+		if (invalidFields() != null)
 		{
-			return "url";
+			result = "Ignored due to Must-have field: " + invalidFields() + " is null or emtpy";
 		}
 
-		if (method == null)
-		{
-			return "method";
-		}
-
-		// if(nullOrEmpty())
-		// {
-		// return "";
-		// }
-
-		// if(nullOrEmpty())
-		// {
-		// return "";
-		// }
-
-		return null;
+		return result != null;
 	}
 
 	/**
@@ -169,8 +154,8 @@ public class Test
 	 */
 	public String[] stringfyFields()
 	{
-		return new String[] { caseName, url, method.toString(), stringfy(data), expectation, result,
-				Float.toString(time()), diff() };
+		return new String[] { caseName, url, method.toString(), stringfy(data), expectation, result, Float.toString(time()),
+				diff() };
 	}
 
 	/**
@@ -181,13 +166,78 @@ public class Test
 		return (float) time / 1000;
 	}
 
+	/**
+	 * @param data
+	 * @return
+	 */
+	private int dataCount()
+	{
+		return stringfy(data).split(",").length;
+	}
+
+	/**
+	 * @return
+	 */
+	private String invalidFields()
+	{
+		String invalids = "";
+
+		if (nullOrEmpty(url))
+		{
+			invalids = "url";
+		}
+
+		if (method == null)
+		{
+			invalids = invalids + ",method";
+		}
+
+		// if(nullOrEmpty())
+		// {
+		// return "";
+		// }
+
+		// if(nullOrEmpty())
+		// {
+		// return "";
+		// }
+
+		return invalids;
+	}
+
+	/**
+	 * @param params
+	 * @return
+	 */
+	private int paramCount()
+	{
+		return params(url).length;
+	}
 
 	/**
 	 * @param data
 	 */
 	private void setUpData(Object data)
 	{
-		// HP String[] params=
+		this.data = data;
+
+		// if nothing to be replaced
+		if (paramCount() == 0)
+		{
+			return;
+		}
+
+		if (data == null)
+		{
+			result = "data==null,so nothing to replace:" + String.join(",", params(url)) + " in the url";
+		}
+
+		if (paramCount() != dataCount())
+		{
+			result = String.format("param count:%d!=%d:data count", paramCount(), dataCount());
+		}
+
+		url = StringUtils.replaceEach(url, params(url), stringfy(data).split(","));
 	}
 
 	/**
