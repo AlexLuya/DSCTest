@@ -18,10 +18,7 @@
 	<classpathentry kind="lib" path="lib/commons-pool2-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/cpsuite-1.2.6.jar"/>
 	<classpathentry kind="lib" path="lib/dbunit-2.5.3.jar"/>
-	<classpathentry kind="lib" path="lib/gson-2.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/hamcrest-junit-2.0.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/httpclient-4.3.4.jar"/>
-	<classpathentry kind="lib" path="lib/httpcore-4.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/ini4j-0.5.4.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-annotations-2.4.3.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-2.4.3.jar"/>
@@ -45,7 +42,6 @@
 	<classpathentry kind="lib" path="lib/jmeter/lib/jorphan.jar"/>
 	<classpathentry kind="lib" path="lib/jmeter/lib/ext/ApacheJMeter_http.jar"/>
 	<classpathentry kind="lib" path="lib/jmeter/lib/ext/ApacheJMeter_java.jar" sourcepath="lib/src/jmeter/protocol"/>
-	<classpathentry kind="lib" path="lib/slf4j-api-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/selenium-combined-3.0.1-nodeps.jar" sourcepath="lib/src/selenium-java-3.0.1-sources.jar"/>
 	<classpathentry kind="lib" path="lib/asm-5.2.jar" sourcepath="lib/src/asm-5.2-sources.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.15.jar"/>
@@ -53,9 +49,14 @@
 	<classpathentry kind="lib" path="lib/rest-assured-3.0.2.jar" sourcepath="lib/src/rest-assured-3.0.2-sources.jar"/>
 	<classpathentry kind="lib" path="lib/spock-excel-reader-1.2.1-modified.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-3.15.jar"/>
-	<classpathentry kind="lib" path="lib/httpmime-4.3.jar"/>
-	<classpathentry kind="lib" path="lib/xmlbeans-2.3.0.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.15.jar"/>
+	<classpathentry kind="lib" path="lib/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.24.jar"/>
+	<classpathentry kind="lib" path="lib/httpmime-4.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore-4.4.6.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient-4.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.7.jar"/>
+	<classpathentry kind="lib" path="lib/guava-21.0.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>

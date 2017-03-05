@@ -29,6 +29,7 @@ import com.dsc.test.api.base.Response;
 import com.dsc.test.api.base.Test;
 import com.dsc.test.common.report.Report;
 import com.dsc.test.common.report.Summary;
+import com.dsc.util.Log;
 import com.google.common.collect.Lists;
 
 import io.restassured.RestAssured;
@@ -359,6 +360,12 @@ public class APITestImpl implements API
 
 		for (int j = 0; j < fields.length; j++)
 		{
+			Log.info("field", fields[j]);
+			if (fields[j].length() >= 32767)
+			{
+				fields[j] = fields[j].substring(0, 32767);
+			}
+
 			row.createCell(j).setCellValue(fields[j]);
 		}
 	}
