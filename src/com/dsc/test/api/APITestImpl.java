@@ -276,14 +276,17 @@ public class APITestImpl implements API
 		}
 
 		FileOutputStream testContent = new FileOutputStream(
+
 				Report.forAPITesting(String.format("%s-api-testing-report-%s.xlsx", caseName, currentDateTime())));
+
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet sheet = workbook.createSheet("api testing");
 
 		// create head
 		createRow(sheet, 0, Test.HEADS);
+
 		// HP freeze first row
-		//HP for mat first row
+		// HP for mat first row
 
 		// create content
 		for (int i = 0; i < tests.size(); i++)
@@ -354,7 +357,8 @@ public class APITestImpl implements API
 	{
 		Row row = sheet.createRow(i);
 
-		for (int j = 0; j < fields.length; j++) {
+		for (int j = 0; j < fields.length; j++)
+		{
 			row.createCell(j).setCellValue(fields[j]);
 		}
 	}
@@ -393,7 +397,6 @@ public class APITestImpl implements API
 		// exec then set result to response
 		Response result = new Response(doExcel(test));
 		test.setTime(result.getTime());
-		test.setResult(result.asString());
 
 		return result;
 	}

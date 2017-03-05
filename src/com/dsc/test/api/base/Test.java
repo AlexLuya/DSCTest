@@ -26,6 +26,7 @@ public class Test
 	public static final String[]	HEADS	= new String[] { "Case", "URL", "Method", "Data", "Expectation", "Result", "Time",
 	"Diff" };
 	private static final String		HTTP	= "http";
+
 	private static final String		WWW		= "www";
 
 	private static HttpMethod method(List<Object> fields, int method)
@@ -69,6 +70,7 @@ public class Test
 	public String		result;
 	public String		url;
 	private String		domain;
+
 	private int			port	= 80;
 	private long		time	= 0;
 
@@ -144,6 +146,10 @@ public class Test
 	}
 
 	/**
+	 * <<<<<<< HEAD
+	 *
+	 * @param params
+	 *            =======
 	 * @param time
 	 *            the time to set
 	 */
@@ -214,7 +220,8 @@ public class Test
 	}
 
 	/**
-	 * @param params
+	 * >>>>>>> c198a7280159aa785993476bd47595370628f65a
+	 *
 	 * @return
 	 */
 	private int paramCount()
@@ -257,7 +264,7 @@ public class Test
 			return;
 		} else if (url.startsWith(HTTP) || url.startsWith(WWW) || url.startsWith(domain))
 		{
-			//HP use library to validate URL
+			// HP use library to validate URL
 			this.url = url;
 		} else if (notNullOrEmpty(domain))
 		{
