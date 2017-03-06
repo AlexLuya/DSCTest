@@ -18,7 +18,7 @@ public class APITestImplTest extends Specification
 		Summary summary=API.test.name("HuaShan").header("Authorization",authKey).excel(new File(excelFile).getAbsolutePath(),ignoredRows,columnCfg).resultAsExcel()
 
 		then:""
-		summary.total==64
+		summary.total==61
 		summary.fails==0
 		summary.ignores==0
 

@@ -14,6 +14,9 @@ import static com.dsc.util.Util.stripLeadingAndTailWhitespace;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.routines.UrlValidator;
+
+import com.dsc.util.Json;
 
 /**
  * @Author alex
@@ -69,6 +72,7 @@ public class Test
 	public HttpMethod	method;
 	public String		result;
 	public String		url;
+	public String		violation;
 	private String		domain;
 
 	private int			port	= 80;
@@ -98,7 +102,7 @@ public class Test
 	public Test(String caseName, String url, HttpMethod method, Object data, Object expectation, String domain, int port)
 	{
 		this.caseName = caseName;
-		this.expectation = expectation;
+		this.expectation = Json.formatIfItIs(expectation);
 		this.method = method;
 		this.domain = domain;
 		this.port = port;
@@ -131,10 +135,10 @@ public class Test
 	{
 		if (!"".equals(invalidFields()))
 		{
-			result = "Ignored due to Must-have field: " + invalidFields() + " is null or emtpy";
+			violation = "Ignored due to Must-have field: " + invalidFields() + " is null or emtpy";
 		}
 
-		return result != null;
+		return violation != null;
 	}
 
 	/**
@@ -142,7 +146,7 @@ public class Test
 	 */
 	public void setResult(String result)
 	{
-		this.result = result;
+		this.result = Json.formatIfItIs(result);
 	}
 
 	/**
@@ -244,10 +248,10 @@ public class Test
 
 		if (data == null)
 		{
-			result = "data==null,so nothing to replace:" + String.join(",", params(url)) + " in the url";
+			violation = "data==null,so nothing to replace:" + String.join(",", params(url)) + " in the url";
 		} else if (paramCount() != dataCount())
 		{
-			result = String.format("param count:%d!=%d:data count", paramCount(), dataCount());
+			violation = String.format("param count:%d!=%d:data count", paramCount(), dataCount());
 		} else
 		{
 			url = StringUtils.replaceEach(url, params(url), stringfy(data).split(","));
@@ -264,14 +268,14 @@ public class Test
 			return;
 		} else if (url.startsWith(HTTP) || url.startsWith(WWW) || url.startsWith(domain))
 		{
-			// HP use library to validate URL
 			this.url = url;
+			violation = UrlValidator.getInstance().isValid(url) ? null : "url is invalid";
 		} else if (notNullOrEmpty(domain))
 		{
 			this.url = domain + ":" + port;
 		} else
 		{
-			result = "Neither 'url' nor 'domain' contains like:'www.xxx.com'";
+			violation = "Neither 'url' nor 'domain' contains like:'www.xxx.com'";
 		}
 	}
 }

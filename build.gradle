@@ -35,6 +35,8 @@ dependencies {
     compile group: 'org.apache.jmeter', name: 'ApacheJMeter_core', version: '3.1'
 	// https://mvnrepository.com/artifact/org.apache.jmeter/jorphan
 	compile group: 'org.apache.jmeter', name: 'jorphan', version: '3.1'
+	// https://mvnrepository.com/artifact/commons-validator/commons-validator
+	compile group: 'commons-validator', name: 'commons-validator', version: '1.6'	
 	// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
 	//compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.1.0'
 	// https://mvnrepository.com/artifact/org.json/json

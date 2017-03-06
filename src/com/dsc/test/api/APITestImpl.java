@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -29,6 +30,7 @@ import com.dsc.test.api.base.Response;
 import com.dsc.test.api.base.Test;
 import com.dsc.test.common.report.Report;
 import com.dsc.test.common.report.Summary;
+import com.dsc.util.Excel;
 import com.dsc.util.Log;
 import com.google.common.collect.Lists;
 
@@ -276,6 +278,8 @@ public class APITestImpl implements API
 			exec(test);
 		}
 
+		Log.debug("Writing result as excel...");
+
 		FileOutputStream testContent = new FileOutputStream(
 				Report.forAPITesting(String.format("%s-api-testing-report-%s.xlsx", caseName, currentDateTime())));
 
@@ -283,10 +287,13 @@ public class APITestImpl implements API
 		XSSFSheet sheet = workbook.createSheet("api testing");
 
 		// create head
-		createRow(sheet, 0, Test.HEADS);
+		Row headRow = createRow(sheet, 0, Test.HEADS);
 
-		// HP freeze first row
-		// HP format first row
+		// freeze first row and first column
+		sheet.createFreezePane(1, 1);
+		// format first row
+		Excel.setBold(workbook, headRow);
+		Excel.setColor(workbook, headRow, IndexedColors.BLUE, IndexedColors.BLUE_GREY);
 
 		// create content
 		for (int i = 0; i < tests.size(); i++)
@@ -298,6 +305,8 @@ public class APITestImpl implements API
 		workbook.write(testContent);
 		testContent.close();
 		workbook.close();
+
+		Log.debug("All api tests finished!!!");
 
 		return new Summary(tests);
 	}
@@ -353,13 +362,12 @@ public class APITestImpl implements API
 	 * @param i
 	 * @param fields
 	 */
-	private void createRow(XSSFSheet sheet, int i, String[] fields)
+	private Row createRow(XSSFSheet sheet, int i, String[] fields)
 	{
 		Row row = sheet.createRow(i);
 
 		for (int j = 0; j < fields.length; j++)
 		{
-			Log.info("field", fields[j]);
 			if (fields[j] != null && fields[j].length() >= 32767)
 			{
 				fields[j] = fields[j].substring(0, 32767);
@@ -367,6 +375,8 @@ public class APITestImpl implements API
 
 			row.createCell(j).setCellValue(fields[j]);
 		}
+
+		return row;
 	}
 
 	/**
@@ -387,7 +397,6 @@ public class APITestImpl implements API
 				return given().post(test.url);
 			case PUT:
 				return given().post(test.url);
-
 		}
 
 		return null;
@@ -397,12 +406,16 @@ public class APITestImpl implements API
 	{
 		if (test.invalid())
 		{
-			return new Response(test.result);
+			Log.debug(String.format("Ignored api test: %s due to: %s", test.caseName, test.result));
+			return new Response(test.violation);
 		}
 
 		// exec then set result to response
 		Response result = new Response(doExcel(test));
 		test.setTime(result.getTime());
+		test.setResult(result.asString());
+
+		Log.debug(String.format("Executing %dth api test: %s in %f seconds",tests.indexOf(test), test.caseName, test.time()));
 
 		return result;
 	}

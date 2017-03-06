@@ -17,9 +17,9 @@ import com.dsc.test.api.base.Test;
  */
 public class Summary
 {
-	public final int	fails;
-	public final int	ignores;
-	public final float	time;
+	public int			fails;
+	public int			ignores;
+	public float		time;
 	public final int	total;
 
 	/**
@@ -28,45 +28,19 @@ public class Summary
 	public Summary(List<Test> tests)
 	{
 		total = tests.size();
-		fails = fails(tests);
-		ignores = ignores(tests);
-		time = time(tests);
-	}
-
-	/**
-	 * @param tests
-	 * @return
-	 */
-	private int fails(List<Test> tests)
-	{
-		// NP- Auto-generated method stub
-		return 0;
-	}
-
-	/**
-	 * @param tests
-	 * @return
-	 */
-	private int ignores(List<Test> tests)
-	{
-		// NP- Auto-generated method stub
-		return 0;
-	}
-
-	/**
-	 * @param tests
-	 * @return
-	 */
-	private float time(List<Test> tests)
-	{
-		float time = 0;
-
 		for (Test test : tests)
 		{
-			time = time + test.time();
+			if (test.invalid())
+			{
+				++ignores;
+			} else if (test.diff() != null)
+			{
+				++fails;
+			} else
+			{
+				time = time + test.time();
+			}
 		}
-
-		return time;
 	}
 
 }
