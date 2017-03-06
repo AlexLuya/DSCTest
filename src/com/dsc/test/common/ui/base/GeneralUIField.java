@@ -16,20 +16,20 @@ public class GeneralUIField extends UIField<WebElement>
 
 	/**
 	 * @param context
-	 * @param id
+	 * @param wrapeeId
 	 */
-	public GeneralUIField(Context<?, ? extends WebDriver> context, String id)
+	public GeneralUIField(Context<?, ? extends WebDriver> context, String wrapeeId)
 	{
-		super(context, id);
+		super(context, wrapeeId);
 	}
 
 	/**
 	 * @param context
-	 * @param id
+	 * @param wrappee
 	 */
-	public GeneralUIField(Context<?, ? extends WebDriver> context, WebElement id)
+	public GeneralUIField(Context<?, ? extends WebDriver> context, WebElement wrappee)
 	{
-		super(context, id);
+		super(context, wrappee);
 	}
 
 }

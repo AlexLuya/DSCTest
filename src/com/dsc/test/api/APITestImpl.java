@@ -277,7 +277,6 @@ public class APITestImpl implements API
 		}
 
 		FileOutputStream testContent = new FileOutputStream(
-
 				Report.forAPITesting(String.format("%s-api-testing-report-%s.xlsx", caseName, currentDateTime())));
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -287,7 +286,7 @@ public class APITestImpl implements API
 		createRow(sheet, 0, Test.HEADS);
 
 		// HP freeze first row
-		// HP for mat first row
+		// HP format first row
 
 		// create content
 		for (int i = 0; i < tests.size(); i++)
@@ -361,7 +360,7 @@ public class APITestImpl implements API
 		for (int j = 0; j < fields.length; j++)
 		{
 			Log.info("field", fields[j]);
-			if (fields[j].length() >= 32767)
+			if (fields[j] != null && fields[j].length() >= 32767)
 			{
 				fields[j] = fields[j].substring(0, 32767);
 			}

@@ -8,7 +8,7 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
-import com.dsc.test.common.ui.base.GeneralUIField;
+import com.dsc.test.common.ui.base.HasTextBase;
 
 /**
  * @Author alex
@@ -16,13 +16,13 @@ import com.dsc.test.common.ui.base.GeneralUIField;
  * @Version 1.0
  * @Since 1.0
  */
-public class Cell extends GeneralUIField
+public class Cell extends HasTextBase
 {
 	/**
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Cell(Context<? ,?> context, WebElement wrapee)
+	public Cell(Context<?, ?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
 	}

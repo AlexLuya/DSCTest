@@ -1,6 +1,6 @@
 package com.dsc.test.web
 
-import com.dsc.test.ContextFactory
+import com.dsc.test.common.ContextFactory
 import com.dsc.test.web.ui.Link
 import com.dsc.util.Util
 

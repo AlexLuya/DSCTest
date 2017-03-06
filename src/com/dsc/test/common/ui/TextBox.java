@@ -8,6 +8,7 @@ package com.dsc.test.common.ui;
 import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
+import com.dsc.test.common.ui.base.HasText;
 import com.dsc.test.common.ui.base.ValidableBase;
 
 import io.appium.java_client.MobileElement;
@@ -15,7 +16,7 @@ import io.appium.java_client.MobileElement;
 /**
  * The Class TextBox.
  */
-public class TextBox extends ValidableBase
+public class TextBox extends ValidableBase implements HasText
 {
 
 	/**
@@ -45,6 +46,28 @@ public class TextBox extends ValidableBase
 	/*
 	 * (non-Javadoc)
 	 *
+	 * @see com.dsc.test.common.ui.base.HasText#contains(java.lang.String)
+	 */
+	@Override
+	public boolean contains(String text)
+	{
+		return super.contains(text);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.common.ui.base.HasText#endsWith(java.lang.String)
+	 */
+	@Override
+	public boolean endsWith(String text)
+	{
+		return super.endsWith(text);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see com.dsc.test.common.ui.UIObject#ensureTextIs(java.lang.String)
 	 */
 	@Override
@@ -64,7 +87,7 @@ public class TextBox extends ValidableBase
 	{
 		clear();
 
-		//due to
+		// due to
 		if (wrapee instanceof MobileElement)
 		{
 			((MobileElement) wrapee).setValue(text);
@@ -72,6 +95,28 @@ public class TextBox extends ValidableBase
 		{
 			wrapee.sendKeys(text);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.common.ui.base.HasText#partOf(java.lang.String)
+	 */
+	@Override
+	public boolean partOf(String text)
+	{
+		return super.partOf(text);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.common.ui.base.HasText#startsWith(java.lang.String)
+	 */
+	@Override
+	public boolean startsWith(String text)
+	{
+		return super.startsWith(text);
 	}
 
 	/*

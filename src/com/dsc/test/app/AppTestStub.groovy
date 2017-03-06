@@ -4,7 +4,7 @@
  **/
 package com.dsc.test.app
 
-import com.dsc.test.ContextFactory
+import com.dsc.test.common.ContextFactory
 
 import spock.lang.Shared
 import spock.lang.Specification

@@ -1,10 +1,12 @@
 /**
- * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights reserved.
+ * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights
+ * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
 package com.dsc.test.common.ui.base;
 
 import static com.dsc.util.Log.info;
+import static com.dsc.util.Util.mustNotNull;
 import static com.dsc.util.Util.nullIfEmpty;
 import static com.dsc.util.Util.wrap;
 import static java.lang.String.format;
@@ -59,7 +61,7 @@ public class UIField<T extends WebElement>
 	protected String						annotatedId;
 
 	/** The wrapee. */
-	protected T					wrapee;
+	protected T								wrapee;
 
 	/** The context. */
 	private Context<?, ? extends WebDriver>	context;
@@ -72,7 +74,7 @@ public class UIField<T extends WebElement>
 	 * @param id
 	 *            the id
 	 */
-	@SuppressWarnings("unchecked")//NP remove this check
+	@SuppressWarnings("unchecked") // NP remove this check
 	public UIField(Context<?, ? extends WebDriver> context, String id)
 	{
 		this(context, (T) context.findElemById(id));
@@ -451,7 +453,7 @@ public class UIField<T extends WebElement>
 	 *            the text
 	 * @return true, if successful
 	 */
-	protected boolean containsText(String text)
+	protected boolean contains(String text)
 	{
 		info("checks whether %s's text:'%s' contains '%s' in #containsText()", id(), text(), text);
 		return text().contains(text);
@@ -517,6 +519,12 @@ public class UIField<T extends WebElement>
 		// slide.release();
 	}
 
+	protected boolean endsWith(String text)
+	{
+		info("checks whether %s's text:'%s' endsWith '%s' in #containsText()", id(), text(), text);
+		return text().endsWith(text);
+	}
+
 	/**
 	 * Ensure attr not null or empty.
 	 *
@@ -564,23 +572,23 @@ public class UIField<T extends WebElement>
 		}
 	}
 
-	/**
-	 * Ensure text ends with.
-	 *
-	 * @param expected
-	 *            the expected
-	 * @return true, if successful
-	 */
-	protected boolean ensureTextEndsWith(String expected)
-	{
-		if (!text().endsWith(expected))
-		{
-			throw new IllegalStateException(wrap(
-					format("Expect %s's text ends with '%s',but actual text '%s' doesn't end with is", id(), expected, text())));
-		}
-
-		return true;
-	}
+	//	/**
+	//	 * Ensure text ends with.
+	//	 *
+	//	 * @param expected
+	//	 *            the expected
+	//	 * @return true, if successful
+	//	 */
+	//	protected boolean ensureTextEndsWith(String expected)
+	//	{
+	//		if (!text().endsWith(expected))
+	//		{
+	//			throw new IllegalStateException(wrap(
+	//					format("Expect %s's text ends with '%s',but actual text '%s' doesn't end with is", id(), expected, text())));
+	//		}
+	//
+	//		return true;
+	//	}
 
 	/**
 	 * Ensure text is.
@@ -671,13 +679,8 @@ public class UIField<T extends WebElement>
 	protected boolean isSyncErrorIndicated(final String text)
 	{
 		info("#isSyncErrorIndicated() call #containsText() and #isShowingError()");
-		return containsText(text) && isShowingError();
+		return contains(text) && isShowingError();
 	}
-
-	// protected boolean isPresented(String id)
-	// {
-	// return context.isPresented(id);
-	// }
 
 	/**
 	 * Checks if is sync warning indicated.
@@ -689,8 +692,20 @@ public class UIField<T extends WebElement>
 	protected boolean isSyncWarningIndicated(final String text)
 	{
 		info("#isSyncErrorIndicated() call #containsText() and #isShowWarning()");
-		return containsText(text) && isShowingWarning();
+		return contains(text) && isShowingWarning();
 	}
+
+	protected boolean partOf(String text)
+	{
+		mustNotNull(text, "text");
+		info("checks whether %s's text:'%s' is part of '%s' in #containsText()", id(), text(), text);
+		return text.contains(text());
+	}
+
+	// protected boolean isPresented(String id)
+	// {
+	// return context.isPresented(id);
+	// }
 
 	/**
 	 * Removes the attribute.
@@ -741,6 +756,12 @@ public class UIField<T extends WebElement>
 	{
 		info("check whether %s's actual src: '%s' ends with: '%s'", id(), src(), src);
 		return src().endsWith(src);
+	}
+
+	protected boolean startsWith(String text)
+	{
+		info("checks whether %s's text:'%s' startsWith '%s' in #containsText()", id(), text(), text);
+		return text().startsWith(text);
 	}
 
 	/**

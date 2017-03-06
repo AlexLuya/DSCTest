@@ -65,7 +65,7 @@ public class Test
 
 	public String		caseName;
 	public Object		data;
-	public String		expectation;
+	public Object		expectation;
 	public HttpMethod	method;
 	public String		result;
 	public String		url;
@@ -83,7 +83,27 @@ public class Test
 	public Test(List<Object> fields, ColumnCfg column, String domain, int port)
 	{
 		this(str(fields, column.caseName), str(fields, column.url), method(fields, column.method), obj(fields, column.data),
-				domain, port);
+				obj(fields, column.expectation), domain, port);
+	}
+
+	/**
+	 * @param caseName
+	 * @param data
+	 * @param expectation
+	 * @param method
+	 * @param url
+	 * @param domain
+	 * @param port
+	 */
+	public Test(String caseName, String url, HttpMethod method, Object data, Object expectation, String domain, int port)
+	{
+		this.caseName = caseName;
+		this.expectation = expectation;
+		this.method = method;
+		this.domain = domain;
+		this.port = port;
+		setUpUrl(url);
+		setUpData(data);
 	}
 
 	/**
@@ -99,29 +119,9 @@ public class Test
 		this(caseName, url, method, data, null, domain, port);
 	}
 
-	/**
-	 * @param caseName
-	 * @param data
-	 * @param expectation
-	 * @param method
-	 * @param url
-	 * @param domain
-	 * @param port
-	 */
-	public Test(String caseName, String url, HttpMethod method, Object data, String expectation, String domain, int port)
-	{
-		this.caseName = caseName;
-		this.expectation = expectation;
-		this.method = method;
-		this.domain = domain;
-		this.port = port;
-		setUpUrl(url);
-		setUpData(data);
-	}
-
 	public String diff()
 	{
-		return StringUtils.difference(expectation, result);
+		return StringUtils.difference(stringfy(expectation), result);
 	}
 
 	/**
@@ -163,8 +163,8 @@ public class Test
 	 */
 	public String[] stringfyFields()
 	{
-		return new String[] { caseName, url, method.toString(), stringfy(data), expectation, result, Float.toString(time()),
-				diff() };
+		return new String[] { caseName, url, method.toString(), stringfy(data), stringfy(expectation), result,
+				Float.toString(time()), diff() };
 	}
 
 	/**

@@ -3,7 +3,7 @@
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
-package com.dsc.test;
+package com.dsc.test.common;
 
 import com.dsc.test.app.App;
 import com.dsc.test.app.android.Android;
