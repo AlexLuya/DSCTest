@@ -357,6 +357,18 @@ public class APITestImpl implements API
 		return given().multiPart(new File(file)).post().asString();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.api.API#url(java.lang.String)
+	 */
+	@Override
+	public API url(String url)
+	{
+		mustNotNullOrEmpty(this.url = url, "url");
+		return this;
+	}
+
 	/**
 	 * @param sheet
 	 * @param i
@@ -415,7 +427,7 @@ public class APITestImpl implements API
 		test.setTime(result.getTime());
 		test.setResult(result.asString());
 
-		Log.debug(String.format("Executing %dth api test: %s in %f seconds",tests.indexOf(test), test.caseName, test.time()));
+		Log.debug(String.format("Executing %dth api test: %s in %f seconds", tests.indexOf(test), test.caseName, test.time()));
 
 		return result;
 	}
@@ -425,6 +437,10 @@ public class APITestImpl implements API
 	 */
 	private Test firstTest()
 	{
+		//		if (tests.size() == 0)
+		//		{
+		//		}
+
 		return test(0);
 	}
 

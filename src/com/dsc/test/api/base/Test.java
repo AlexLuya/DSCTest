@@ -26,11 +26,12 @@ import com.dsc.util.Json;
  */
 public class Test
 {
-	public static final String[]	HEADS	= new String[] { "Case", "URL", "Method", "Data", "Expectation", "Result", "Time",
-	"Diff" };
-	private static final String		HTTP	= "http";
+	public static final String[]	HEADS				= new String[] { "Case", "URL", "Method", "Data", "Expectation", "Result",
+			"Time", "Diff" };
+	private static final String		HTTP				= "http";
 
-	private static final String		WWW		= "www";
+	private static final String		NON_NAMED_API_TEST	= "NON_NAMED_API_TEST";
+	private static final String		WWW					= "www";
 
 	private static HttpMethod method(List<Object> fields, int method)
 	{
@@ -47,10 +48,12 @@ public class Test
 	 */
 	private static Object obj(List<Object> fields, int idx)
 	{
-		if (idx >= fields.size())
+		if (ColumnCfg.columnNofExisted(idx))
 		{
-			// HP tell column
 			throw null;
+		} else if (idx >= fields.size())
+		{
+			throw new RuntimeException(String.format("%dth column specified in config but not existed in data", idx));
 		}
 
 		return fields.get(idx);
@@ -102,6 +105,10 @@ public class Test
 	public Test(String caseName, String url, HttpMethod method, Object data, Object expectation, String domain, int port)
 	{
 		this.caseName = caseName;
+		if (null == caseName)
+		{
+			this.caseName = NON_NAMED_API_TEST;
+		}
 		this.expectation = Json.formatIfItIs(expectation);
 		this.method = method;
 		this.domain = domain;
@@ -240,21 +247,12 @@ public class Test
 	{
 		this.data = data;
 
-		// if nothing to be replaced
-		if (paramCount() == 0)
+		if (paramCount() > 0)
 		{
-			return;
-		}
-
-		if (data == null)
+			tryToReplacePathParams(data);
+		} else if (data != null)
 		{
-			violation = "data==null,so nothing to replace:" + String.join(",", params(url)) + " in the url";
-		} else if (paramCount() != dataCount())
-		{
-			violation = String.format("param count:%d!=%d:data count", paramCount(), dataCount());
-		} else
-		{
-			url = StringUtils.replaceEach(url, params(url), stringfy(data).split(","));
+			url = url + data.toString();
 		}
 	}
 
@@ -276,6 +274,23 @@ public class Test
 		} else
 		{
 			violation = "Neither 'url' nor 'domain' contains like:'www.xxx.com'";
+		}
+	}
+
+	/**
+	 * @param data
+	 */
+	private void tryToReplacePathParams(Object data)
+	{
+		if (data == null)
+		{
+			violation = "data==null,so nothing to replace:" + String.join(",", params(url)) + " in the url";
+		} else if (paramCount() != dataCount())
+		{
+			violation = String.format("param count:%d!=%d:data count", paramCount(), dataCount());
+		} else
+		{
+			url = StringUtils.replaceEach(url, params(url), stringfy(data).split(","));
 		}
 	}
 }

@@ -68,7 +68,7 @@ public class ButtonBase extends GeneralUIField
 	 * @see com.dsc.test.common.ui.UIObject#text()
 	 */
 	@Override
-	protected String text()
+	public String text()
 	{
 		return super.text();
 	}

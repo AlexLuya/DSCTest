@@ -35,7 +35,7 @@ public class AndroidTestExample extends AppTestStub
 	//		homepage.slideShow.swipeLeft(300)
 	//
 	//		then:
-	//		true
+	//		//check new pointer position
 	//	}
 	//
 	//	def "swipe right"(){
@@ -48,16 +48,19 @@ public class AndroidTestExample extends AppTestStub
 	//		homepage.slideShow.swipeRight(300)
 	//
 	//		then:
-	//		true
+	//		//check new pointer position
 	//	}
 	//
 	//	def "swipe up"(){
+	//		//check new pointer position
 	//	}
 	//
 	//	def "swipe down"(){
+	//		//check new pointer position
 	//	}
 	//
 	//	def "swipe diagonal"(){
+	//		//check new pointer position
 	//	}
 	//
 	//	def "click"(){
