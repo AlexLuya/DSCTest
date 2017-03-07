@@ -9,9 +9,17 @@ import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
 
-public class Button extends ButtonBase
+/**
+ * A control that is not displayed but whose value is submitted to the server.
+ *
+ * @Author alex
+ * @CreateTime 22.02.2017 09:33:30
+ * @Version 1.0
+ * @Since 1.0
+ */
+public class Hidden extends ButtonBase
 {
-	public Button(Context<?, ?> context, String id)
+	public Hidden(Context<?, ?> context, String id)
 	{
 		this(context, context.findElemById(id));
 	}
@@ -20,19 +28,8 @@ public class Button extends ButtonBase
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Button(Context<?, ?> context, WebElement wrapee)
+	public Hidden(Context<?, ?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.common.ui.UIObject#text()
-	 */
-	@Override
-	public String text()
-	{
-		return super.text();
 	}
 }

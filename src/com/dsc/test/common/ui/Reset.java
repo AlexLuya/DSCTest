@@ -9,9 +9,9 @@ import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
 
-public class Button extends ButtonBase
+public class Reset extends ButtonBase
 {
-	public Button(Context<?, ?> context, String id)
+	public Reset(Context<?, ?> context, String id)
 	{
 		this(context, context.findElemById(id));
 	}
@@ -20,19 +20,8 @@ public class Button extends ButtonBase
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Button(Context<?, ?> context, WebElement wrapee)
+	public Reset(Context<?, ?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.common.ui.UIObject#text()
-	 */
-	@Override
-	public String text()
-	{
-		return super.text();
 	}
 }

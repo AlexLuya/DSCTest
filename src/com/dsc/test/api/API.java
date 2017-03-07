@@ -62,7 +62,7 @@ public interface API
 	API delete(String data);
 
 	/**
-	 * set the domain that will be used to combined url if url not set
+	 * set the domain that will be used to combined url with port if url not set
 	 *
 	 * @param domain
 	 *            the domain
@@ -202,7 +202,8 @@ public interface API
 	API patch(String data);
 
 	/**
-	 * Port.
+	 * set the domain that will be used to combined url with domain if url not
+	 * set
 	 *
 	 * @param port
 	 *            the port
@@ -235,18 +236,19 @@ public interface API
 	API put(String data);
 
 	/**
-	 * Result as excel.
+	 * Run tests and write out result as an excel in under
+	 * dir:project/report/api
 	 *
-	 * @return the summary
+	 * @return the summary of test result
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
 	Summary resultAsExcel() throws IOException;
 
 	/**
-	 * Return json.
+	 * Run test and return result as a JSONObject
 	 *
-	 * @return the JSON object
+	 * @return the JSON object of result
 	 */
 	JSONObject returnJson();
 
@@ -258,14 +260,14 @@ public interface API
 	JSONArray returnJsonArray();
 
 	/**
-	 * Return string.
+	 * Run test and return result as a string
 	 *
-	 * @return the string
+	 * @return the string of result
 	 */
 	String returnString();
 
 	/**
-	 * Upload.
+	 * Upload specified
 	 *
 	 * @param file
 	 *            the file
@@ -275,6 +277,7 @@ public interface API
 
 	/**
 	 * Set the url that will be requested
+	 * the combination of domain and port will be used if not set
 	 *
 	 * @param url
 	 *            the url

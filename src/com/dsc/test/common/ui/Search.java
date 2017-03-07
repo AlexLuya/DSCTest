@@ -9,9 +9,18 @@ import org.openqa.selenium.WebElement;
 
 import com.dsc.test.common.Context;
 
-public class Button extends ButtonBase
+/**
+ * A html5 added single-line text field for entering search strings. Line-breaks
+ * are automatically removed from the input value.
+ *
+ * @Author alex
+ * @CreateTime 22.02.2017 09:33:30
+ * @Version 1.0
+ * @Since 1.0
+ */
+public class Search extends ButtonBase
 {
-	public Button(Context<?, ?> context, String id)
+	public Search(Context<?, ?> context, String id)
 	{
 		this(context, context.findElemById(id));
 	}
@@ -20,19 +29,8 @@ public class Button extends ButtonBase
 	 * @param browser
 	 * @param wrapee
 	 */
-	public Button(Context<?, ?> context, WebElement wrapee)
+	public Search(Context<?, ?> context, WebElement wrapee)
 	{
 		super(context, wrapee);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.common.ui.UIObject#text()
-	 */
-	@Override
-	public String text()
-	{
-		return super.text();
 	}
 }

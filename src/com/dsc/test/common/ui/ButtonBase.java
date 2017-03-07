@@ -61,15 +61,4 @@ public class ButtonBase extends GeneralUIField
 	{
 		return wrapee.isEnabled();
 	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.common.ui.UIObject#text()
-	 */
-	@Override
-	public String text()
-	{
-		return super.text();
-	}
 }
