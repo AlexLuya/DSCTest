@@ -5,6 +5,7 @@
  **/
 package com.dsc.test.api;
 
+import static com.dsc.util.ContentType.JSON;
 import static com.dsc.util.Util.currentDateTime;
 import static com.dsc.util.Util.mustBePositive;
 import static com.dsc.util.Util.mustNotNull;
@@ -37,6 +38,7 @@ import com.dsc.util.ContentType;
 import com.dsc.util.Excel;
 import com.dsc.util.FileUtil;
 import com.dsc.util.Log;
+import com.dsc.util.StringUtil;
 import com.google.common.collect.Lists;
 
 import io.restassured.RestAssured;
@@ -78,7 +80,7 @@ public class APITestImpl implements API
 	 * @see com.dsc.test.api.API#contentType(com.dsc.test.api.ContentType)
 	 */
 	@Override
-	public API contentType(ContentType type)
+	public APITestImpl contentType(ContentType type)
 	{
 		given().contentType(type.toString());
 		return this;
@@ -409,18 +411,19 @@ public class APITestImpl implements API
 
 	private io.restassured.response.Response doExecNonUploading(Test test)
 	{
+		String url = StringUtil.unformat(test.url);
 		switch (test.method)
 		{
 			case DELETE:
-				return given().delete(test.url);
+				return given().delete(url);
 			case GET:
-				return given().get(test.url);
+				return given().get(url);
 			case PATCH:
-				return given().patch(test.url);
+				return given().patch(url);
 			case POST:
-				return given().post(test.url);
+				return post(test, url);
 			case PUT:
-				return given().post(test.url);
+				return given().post(url);
 			default:
 				throw new RuntimeException(test.method + " isn't a supported http method");
 		}
@@ -478,6 +481,21 @@ public class APITestImpl implements API
 		}
 
 		return given;
+	}
+
+	/**
+	 * @param test
+	 * @param url
+	 * @return
+	 */
+	private io.restassured.response.Response post(Test test, String url)
+	{
+		if (test.dataIsJson())
+		{
+			return given().contentType(JSON.toString()).body(test.data.toString()).post(url);
+		}
+
+		return given().post(url);
 	}
 
 	/**

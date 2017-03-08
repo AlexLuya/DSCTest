@@ -5,10 +5,13 @@
  **/
 package com.dsc.test.api.base;
 
+import static com.dsc.test.api.base.HttpMethod.GET;
+import static com.dsc.util.StringUtil.stringfy;
+import static com.dsc.util.StringUtil.toUTF8;
+import static com.dsc.util.StringUtil.unformat;
 import static com.dsc.util.Util.notNullOrEmpty;
 import static com.dsc.util.Util.nullOrEmpty;
 import static com.dsc.util.Util.params;
-import static com.dsc.util.Util.stringfy;
 import static com.dsc.util.Util.stripLeadingAndTailWhitespace;
 
 import java.util.List;
@@ -27,12 +30,12 @@ import com.dsc.util.Json;
  */
 public class Test
 {
-	public static final String[]	HEADS				= new String[] { "Case", "URL", "Method", "Data", "Expectation", "Result",
-			"Time", "Diff" };
-	private static final String		HTTP				= "http";
+	public static final String[]	HEADS				= new String[] { "Case", "URL", "Method", "Data", "Time", "Expectation",
+			"Result", "Diff" };
+	// private static final String HTTP = "http";
 
 	private static final String		NON_NAMED_API_TEST	= "NON_NAMED_API_TEST";
-	private static final String		WWW					= "www";
+	// private static final String WWW = "www";
 
 	private static HttpMethod method(List<Object> fields, int method)
 	{
@@ -112,7 +115,7 @@ public class Test
 		}
 		this.expectation = Json.formatIfItIs(expectation);
 		this.method = method;
-		this.domain = domain;
+		this.domain = toUTF8(domain);
 		this.port = port;
 		setUpUrl(url);
 		setUpData(data);
@@ -129,6 +132,26 @@ public class Test
 	public Test(String caseName, String url, HttpMethod method, Object data, String domain, int port)
 	{
 		this(caseName, url, method, data, null, domain, port);
+	}
+
+	public boolean dataIsJson()
+	{
+		// if (method != POST)
+		// {
+		// return false;
+		// }
+
+		if (data == null)
+		{
+			return false;
+		}
+
+		if (Json.not(stringfy(data)))
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	public String diff()
@@ -189,8 +212,8 @@ public class Test
 	 */
 	public String[] stringfyFields()
 	{
-		return new String[] { caseName, url, method.toString(), stringfy(data), stringfy(expectation), result,
-				Float.toString(time()), diff() };
+		return new String[] { caseName, url, method == null ? null : method.toString(), stringfy(data), Float.toString(time()),
+				stringfy(expectation), result, diff() };
 	}
 
 	/**
@@ -246,7 +269,6 @@ public class Test
 	}
 
 	/**
-	 * >>>>>>> c198a7280159aa785993476bd47595370628f65a
 	 *
 	 * @return
 	 */
@@ -260,14 +282,17 @@ public class Test
 	 */
 	private void setUpData(Object data)
 	{
-		this.data = data;
+		this.data = toUTF8(data);
 
-		if (paramCount() > 0)
+		if (url == null)
+		{
+			return;
+		} else if (paramCount() > 0)
 		{
 			tryToReplacePathParams(data);
-		} else if (data != null)
+		} else if (data != null && method == GET && !url.contains(toUTF8(data)))
 		{
-			url = url + data.toString();
+			url = url + toUTF8(data);
 		}
 	}
 
@@ -276,19 +301,22 @@ public class Test
 	 */
 	private void setUpUrl(String url)
 	{
-		if (url == null)
+		this.url = toUTF8(url);
+
+		if (this.url == null)
 		{
-			return;
-		} else if (url.startsWith(HTTP) || url.startsWith(WWW) || url.startsWith(domain))
+			if (notNullOrEmpty(domain))
+			{
+				this.url = domain + ":" + port;
+			} else
+			{
+				violation = "Both url and domain is null or empty";
+			}
+		}
+
+		if (!UrlValidator.getInstance().isValid(this.url))
 		{
-			this.url = url;
-			violation = UrlValidator.getInstance().isValid(url) ? null : "url is invalid";
-		} else if (notNullOrEmpty(domain))
-		{
-			this.url = domain + ":" + port;
-		} else
-		{
-			violation = "Neither 'url' nor 'domain' contains like:'www.xxx.com'";
+			violation = "url is invalid";
 		}
 	}
 
@@ -305,7 +333,7 @@ public class Test
 			violation = String.format("param count:%d!=%d:data count", paramCount(), dataCount());
 		} else
 		{
-			url = StringUtils.replaceEach(url, params(url), stringfy(data).split(","));
+			url = StringUtils.replaceEach(url, params(url), unformat(stringfy(data)).split(","));
 		}
 	}
 }

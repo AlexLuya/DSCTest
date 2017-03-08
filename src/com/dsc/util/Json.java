@@ -28,7 +28,7 @@ public class Json
 			return null;
 		}
 
-		String str = obj.toString();
+		String str = StringUtil.toUTF8(obj.toString());
 
 		if (not(str))
 		{

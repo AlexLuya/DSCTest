@@ -352,11 +352,6 @@ public class Util
 		return str.split(seprator);
 	}
 
-	public static String stringfy(Object obj)
-	{
-		return obj == null ? null : obj.toString();
-	}
-
 	public static String stripLeadingAndTailWhitespace(String str)
 	{
 		if (str == null)
