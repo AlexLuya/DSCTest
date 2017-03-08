@@ -9,6 +9,8 @@ import static com.dsc.util.Util.currentDateTime;
 import static com.dsc.util.Util.mustBePositive;
 import static com.dsc.util.Util.mustNotNull;
 import static com.dsc.util.Util.mustNotNullOrEmpty;
+import static com.dsc.util.Util.notNullOrEmpty;
+import static java.lang.String.format;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,7 +32,9 @@ import com.dsc.test.api.base.Response;
 import com.dsc.test.api.base.Test;
 import com.dsc.test.common.report.Report;
 import com.dsc.test.common.report.Summary;
+import com.dsc.util.ContentType;
 import com.dsc.util.Excel;
+import com.dsc.util.FileUtil;
 import com.dsc.util.Log;
 import com.google.common.collect.Lists;
 
@@ -64,6 +68,18 @@ public class APITestImpl implements API
 
 		given().auth().basic(user, password);
 
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.api.API#contentType(com.dsc.test.api.ContentType)
+	 */
+	@Override
+	public API contentType(ContentType type)
+	{
+		given().contentType(type.toString());
 		return this;
 	}
 
@@ -281,7 +297,7 @@ public class APITestImpl implements API
 		Log.debug("Writing result as excel...");
 
 		FileOutputStream testContent = new FileOutputStream(
-				Report.forAPITesting(String.format("%s-api-testing-report-%s.xlsx", caseName, currentDateTime())));
+				Report.forAPITesting(format("%s-api-testing-report-%s.xlsx", caseName, currentDateTime())));
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet sheet = workbook.createSheet("api testing");
@@ -354,7 +370,16 @@ public class APITestImpl implements API
 	{
 		mustNotNullOrEmpty(file, "file path");
 
-		return given().multiPart(new File(file)).post().asString();
+		file = FileUtil.tryToAbsolutionPath(file);
+
+		io.restassured.response.Response response = given().multiPart(new File(file)).post(url);
+
+		if (notNullOrEmpty(response.asString()))
+		{
+			return response.asString();
+		}
+
+		return Integer.toString(response.getStatusCode());
 	}
 
 	/*
@@ -418,7 +443,7 @@ public class APITestImpl implements API
 	{
 		if (test.invalid())
 		{
-			Log.debug(String.format("Ignored api test: %s due to: %s", test.caseName, test.result));
+			Log.debug(format("Ignored api test: %s due to: %s", test.caseName, test.result));
 			return new Response(test.violation);
 		}
 
@@ -427,7 +452,7 @@ public class APITestImpl implements API
 		test.setTime(result.getTime());
 		test.setResult(result.asString());
 
-		Log.debug(String.format("Executing %dth api test: %s in %f seconds", tests.indexOf(test), test.caseName, test.time()));
+		Log.debug(format("Executing %dth api test: %s in %f seconds", tests.indexOf(test), test.caseName, test.time()));
 
 		return result;
 	}
@@ -437,9 +462,9 @@ public class APITestImpl implements API
 	 */
 	private Test firstTest()
 	{
-		//		if (tests.size() == 0)
-		//		{
-		//		}
+		// if (tests.size() == 0)
+		// {
+		// }
 
 		return test(0);
 	}

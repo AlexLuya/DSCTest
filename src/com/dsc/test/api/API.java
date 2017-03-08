@@ -12,6 +12,8 @@ import org.json.JSONObject;
 
 import com.dsc.test.api.base.ColumnCfg;
 import com.dsc.test.common.report.Summary;
+import com.dsc.util.ContentType;
+
 
 /**
  * The API Test Runner
@@ -37,6 +39,14 @@ public interface API
 	 * @return the test runner itself
 	 */
 	API basicAuth(String user, String password);
+
+	/**
+	 *Specify the content type of the file which will be uploaded
+	 * @param type
+	 *            the content type
+	 * @return the test runner itself
+	 */
+	API contentType(ContentType type);
 
 	/**
 	 * set cookie
@@ -267,11 +277,12 @@ public interface API
 	String returnString();
 
 	/**
-	 * Upload specified
+	 * Upload specified file
 	 *
 	 * @param file
-	 *            the file
-	 * @return the string
+	 *            the file to be uploaded
+	 * @return the result returned by server,or status code if no explicit
+	 *         result returned
 	 */
 	String upload(String file);
 

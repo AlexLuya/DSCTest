@@ -5,6 +5,9 @@
  **/
 package com.dsc.util;
 
+import static java.lang.String.format;
+
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -34,5 +37,24 @@ public class FileUtil
 	public static String standardImagePath(String image)
 	{
 		return System.getProperty("user.dir") + "/standard_images/" + image;
+	}
+
+	public static String tryToAbsolutionPath(String path)
+	{
+		// may a relative path given
+		if (!new File(path).exists())
+		{
+			// use absolute path try again
+			String absolutePath = new File(path).getAbsolutePath();
+			if (!new File(absolutePath).exists())
+			{
+				throw new RuntimeException(format("Neither %s nor %s file exists", path, absolutePath));
+			}
+
+			// absolute path pointed file exists,use it
+			path = absolutePath;
+		}
+
+		return path;
 	}
 }
