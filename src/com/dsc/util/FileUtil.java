@@ -29,6 +29,20 @@ public class FileUtil
 		return true;
 	}
 
+	/**
+	 * @param data
+	 * @return
+	 */
+	public static boolean existed(Object data)
+	{
+		if (data == null)
+		{
+			return false;
+		}
+
+		return new File(new File(data.toString()).getAbsolutePath()).exists();
+	}
+
 	public static String imagePath(String image)
 	{
 		return System.getProperty("user.dir") + "/images/" + image;

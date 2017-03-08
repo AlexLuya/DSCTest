@@ -13,6 +13,7 @@ import static com.dsc.util.Util.notNullOrEmpty;
 import static java.lang.String.format;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -284,7 +285,6 @@ public class APITestImpl implements API
 	 *
 	 * @see com.dsc.test.api.API#resultAsCSV()
 	 */
-	@SuppressWarnings("resource")
 	@Override
 	public Summary resultAsExcel() throws IOException
 	{
@@ -296,31 +296,7 @@ public class APITestImpl implements API
 
 		Log.debug("Writing result as excel...");
 
-		FileOutputStream testContent = new FileOutputStream(
-				Report.forAPITesting(format("%s-api-testing-report-%s.xlsx", caseName, currentDateTime())));
-
-		XSSFWorkbook workbook = new XSSFWorkbook();
-		XSSFSheet sheet = workbook.createSheet("api testing");
-
-		// create head
-		Row headRow = createRow(sheet, 0, Test.HEADS);
-
-		// freeze first row and first column
-		sheet.createFreezePane(1, 1);
-		// format first row
-		Excel.setBold(workbook, headRow);
-		Excel.setColor(workbook, headRow, IndexedColors.BLUE, IndexedColors.BLUE_GREY);
-
-		// create content
-		for (int i = 0; i < tests.size(); i++)
-		{
-			// +1 due to head is being first row
-			createRow(sheet, i + 1, test(i).stringfyFields());
-		}
-
-		workbook.write(testContent);
-		testContent.close();
-		workbook.close();
+		writeOutTestsAsExcel();
 
 		Log.debug("All api tests finished!!!");
 
@@ -370,9 +346,7 @@ public class APITestImpl implements API
 	{
 		mustNotNullOrEmpty(file, "file path");
 
-		file = FileUtil.tryToAbsolutionPath(file);
-
-		io.restassured.response.Response response = given().multiPart(new File(file)).post(url);
+		io.restassured.response.Response response = doUploading(file);
 
 		if (notNullOrEmpty(response.asString()))
 		{
@@ -388,7 +362,7 @@ public class APITestImpl implements API
 	 * @see com.dsc.test.api.API#url(java.lang.String)
 	 */
 	@Override
-	public API url(String url)
+	public APITestImpl url(String url)
 	{
 		mustNotNullOrEmpty(this.url = url, "url");
 		return this;
@@ -407,6 +381,7 @@ public class APITestImpl implements API
 		{
 			if (fields[j] != null && fields[j].length() >= 32767)
 			{
+				// execl cell'max size is 32767
 				fields[j] = fields[j].substring(0, 32767);
 			}
 
@@ -420,7 +395,19 @@ public class APITestImpl implements API
 	 * @param test
 	 * @return
 	 */
-	private io.restassured.response.Response doExcel(Test test)
+	private Response doExec(Test test)
+	{
+		if (test.isUploading())
+		{
+			// test as uploading
+			Log.warn(format("Executing %dth api test: %s as uploading", tests.indexOf(test), test.caseName));
+			return new Response(url(test.url).doUploading(test.data.toString()));
+		}
+
+		return new Response(doExecNonUploading(test));
+	}
+
+	private io.restassured.response.Response doExecNonUploading(Test test)
 	{
 		switch (test.method)
 		{
@@ -434,9 +421,20 @@ public class APITestImpl implements API
 				return given().post(test.url);
 			case PUT:
 				return given().post(test.url);
+			default:
+				throw new RuntimeException(test.method + " isn't a supported http method");
 		}
+	}
 
-		return null;
+	/**
+	 * @param file
+	 * @return
+	 */
+	private io.restassured.response.Response doUploading(String file)
+	{
+		file = FileUtil.tryToAbsolutionPath(file);
+
+		return given().multiPart(new File(file)).post(url);
 	}
 
 	private Response exec(Test test)
@@ -448,7 +446,7 @@ public class APITestImpl implements API
 		}
 
 		// exec then set result to response
-		Response result = new Response(doExcel(test));
+		Response result = doExec(test);
 		test.setTime(result.getTime());
 		test.setResult(result.asString());
 
@@ -498,5 +496,40 @@ public class APITestImpl implements API
 	private Test test(int index)
 	{
 		return tests.get(index);
+	}
+
+	/**
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private void writeOutTestsAsExcel() throws FileNotFoundException, IOException
+	{
+		@SuppressWarnings("resource")
+		FileOutputStream testContent = new FileOutputStream(
+				Report.forAPITesting(format("%s-api-testing-report-%s.xlsx", caseName, currentDateTime())));
+
+		@SuppressWarnings("resource")
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet("api testing");
+
+		// create head
+		Row headRow = createRow(sheet, 0, Test.HEADS);
+
+		// freeze first row and first column
+		sheet.createFreezePane(1, 1);
+		// format first row
+		Excel.setBold(workbook, headRow);
+		Excel.setColor(workbook, headRow, IndexedColors.BLUE, IndexedColors.BLUE_GREY);
+
+		// create content
+		for (int i = 0; i < tests.size(); i++)
+		{
+			// +1 due to head is being first row
+			createRow(sheet, i + 1, test(i).stringfyFields());
+		}
+
+		workbook.write(testContent);
+		testContent.close();
+		workbook.close();
 	}
 }

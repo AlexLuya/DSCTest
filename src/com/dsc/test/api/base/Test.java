@@ -16,6 +16,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.UrlValidator;
 
+import com.dsc.util.FileUtil;
 import com.dsc.util.Json;
 
 /**
@@ -146,6 +147,20 @@ public class Test
 		}
 
 		return violation != null;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isUploading()
+	{
+		// if url contains "upload" and data represent a file
+		if (url.toLowerCase().contains("upload") && FileUtil.existed(data))
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
