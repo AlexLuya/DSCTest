@@ -5,7 +5,6 @@
  **/
 package com.dsc.test.api.base;
 
-import static com.dsc.test.api.base.HttpMethod.GET;
 import static com.dsc.util.StringUtil.stringfy;
 import static com.dsc.util.StringUtil.toUTF8;
 import static com.dsc.util.StringUtil.unformat;
@@ -290,10 +289,11 @@ public class Test
 		} else if (paramCount() > 0)
 		{
 			tryToReplacePathParams(data);
-		} else if (data != null && method == GET && !url.contains(toUTF8(data)))
-		{
-			url = url + toUTF8(data);
 		}
+		//		else if (data != null && method == GET && !url.contains(toUTF8(data)))
+		//		{
+		//			url = url + toUTF8(data);
+		//		}
 	}
 
 	/**

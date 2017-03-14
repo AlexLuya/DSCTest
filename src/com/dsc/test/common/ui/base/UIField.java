@@ -19,6 +19,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import com.dsc.test.app.App;
 import com.dsc.test.common.Context;
 import com.dsc.util.Util;
 
@@ -95,11 +96,16 @@ public class UIField<T extends WebElement>
 	}
 
 	/**
-	 * Click.
+	 * Click if under web context,tap if under app/mobile context
 	 */
 	public void click()
 	{
-		wrapee.click();
+		if(context instanceof App<?, ?>)
+		{
+			((App<?, ?>)context).tap(wrapee);
+		}else{
+			wrapee.click();
+		}
 	}
 
 	/**
