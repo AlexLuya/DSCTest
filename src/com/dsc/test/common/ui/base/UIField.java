@@ -672,6 +672,7 @@ public class UIField<T extends WebElement>
 	 */
 	protected void input(String text)
 	{
+		wrapee.sendKeys("");
 		wrapee.sendKeys(text);
 	}
 

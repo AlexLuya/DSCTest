@@ -37,10 +37,9 @@ public class TextBox extends ValidableBase implements HasText
 	 *
 	 * @return the text box
 	 */
-	public TextBox clear()
+	public void clear()
 	{
 		wrapee.clear();
-		return this;
 	}
 
 	/*
@@ -85,15 +84,13 @@ public class TextBox extends ValidableBase implements HasText
 	@Override
 	public void input(String text)
 	{
-		clear();
-
 		// due to
 		if (wrapee instanceof MobileElement)
 		{
 			((MobileElement) wrapee).setValue(text);
 		} else
 		{
-			wrapee.sendKeys(text);
+			super.input(text);
 		}
 	}
 
