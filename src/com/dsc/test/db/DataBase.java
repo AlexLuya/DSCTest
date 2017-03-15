@@ -54,7 +54,8 @@ public interface DataBase
 	void ensureConnected();
 
 	/**
-	 * @param sql any SQL statement
+	 * @param sql
+	 *            any SQL statement
 	 * @return updated row count
 	 */
 	int exec(String sql);
@@ -75,7 +76,7 @@ public interface DataBase
 	 *            the sql
 	 * @param values
 	 *            the values
-	 * @deprecated  replaced by {@link com.dsc.test.db.Table#insert()}.
+	 * @deprecated replaced by {@link com.dsc.test.db.Table#insert()}.
 	 */
 	@Deprecated
 	void insert(String sql, Object[][] values);

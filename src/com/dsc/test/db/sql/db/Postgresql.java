@@ -5,6 +5,8 @@
  **/
 package com.dsc.test.db.sql.db;
 
+import org.postgresql.ds.PGPoolingDataSource;
+
 import com.dsc.test.db.DataBase;
 import com.dsc.test.db.sql.SQLDataBase;
 import com.dsc.util.Util;
@@ -33,6 +35,8 @@ public class Postgresql extends SQLDataBase
 		Util.mustNotNullOrEmpty(name = db, "db");
 		Util.mustNotNullOrEmpty(this.user = user, "user");
 		Util.mustNotNullOrEmpty(this.password = password, "password");
+
+		//		conn=setupConnectionPool().getConnection();
 
 		return doConnect();
 	}
@@ -64,5 +68,17 @@ public class Postgresql extends SQLDataBase
 	protected String driverClass()
 	{
 		return "org.postgresql.Driver";
+	}
+
+	private PGPoolingDataSource setupConnectionPool(){
+		PGPoolingDataSource source = new PGPoolingDataSource();
+		source.setDataSourceName("A Data Source");
+		source.setServerName(host);
+		source.setDatabaseName(name);
+		source.setUser(user);
+		source.setPassword(password);
+		source.setMaxConnections(10);
+
+		return source;
 	}
 }

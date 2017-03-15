@@ -12,6 +12,7 @@ import static com.dsc.util.Util.wrap;
 import static java.lang.String.format;
 
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,6 +23,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.dsc.test.app.App;
 import com.dsc.test.common.Context;
 import com.dsc.util.Util;
+
+import io.appium.java_client.MobileElement;
 
 /**
  * The Class UIField.
@@ -100,10 +103,11 @@ public class UIField<T extends WebElement>
 	 */
 	public void click()
 	{
-		if(context instanceof App<?, ?>)
+		if (context instanceof App<?, ?>)
 		{
-			((App<?, ?>)context).tap(wrapee);
-		}else{
+			((App<?, ?>) context).tap(wrapee);
+		} else
+		{
 			wrapee.click();
 		}
 	}
@@ -452,6 +456,15 @@ public class UIField<T extends WebElement>
 		return wrapee.getAttribute(attrName);
 	}
 
+	protected void clear(){
+		context.actions().click(wrapee)
+		.sendKeys(Keys.END)
+		.keyDown(Keys.SHIFT)
+		.sendKeys(Keys.HOME)
+		.keyUp(Keys.SHIFT)
+		.sendKeys(Keys.BACK_SPACE).perform();
+	}
+
 	/**
 	 * Contains text.
 	 *
@@ -564,6 +577,25 @@ public class UIField<T extends WebElement>
 		return true;
 	}
 
+	// /**
+	// * Ensure text ends with.
+	// *
+	// * @param expected
+	// * the expected
+	// * @return true, if successful
+	// */
+	// protected boolean ensureTextEndsWith(String expected)
+	// {
+	// if (!text().endsWith(expected))
+	// {
+	// throw new IllegalStateException(wrap(
+	// format("Expect %s's text ends with '%s',but actual text '%s' doesn't end
+	// with is", id(), expected, text())));
+	// }
+	//
+	// return true;
+	// }
+
 	/**
 	 * Ensure src end with.
 	 *
@@ -577,24 +609,6 @@ public class UIField<T extends WebElement>
 			throw new IllegalStateException(wrap(format("%s's src isn't end with '%s' but '%s'", id(), src, src())));
 		}
 	}
-
-	//	/**
-	//	 * Ensure text ends with.
-	//	 *
-	//	 * @param expected
-	//	 *            the expected
-	//	 * @return true, if successful
-	//	 */
-	//	protected boolean ensureTextEndsWith(String expected)
-	//	{
-	//		if (!text().endsWith(expected))
-	//		{
-	//			throw new IllegalStateException(wrap(
-	//					format("Expect %s's text ends with '%s',but actual text '%s' doesn't end with is", id(), expected, text())));
-	//		}
-	//
-	//		return true;
-	//	}
 
 	/**
 	 * Ensure text is.
@@ -672,8 +686,21 @@ public class UIField<T extends WebElement>
 	 */
 	protected void input(String text)
 	{
-		wrapee.sendKeys("");
-		wrapee.sendKeys(text);
+		// due to
+		if (wrapee instanceof MobileElement)
+		{
+			((MobileElement) wrapee).setValue(text);
+		} else
+		{
+			context.actions().click(wrapee)
+			.sendKeys(Keys.END)
+			.keyDown(Keys.SHIFT)
+			.sendKeys(Keys.HOME)
+			.keyUp(Keys.SHIFT)
+			.sendKeys(Keys.BACK_SPACE)
+			.sendKeys(text)
+			.perform();
+		}
 	}
 
 	/**

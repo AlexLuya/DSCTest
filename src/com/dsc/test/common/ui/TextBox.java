@@ -11,8 +11,6 @@ import com.dsc.test.common.Context;
 import com.dsc.test.common.ui.base.HasText;
 import com.dsc.test.common.ui.base.ValidableBase;
 
-import io.appium.java_client.MobileElement;
-
 /**
  * The Class TextBox.
  */
@@ -37,9 +35,10 @@ public class TextBox extends ValidableBase implements HasText
 	 *
 	 * @return the text box
 	 */
+	@Override
 	public void clear()
 	{
-		wrapee.clear();
+		super.clear();
 	}
 
 	/*
@@ -84,14 +83,7 @@ public class TextBox extends ValidableBase implements HasText
 	@Override
 	public void input(String text)
 	{
-		// due to
-		if (wrapee instanceof MobileElement)
-		{
-			((MobileElement) wrapee).setValue(text);
-		} else
-		{
-			super.input(text);
-		}
+		super.input(text);
 	}
 
 	/*
