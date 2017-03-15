@@ -144,13 +144,23 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 		return new IOSDriver<>(new URL(remoteAddress), cap);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dsc.test.app.App#pageId()
+	 */
+	@Override
+	protected String pageId()
+	{
+		// android only,not applied for IOS
+		return null;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see com.dsc.test.app.App#pkgOrBundleId()
 	 */
 	@Override
-	protected String pkgOrBundleId()
+	protected String pkgOrBundle()
 	{
 		return BUNDLE_ID;
 	}

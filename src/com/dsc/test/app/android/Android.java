@@ -171,10 +171,19 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 	}
 
 	/* (non-Javadoc)
+	 * @see com.dsc.test.app.App#pageId()
+	 */
+	@Override
+	protected String pageId()
+	{
+		return APP_ACTIVITY;
+	}
+
+	/* (non-Javadoc)
 	 * @see com.dsc.test.app.App#pkgOrBundleId()
 	 */
 	@Override
-	protected String pkgOrBundleId()
+	protected String pkgOrBundle()
 	{
 		return APP_PACKAGE;
 	}

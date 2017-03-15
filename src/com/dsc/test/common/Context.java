@@ -287,7 +287,7 @@ public abstract class Context<T extends Context<T, D>, D extends WebDriver>
 		new Actions(driver).moveToElement(target, x, y).perform();
 	}
 
-	public abstract void open() throws MalformedURLException;
+	//	public abstract void open() throws MalformedURLException;
 
 	public abstract void open(String urlOrAppFile) throws MalformedURLException;
 

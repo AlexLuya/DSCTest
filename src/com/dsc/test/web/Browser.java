@@ -193,11 +193,11 @@ public class Browser extends Context<Browser, WebDriver>
 		return driver.navigate();
 	}
 
-	@Override
-	public void open()
-	{
-		open("about:blank");
-	}
+	//	@Override
+	//	public void open()
+	//	{
+	//		open("about:blank");
+	//	}
 
 	@Override
 	public void open(String url)

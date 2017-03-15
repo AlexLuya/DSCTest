@@ -26,6 +26,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import com.dsc.test.common.Context;
+import com.dsc.util.FileUtil;
 import com.dsc.util.Util;
 
 import io.appium.java_client.AppiumDriver;
@@ -133,7 +134,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		try
 		{
 			driver.hideKeyboard();
-			driver.getKeyboard().pressKey("c");;
+			driver.getKeyboard().pressKey("c");
 		} catch (Exception e)
 		{
 			return true;
@@ -161,9 +162,35 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	 *
 	 * @see com.dsc.test.common.Context#open()
 	 */
+	// @Override
+	// public void open() throws MalformedURLException
+	// {
+	// // HP ensure necessary capabilities got set already
+	// // such as device name
+	//
+	// driver = createDriver(remoteAddress);
+	//
+	// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	// }
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.common.Context#open(java.lang.String)
+	 */
 	@Override
-	public void open() throws MalformedURLException
+	public void open(String pageIdOrFile) throws MalformedURLException
 	{
+		Util.mustNotNull("app id or file", pageIdOrFile);
+
+		if (FileUtil.existed(pageIdOrFile))
+		{
+			setCapability(APP, new File(pageIdOrFile).getAbsolutePath());
+		} else
+		{
+			setCapability(pageId(), pageIdOrFile);
+		}
+
 		// HP ensure necessary capabilities got set already
 		// such as device name
 
@@ -172,24 +199,11 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.common.Context#open(java.lang.String)
-	 */
-	@Override
-	public void open(String appIdOrFile) throws MalformedURLException
+	@SuppressWarnings("unchecked")
+	public T pkgOrBundle(String pkgOrBundleId)
 	{
-		Util.mustNotNull("app id or file", appIdOrFile);
-
-		//		setCapability(pkgOrBundleId(), appIdOrFile);
-		setCapability(APP, new File(appIdOrFile).getAbsolutePath());
-
-		open();
-
-		if (!driver.isAppInstalled(appIdOrFile))
-		{
-		}
+		setCapability(pkgOrBundle(), pkgOrBundleId);
+		return (T) this;
 	}
 
 	public void press(WebElement elem)
@@ -310,10 +324,12 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	 */
 	protected abstract D createDriver(String remoteAddress) throws MalformedURLException;
 
+	protected abstract String pageId();
+
 	/**
 	 * @return
 	 */
-	protected abstract String pkgOrBundleId();
+	protected abstract String pkgOrBundle();
 
 	/**
 	 * Platform.
@@ -328,6 +344,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		setCapability(PLATFORM_NAME, platform);
 		return (T) this;
 	}
+
 	@SuppressWarnings("unchecked")
 	protected T version(String version)
 	{
