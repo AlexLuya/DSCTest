@@ -54,7 +54,7 @@ public class APITestImplTest extends Specification
 		res=="200"
 	}
 
-	def "Careplan test"(){
+	def "Careplan getDisgonosisList"(){
 		String url="http://test.icloudcare.com/assessment/api/Test.html"
 		String excelFile="test/com/dsc/test/api/CarePlan-Testing.xls"
 		int ignoredRows = 1
@@ -69,7 +69,22 @@ public class APITestImplTest extends Specification
 		summary.ignores==0
 	}
 
-	def "single spec"(){
+	def "Careplan getServiceList"(){
+		String url="http://test.icloudcare.com/assessment/api/Test.html"
+		String excelFile="test/com/dsc/test/api/CarePlan-getServiceList.xls"
+		int ignoredRows = 1
+		ColumnCfg columnCfg = ColumnCfg.name(0).method(1).url(2).data(3).expectation(4)
+
+		when:"perform tests from specs in excel"
+		Summary summary=API.test.name("CarePlan-getServiceList").url(url).contentType(ContentType.URLENC).excel(excelFile,ignoredRows,columnCfg).resultAsExcel()
+
+		then:"expected result got returned"
+		summary.total==2
+		summary.fails==1
+		summary.ignores==0
+	}
+
+	def "single spec-diagosis"(){
 		String url="http://test.icloudcare.com/assessment/api/Test.html"
 		API test=API.test.name("Care plan").url(url).contentType(ContentType.URLENC)
 
@@ -78,6 +93,17 @@ public class APITestImplTest extends Specification
 
 		then:"expected result got returned"
 		res.asString()=="[\"家庭照护能力不足\",\"家庭成员关系问题\"]"
+	}
+
+	def "single spec-service"(){
+		String url="http://test.icloudcare.com/assessment/api/Test.html"
+		API test=API.test.name("Care plan").url(url).contentType(ContentType.URLENC)
+
+		when:"perform tests from specs in excel"
+		Response res=test.formParam("Action", "getServiceList").formParam("Data", "[\"起居动作困难\"]").post()
+
+		then:"expected result got returned"
+		res.asString()=="[\"晨间护理\"]"
 	}
 
 	def "Pure RestAssured test"(){

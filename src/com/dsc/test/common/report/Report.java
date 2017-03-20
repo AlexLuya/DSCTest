@@ -21,8 +21,11 @@ public class Report
 
 	public static File forAPITesting(String fileName)
 	{
-		// HP ensure parent dir existed
-		return new File(new File(APT_TESTING_REPORT_DIR + fileName).getAbsolutePath());
+		File file= new File(new File(APT_TESTING_REPORT_DIR + fileName).getAbsolutePath());
+
+		file.mkdirs();
+
+		return file;
 	}
 
 }

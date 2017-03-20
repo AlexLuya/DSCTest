@@ -184,7 +184,7 @@ public class APITestImpl implements API
 		Path path = Paths.get(file);
 		ExcelDataReader excel = new ExcelDataReader(path.getParent().toString(), path.getFileName().toString());
 
-		for (int i = ignoredRows; excel.getDataFromRow(i) != null; i++)
+		for (int i = ignoredRows; i <excel.lastNonemptyRow(); i++)
 		{
 			tests.add(new Test(excel.getDataFromRow(i), column, url()));
 		}
@@ -223,7 +223,7 @@ public class APITestImpl implements API
 	@Override
 	public Response get()
 	{
-		return  setSingleTest(HttpMethod.GET);
+		return setSingleTest(HttpMethod.GET);
 	}
 
 	/*
@@ -262,7 +262,7 @@ public class APITestImpl implements API
 	@Override
 	public Response patch()
 	{
-		return  setSingleTest(HttpMethod.PATCH);
+		return setSingleTest(HttpMethod.PATCH);
 	}
 
 	@Override
@@ -375,7 +375,6 @@ public class APITestImpl implements API
 			}
 
 			row.createCell(j).setCellValue(fields[j]);
-			System.out.println(String.format("%s : %s", Test.HEADS[j], fields[j]));
 		}
 
 		return row;
@@ -505,13 +504,13 @@ public class APITestImpl implements API
 	 */
 	private String url()
 	{
-		//both not set
+		// both not set
 		if (null == url && null == domain)
 		{
 			throw new RuntimeException("Both domain and url don't set,can't determine where to request");
 		}
 
-		//both set
+		// both set
 		if (null != url && null != domain)
 		{
 			throw new RuntimeException("Both domain and url set,can't determine which one to request");
