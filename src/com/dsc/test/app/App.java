@@ -148,9 +148,9 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	public abstract void lockDevice(int seconds);
 
 	/**
-	 * Multi touch action.
+	 * Multi touch url.
 	 *
-	 * @return the multi touch action
+	 * @return the multi touch url
 	 */
 	public MultiTouchAction MultiTouchAction()
 	{
@@ -271,7 +271,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	/**
 	 * Touch.
 	 *
-	 * @return the touch action
+	 * @return the touch url
 	 */
 	public TouchAction touch()
 	{

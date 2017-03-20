@@ -7,13 +7,10 @@ package com.dsc.test.api;
 
 import java.io.IOException;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.dsc.test.api.base.ColumnCfg;
+import com.dsc.test.api.base.Response;
 import com.dsc.test.common.report.Summary;
 import com.dsc.util.ContentType;
-
 
 /**
  * The API Test Runner
@@ -30,7 +27,19 @@ public interface API
 	API test = new APITestImpl();
 
 	/**
-	 * tell test use http basic authentication
+	 * Set the action that will be requested
+	 *
+	 * @param action
+	 *            the action that will be used to combined url with domain and<br>
+	 *            port like:domain:port/action if url not set.
+	 * @return the test runner itself
+	 * @throws IllegalStateException
+	 *             if url is set also
+	 */
+	API action(String action) throws IllegalStateException;
+
+	/**
+	 * Tell the runner use http basic authentication
 	 *
 	 * @param user
 	 *            the user name
@@ -41,7 +50,8 @@ public interface API
 	API basicAuth(String user, String password);
 
 	/**
-	 *Specify the content type of the file which will be uploaded
+	 * Specify the content type of the file
+	 *
 	 * @param type
 	 *            the content type
 	 * @return the test runner itself
@@ -55,40 +65,31 @@ public interface API
 	 *            the cookie name
 	 * @param value
 	 *            the cookie value
-	 * @return the test runner itself the test runner itself
+	 * @return the test runner itself
 	 */
 	API cookie(String name, Object value);
 
 	/**
 	 * Perform a DELETE request to a path that specified by
 	 * {@link #url(String)}}
-	 *
-	 * @param data
-	 *            the data that will be used to replace path params,or be
-	 *            appended to the url if non path param should be replaced and
-	 *            data!=null
 	 * @return the test runner itself
 	 */
-	API delete(String data);
+	Response delete();
 
 	/**
-	 * set the domain that will be used to combined url with port if url not set
+	 * set the domain
 	 *
 	 * @param domain
-	 *            the domain
+	 *            the domain that will be used to combined url with port and<br>
+	 *            action like:domain:port/action if url not set.
 	 * @return the test runner itself
+	 * @throws IllegalStateException
+	 *             if url is set also
 	 */
-	API domain(String domain);
+	API domain(String domain) throws IllegalStateException;
 
 	/**
 	 * Set an excel file as testing specifications with default configurations:
-	 * <ul>
-	 * <li>Sheet: first sheet</li>
-	 * <li>ignoreRows: first row</li>
-	 * <li>columConfig: @see {@link com.dsc.test.api.base.ColumnConfig}'default
-	 * field values</li>
-	 * </ul>
-	 *
 	 * @param file
 	 *            the file which contains testing specifications
 	 * @return the test runner itself
@@ -108,13 +109,13 @@ public interface API
 	API excel(String file, ColumnCfg column);
 
 	/**
-	 * Set an excel file as testing specifications
+	 * Set an excel file as testing specification
 	 *
 	 * @param file
 	 *            the file which contains testing specifications
 	 * @param ignoredRows
-	 *            the ignored rows which tell runner how many heading rows will
-	 *            be ignored in the excel file
+	 *            the ignored rows which tell runner how many heading rows should
+	 *            be ignored
 	 * @param column
 	 *            the column configuration that tell what each excel row
 	 *            represents
@@ -123,13 +124,13 @@ public interface API
 	API excel(String file, int ignoredRows, ColumnCfg column);
 
 	/**
-	 * Set an excel file as testing specifications
+	 * Set an excel file as testing specification
 	 *
 	 * @param file
 	 *            the file which contains testing specifications
 	 * @param ignoredRows
-	 *            the ignored rows which tell runner how many heading rows will
-	 *            be ignored in the excel file
+	 *            the ignored rows which tell runner how many heading rows should
+	 *            be ignored
 	 * @param sheet
 	 *            the name of sheet that contains testing specifications
 	 * @param column
@@ -140,7 +141,7 @@ public interface API
 	API excel(String file, int ignoredRows, String sheet, ColumnCfg column);
 
 	/**
-	 * Set an excel file as testing specifications
+	 * Set an excel file as testing specification
 	 *
 	 * @param file
 	 *            the file which contains testing specifications
@@ -169,13 +170,9 @@ public interface API
 	 * Perform a GET request to a path that specified by
 	 * {@link #url(String)}}
 	 *
-	 * @param data
-	 *            the data that will be used to replace path params,or be
-	 *            appended to the url if non path param should be replaced and
-	 *            data!=null
 	 * @return the test runner itself
 	 */
-	API get(String data);
+	Response get();
 
 	/**
 	 * Specify a header that'll be sent with the http request head
@@ -189,7 +186,7 @@ public interface API
 	API header(String name, Object value);
 
 	/**
-	 * Set the test name that will be used in logging and as report file
+	 * Set the test name that will be used in logging and as report file<br>
 	 * prefix,a default name will be given if not set,that is
 	 * {@link com.dsc.test.api.base.Test#NON_NAMED_API_TEST}
 	 *
@@ -202,79 +199,61 @@ public interface API
 	/**
 	 * Perform a PATCH request to a path that specified by
 	 * {@link #url(String)}}
-	 *
-	 * @param data
-	 *            the data that will be used to replace path params,or be
-	 *            appended to the url if non path param should be replaced and
-	 *            data!=null
 	 * @return the test runner itself
 	 */
-	API patch(String data);
+	Response patch();
 
 	/**
-	 * set the domain that will be used to combined url with domain if url not
-	 * set
 	 *
 	 * @param port
-	 *            the port
+	 *            the port that will be used to combined url with domain and
+	 *            action like:domain:port/action if url not set.
+	 * @return the test runner itself
+	 * @throws IllegalStateException
+	 *             if url is set also
 	 * @return the test runner itself
 	 */
-	API port(int port);
+	API port(int port) throws IllegalStateException;
 
 	/**
 	 * Perform a POST request to a path that specified by
 	 * {@link #url(String)}}
-	 *
-	 * @param data
-	 *            the data that will be used to replace path params,or be
-	 *            appended to the url if non path param should be replaced and
-	 *            data!=null
 	 * @return the test runner itself
 	 */
-	API post(String data);
+	Response post();
 
 	/**
 	 * Perform a PUT request to a path that specified by
 	 * {@link #url(String)}}
 	 *
-	 * @param data
-	 *            the data that will be used to replace path params,or be
-	 *            appended to the url if non path param should be replaced and
-	 *            data!=null
 	 * @return the test runner itself
 	 */
-	API put(String data);
+	Response put();
 
 	/**
-	 * Run tests and write out result as an excel in under
-	 * dir:project/report/api
+	 * Run batched tests and generate a report to project/report/api <br>
+	 * Use {@link #returnSummary()} if you don't want to generate detailed
+	 * report<br>
+	 * Use {@link #resultAsExcel()} if you want to generate detailed report that
+	 * will take time
 	 *
 	 * @return the summary of test result
 	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 *             on write out report failed
 	 */
 	Summary resultAsExcel() throws IOException;
 
-	/**
-	 * Run test and return result as a JSONObject
-	 *
-	 * @return the JSON object of result
-	 */
-	JSONObject returnJson();
 
 	/**
-	 * Return json array.
+	 * Run batched tests and return result summary <br>
+	 * Use {@link #returnSummary()} if you don't want to generate detailed
+	 * report<br>
+	 * Use {@link #resultAsExcel()} if you want to generate detailed report that
+	 * will take time
 	 *
-	 * @return the JSON array
+	 * @return the summary of testing result
 	 */
-	JSONArray returnJsonArray();
-
-	/**
-	 * Run test and return result as a string
-	 *
-	 * @return the string of result
-	 */
-	String returnString();
+	Summary returnSummary();
 
 	/**
 	 * Upload specified file
@@ -287,8 +266,7 @@ public interface API
 	String upload(String file);
 
 	/**
-	 * Set the url that will be requested
-	 * the combination of domain and port will be used if not set
+	 * set the url as the endpoint that will be requested to
 	 *
 	 * @param url
 	 *            the url

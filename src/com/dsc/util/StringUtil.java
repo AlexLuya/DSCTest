@@ -20,6 +20,16 @@ public class StringUtil
 		return obj == null ? null : toUTF8(obj.toString());
 	}
 
+	public static String stripLeadingAndTailWhitespace(String str)
+	{
+		if (str == null)
+		{
+			return null;
+		}
+
+		return str.replaceAll("^\\s+|\\s+$", "");
+	}
+
 	public static String toUTF8(Object str)
 	{
 		try

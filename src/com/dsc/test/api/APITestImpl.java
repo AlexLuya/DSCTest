@@ -10,7 +10,7 @@ import static com.dsc.util.Util.currentDateTime;
 import static com.dsc.util.Util.mustBePositive;
 import static com.dsc.util.Util.mustNotNull;
 import static com.dsc.util.Util.mustNotNullOrEmpty;
-import static com.dsc.util.Util.notNullOrEmpty;
+import static com.dsc.util.Util.notEmpty;
 import static java.lang.String.format;
 
 import java.io.File;
@@ -25,8 +25,6 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.dsc.test.api.base.ColumnCfg;
 import com.dsc.test.api.base.HttpMethod;
@@ -38,10 +36,11 @@ import com.dsc.util.ContentType;
 import com.dsc.util.Excel;
 import com.dsc.util.FileUtil;
 import com.dsc.util.Log;
-import com.dsc.util.StringUtil;
+import com.dsc.util.common.model.NameValue;
 import com.google.common.collect.Lists;
 
 import io.restassured.RestAssured;
+import io.restassured.config.EncoderConfig;
 import io.restassured.specification.RequestSpecification;
 import io.testworx.spock.exceldatareader.client.ExcelDataReader;
 
@@ -56,12 +55,25 @@ public class APITestImpl implements API
 	private static final int		DEFAULT_IGNORED_ROWS	= 1;
 	// first sheet will be selected if sheet name is ""
 	private static final String		FIRST_SHEET				= "";
+	private String					action;
 	private String					caseName;
 	private String					domain;
 	private RequestSpecification	given;
 	private int						port					= 80;
 	private List<Test>				tests					= Lists.newArrayList();
 	private String					url;
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.api.API#url(java.lang.String)
+	 */
+	@Override
+	public APITestImpl action(String action)
+	{
+		mustNotNullOrEmpty(this.action = action, "action");
+		return this;
+	}
 
 	@Override
 	public API basicAuth(String user, String password)
@@ -97,24 +109,26 @@ public class APITestImpl implements API
 		mustNotNullOrEmpty(name, "cookie name");
 		mustNotNull(value, "cookie value");
 
-		given.cookie(name, value);
+		given().cookie(name, value);
 
 		return this;
 	}
 
 	@Override
-	public API delete(String data)
+	public Response delete()
 	{
-		setSingleTest(HttpMethod.DELETE, data);
-
-		return this;
+		return setSingleTest(HttpMethod.DELETE);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.api.API#domain(java.lang.String)
+	 */
 	@Override
-	public API domain(String domain)
+	public API domain(String domain) throws IllegalStateException
 	{
-		mustNotNullOrEmpty(this.domain = domain, "domain");
-
+		mustNotNullOrEmpty(this.domain = domain, "domain name");
 		return this;
 	}
 
@@ -172,7 +186,7 @@ public class APITestImpl implements API
 
 		for (int i = ignoredRows; excel.getDataFromRow(i) != null; i++)
 		{
-			tests.add(new Test(excel.getDataFromRow(i), column, domain, port));
+			tests.add(new Test(excel.getDataFromRow(i), column, url()));
 		}
 
 		return this;
@@ -201,16 +215,15 @@ public class APITestImpl implements API
 		mustNotNullOrEmpty(name, "form param name");
 		mustNotNull(value, "form param value");
 
-		given.formParam(name, value);
+		given().formParam(name, value);
 
 		return this;
 	}
 
 	@Override
-	public API get(String data)
+	public Response get()
 	{
-		setSingleTest(HttpMethod.GET, data);
-		return this;
+		return  setSingleTest(HttpMethod.GET);
 	}
 
 	/*
@@ -247,10 +260,9 @@ public class APITestImpl implements API
 	 * @see com.dsc.test.api.API#patch(java.lang.String)
 	 */
 	@Override
-	public API patch(String data)
+	public Response patch()
 	{
-		setSingleTest(HttpMethod.PATCH, data);
-		return this;
+		return  setSingleTest(HttpMethod.PATCH);
 	}
 
 	@Override
@@ -264,10 +276,9 @@ public class APITestImpl implements API
 	}
 
 	@Override
-	public API post(String data)
+	public Response post()
 	{
-		setSingleTest(HttpMethod.POST, data);
-		return this;
+		return setSingleTest(HttpMethod.POST);
 	}
 
 	/*
@@ -276,10 +287,9 @@ public class APITestImpl implements API
 	 * @see com.dsc.test.api.API#put(java.lang.String)
 	 */
 	@Override
-	public API put(String data)
+	public Response put()
 	{
-		setSingleTest(HttpMethod.PUT, data);
-		return this;
+		return setSingleTest(HttpMethod.PUT);
 	}
 
 	/*
@@ -291,51 +301,33 @@ public class APITestImpl implements API
 	public Summary resultAsExcel() throws IOException
 	{
 		// run all tests
+		Summary summary = returnSummary();
+
+		Log.debug("Generate report ...");
+
+		writeOutTestsAsExcel();
+
+		Log.debug("The report generated under dir:report/api sucessfully!!!");
+
+		return summary;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.api.API#returnSummary()
+	 */
+	@Override
+	public Summary returnSummary()
+	{
+		// run all tests
 		for (Test test : tests)
 		{
 			exec(test);
 		}
 
-		Log.debug("Writing result as excel...");
-
-		writeOutTestsAsExcel();
-
-		Log.debug("All api tests finished!!!");
-
 		return new Summary(tests);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.api.API#returnJson()
-	 */
-	@Override
-	public JSONObject returnJson()
-	{
-		return exec(firstTest()).asJson();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.api.API#returnJsonArray()
-	 */
-	@Override
-	public JSONArray returnJsonArray()
-	{
-		return exec(firstTest()).asJsonArray();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.api.API#returnString()
-	 */
-	@Override
-	public String returnString()
-	{
-		return exec(firstTest()).asString();
 	}
 
 	/*
@@ -350,7 +342,7 @@ public class APITestImpl implements API
 
 		io.restassured.response.Response response = doUploading(file);
 
-		if (notNullOrEmpty(response.asString()))
+		if (notEmpty(response.asString()))
 		{
 			return response.asString();
 		}
@@ -358,15 +350,11 @@ public class APITestImpl implements API
 		return Integer.toString(response.getStatusCode());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.api.API#url(java.lang.String)
-	 */
 	@Override
-	public APITestImpl url(String url)
+	public API url(String url)
 	{
 		mustNotNullOrEmpty(this.url = url, "url");
+
 		return this;
 	}
 
@@ -388,6 +376,7 @@ public class APITestImpl implements API
 			}
 
 			row.createCell(j).setCellValue(fields[j]);
+			System.out.println(String.format("%s : %s", Test.HEADS[j], fields[j]));
 		}
 
 		return row;
@@ -403,7 +392,7 @@ public class APITestImpl implements API
 		{
 			// test as uploading
 			Log.warn(format("Executing %dth api test: %s as uploading", tests.indexOf(test), test.caseName));
-			return new Response(url(test.url).doUploading(test.data.toString()));
+			return new Response(action(test.url()).doUploading(test.data.toString()));
 		}
 
 		return new Response(doExecNonUploading(test));
@@ -411,19 +400,18 @@ public class APITestImpl implements API
 
 	private io.restassured.response.Response doExecNonUploading(Test test)
 	{
-		String url = StringUtil.unformat(test.url);
 		switch (test.method)
 		{
 			case DELETE:
-				return given().delete(url);
+				return given().delete(test.url());
 			case GET:
-				return given().get(url);
+				return given().get(test.url());
 			case PATCH:
-				return given().patch(url);
+				return given().patch(test.url());
 			case POST:
-				return post(test, url);
+				return post(test, test.url());
 			case PUT:
-				return given().post(url);
+				return given().post(test.url());
 			default:
 				throw new RuntimeException(test.method + " isn't a supported http method");
 		}
@@ -437,7 +425,7 @@ public class APITestImpl implements API
 	{
 		file = FileUtil.tryToAbsolutionPath(file);
 
-		return given().multiPart(new File(file)).post(url);
+		return given().multiPart(new File(file)).post(url());
 	}
 
 	private Response exec(Test test)
@@ -461,23 +449,13 @@ public class APITestImpl implements API
 	/**
 	 * @return
 	 */
-	private Test firstTest()
-	{
-		// if (tests.size() == 0)
-		// {
-		// }
-
-		return test(0);
-	}
-
-	/**
-	 * @return
-	 */
 	private RequestSpecification given()
 	{
 		if (given == null)
 		{
-			given = RestAssured.given();
+			given = RestAssured.given()
+					.config(RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().defaultContentCharset("UTF-8")));
+			// config(RestAssured.config().decoderConfig(DecoderConfig.decoderConfig().defaultContentCharset("UTF-8")));
 		}
 
 		return given;
@@ -495,16 +473,23 @@ public class APITestImpl implements API
 			return given().contentType(JSON.toString()).body(test.data.toString()).post(url);
 		}
 
-		return given().post(url);
+		for (NameValue pair : test.dataAsParams())
+		{
+			formParam(pair.getName(), pair.getValue());
+		}
+
+		return given().request().post(url);
 	}
 
 	/**
 	 * @param data
 	 * @return
 	 */
-	private boolean setSingleTest(HttpMethod method, String data)
+	private Response setSingleTest(HttpMethod method)
 	{
-		return tests.add(new Test(caseName, url, method, data, domain, port));
+		tests.add(new Test(caseName, url(), action, method, null));
+
+		return exec(tests.get(0));
 	}
 
 	/**
@@ -514,6 +499,27 @@ public class APITestImpl implements API
 	private Test test(int index)
 	{
 		return tests.get(index);
+	}
+
+	/**
+	 * @return
+	 */
+	private String url()
+	{
+		if (null == url && null == domain)
+		{
+			throw new RuntimeException("Both domain and url don't set,can't determine where to request");
+		} else if (null != url && null != domain)
+		{
+			throw new RuntimeException("Both domain and url set,can't determine which one to request");
+		}
+
+		if (url == null)
+		{
+			return domain + ":" + port;
+		}
+
+		return url;
 	}
 
 	/**

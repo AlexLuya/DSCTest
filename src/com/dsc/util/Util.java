@@ -224,7 +224,7 @@ public class Util
 		return true;
 	}
 
-	public static boolean notNullOrEmpty(String str)
+	public static boolean notEmpty(String str)
 	{
 		return !nullOrEmpty(str);
 	}
@@ -352,16 +352,6 @@ public class Util
 		return str.split(seprator);
 	}
 
-	public static String stripLeadingAndTailWhitespace(String str)
-	{
-		if (str == null)
-		{
-			return null;
-		}
-
-		return str.replaceAll("^\\s+|\\s+$", "");
-	}
-
 	/**
 	 * @param swap
 	 * @return
@@ -384,6 +374,21 @@ public class Util
 		}
 
 		return string;
+	}
+
+	public static String tryToPrefix(String original, String prefix)
+	{
+		if (original == null)
+		{
+			return null;
+		}
+
+		if (original.startsWith(prefix))
+		{
+			return original;
+		}
+
+		return prefix + original;
 	}
 
 	public static void tryToThrowOutIllegalStateException(Object value, String description) throws IllegalStateException

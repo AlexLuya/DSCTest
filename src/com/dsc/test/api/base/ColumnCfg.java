@@ -52,27 +52,35 @@ public class ColumnCfg
 		return new ColumnCfg(nameColumn);
 	}
 
-	/** The case name. */
-	public int	caseName	= 1;// generally,0 column is module
-
-	/** The data. */
-	public int	data		= 4;
-
-	/** The expectation. */
-	public int	expectation	= 5;
-
-	/** The method. */
-	public int	method		= 3;
-
 	/** The url. */
 	// public int result = 6;
-	public int	url			= 2;
+	public int	action		= -1;
+
+	/** The case name. */
+	public int	caseName	= -1;
+
+	/** The data. */
+	public int	data		= -1;
+
+	/** The expectation. */
+	public int	expectation	= -1;
+
+	/** The method. */
+	public int	method		= -1;
+
+	public int	url			= -1;
 
 	/**
 	 * Instantiates a new column cfg.
 	 */
 	public ColumnCfg()
 	{
+		caseName	= 1;	// generally,0 column is module
+		url			= 2;
+		action		= 3;
+		method		= 4;
+		data		= 5;
+		expectation	= 6;
 	}
 
 	/**
@@ -84,6 +92,19 @@ public class ColumnCfg
 	public ColumnCfg(int name)
 	{
 		this.caseName = name;
+	}
+
+	/**
+	 * Action.
+	 *
+	 * @param action
+	 *            the action
+	 * @return the column action
+	 */
+	public ColumnCfg action(int action)
+	{
+		this.action = action;
+		return this;
 	}
 
 	/**

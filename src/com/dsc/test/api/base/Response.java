@@ -8,6 +8,7 @@ package com.dsc.test.api.base;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.dsc.util.StringUtil;
 import com.google.common.base.Strings;
 
 /**
@@ -59,7 +60,7 @@ public class Response
 	 */
 	public String asString()
 	{
-		return message != null ? message : raw.asString();
+		return message != null ? message : StringUtil.stripLeadingAndTailWhitespace(raw.asString());
 	}
 
 	/**

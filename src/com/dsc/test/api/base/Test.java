@@ -5,13 +5,17 @@
  **/
 package com.dsc.test.api.base;
 
+import static com.dsc.test.api.base.HttpMethod.GET;
 import static com.dsc.util.StringUtil.stringfy;
+import static com.dsc.util.StringUtil.stripLeadingAndTailWhitespace;
 import static com.dsc.util.StringUtil.toUTF8;
 import static com.dsc.util.StringUtil.unformat;
-import static com.dsc.util.Util.notNullOrEmpty;
+import static com.dsc.util.Util.mustNotNullOrEmpty;
+import static com.dsc.util.Util.notEmpty;
 import static com.dsc.util.Util.nullOrEmpty;
 import static com.dsc.util.Util.params;
-import static com.dsc.util.Util.stripLeadingAndTailWhitespace;
+import static com.dsc.util.Util.tryToPrefix;
+import static java.lang.String.format;
 
 import java.util.List;
 
@@ -20,6 +24,9 @@ import org.apache.commons.validator.routines.UrlValidator;
 
 import com.dsc.util.FileUtil;
 import com.dsc.util.Json;
+import com.dsc.util.Log;
+import com.dsc.util.StringUtil;
+import com.dsc.util.common.model.NameValue;
 
 /**
  * @Author alex
@@ -53,7 +60,7 @@ public class Test
 	{
 		if (ColumnCfg.columnNofExisted(idx))
 		{
-			throw null;
+			return null;
 		} else if (idx >= fields.size())
 		{
 			throw new RuntimeException(String.format("%dth column specified in config but not existed in data", idx));
@@ -77,23 +84,33 @@ public class Test
 	public Object		expectation;
 	public HttpMethod	method;
 	public String		result;
-	public String		url;
 	public String		violation;
-	private String		domain;
-
-	private int			port	= 80;
 	private long		time	= 0;
+	private String		url;
 
 	/**
 	 * @param fields
 	 * @param column
-	 * @param domain
+	 * @param url
 	 * @param port
 	 */
-	public Test(List<Object> fields, ColumnCfg column, String domain, int port)
+	public Test(List<Object> fields, ColumnCfg column, String url)
 	{
-		this(str(fields, column.caseName), str(fields, column.url), method(fields, column.method), obj(fields, column.data),
-				obj(fields, column.expectation), domain, port);
+		this(str(fields, column.caseName), url, str(fields, column.action), method(fields, column.method),
+				obj(fields, column.data), obj(fields, column.expectation));
+	}
+
+	/**
+	 * @param caseName
+	 * @param url
+	 * @param action
+	 * @param data
+	 * @param method
+	 * @param port
+	 */
+	public Test(String caseName, String url, String action, HttpMethod method, Object data)
+	{
+		this(caseName, url, action, method, data, null);
 	}
 
 	/**
@@ -102,35 +119,24 @@ public class Test
 	 * @param expectation
 	 * @param method
 	 * @param url
-	 * @param domain
 	 * @param port
 	 */
-	public Test(String caseName, String url, HttpMethod method, Object data, Object expectation, String domain, int port)
+	public Test(String caseName, String url, String action, HttpMethod method, Object data, Object expectation)
 	{
-		this.caseName = caseName;
-		if (null == caseName)
-		{
-			this.caseName = NON_NAMED_API_TEST;
-		}
+		this.caseName = caseName == null ? NON_NAMED_API_TEST : caseName;
+		mustNotNullOrEmpty(this.url = toUTF8(url), "nurl");
 		this.expectation = Json.formatIfItIs(expectation);
 		this.method = method;
-		this.domain = toUTF8(domain);
-		this.port = port;
-		setUpUrl(url);
+		setUpAction(action);
 		setUpData(data);
 	}
 
 	/**
-	 * @param caseName
-	 * @param data
-	 * @param method
-	 * @param url
-	 * @param domain
-	 * @param port
+	 * @return
 	 */
-	public Test(String caseName, String url, HttpMethod method, Object data, String domain, int port)
+	public List<NameValue> dataAsParams()
 	{
-		this(caseName, url, method, data, null, domain, port);
+		return NameValue.parseAsList(data);
 	}
 
 	public boolean dataIsJson()
@@ -220,7 +226,16 @@ public class Test
 	 */
 	public float time()
 	{
+		//HP printed time is far more short then actual time
 		return (float) time / 1000;
+	}
+
+	/**
+	 * @return
+	 */
+	public String url()
+	{
+		return StringUtil.unformat(url);
 	}
 
 	/**
@@ -277,41 +292,13 @@ public class Test
 	}
 
 	/**
-	 * @param data
-	 */
-	private void setUpData(Object data)
-	{
-		this.data = toUTF8(data);
-
-		if (url == null)
-		{
-			return;
-		} else if (paramCount() > 0)
-		{
-			tryToReplacePathParams(data);
-		}
-		//		else if (data != null && method == GET && !url.contains(toUTF8(data)))
-		//		{
-		//			url = url + toUTF8(data);
-		//		}
-	}
-
-	/**
 	 * @return
 	 */
-	private void setUpUrl(String url)
+	private void setUpAction(String action)
 	{
-		this.url = toUTF8(url);
-
-		if (this.url == null)
+		if (notEmpty(action))
 		{
-			if (notNullOrEmpty(domain))
-			{
-				this.url = domain + ":" + port;
-			} else
-			{
-				violation = "Both url and domain is null or empty";
-			}
+			url = url + tryToPrefix(action, "/");
 		}
 
 		if (!UrlValidator.getInstance().isValid(this.url))
@@ -323,7 +310,51 @@ public class Test
 	/**
 	 * @param data
 	 */
-	private void tryToReplacePathParams(Object data)
+	private void setUpData(Object data)
+	{
+		this.data = toUTF8(data);
+
+		if (method == GET)
+		{
+			setupQuery(data);
+		}
+	}
+
+	/**
+	 * @param data
+	 */
+	private void setupQuery(Object data)
+	{
+		if (paramCount() > 0)
+		{
+			tryToReplaceQueryParams(data);
+		} else if (shouldBeAppendedAsQuerying(data))
+		{
+			url = url + tryToPrefix(data.toString(), "?");
+		} else if (data != null && url.contains(data.toString()))
+		{
+			Log.warn(format("Data %s ignored due to contained in url already", stringfy(this.data)));
+		}
+	}
+
+	/**
+	 * @param data
+	 */
+	private boolean shouldBeAppendedAsQuerying(Object data)
+	{
+		if (data == null || url.contains(data.toString()))
+		{
+			return false;
+		}
+
+		// it must be format like key=value,so length must >=3
+		return data.toString().split("=").length > 2;
+	}
+
+	/**
+	 * @param data
+	 */
+	private void tryToReplaceQueryParams(Object data)
 	{
 		if (data == null)
 		{
