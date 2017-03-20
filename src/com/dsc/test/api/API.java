@@ -72,7 +72,7 @@ public interface API
 	/**
 	 * Perform a DELETE request to a path that specified by
 	 * {@link #url(String)}}
-	 * @return the test runner itself
+	 * @return the response
 	 */
 	Response delete();
 
@@ -170,7 +170,7 @@ public interface API
 	 * Perform a GET request to a path that specified by
 	 * {@link #url(String)}}
 	 *
-	 * @return the test runner itself
+	 * @return the response
 	 */
 	Response get();
 
@@ -199,7 +199,7 @@ public interface API
 	/**
 	 * Perform a PATCH request to a path that specified by
 	 * {@link #url(String)}}
-	 * @return the test runner itself
+	 * @return the response
 	 */
 	Response patch();
 
@@ -218,7 +218,7 @@ public interface API
 	/**
 	 * Perform a POST request to a path that specified by
 	 * {@link #url(String)}}
-	 * @return the test runner itself
+	 * @return the response
 	 */
 	Response post();
 
@@ -226,7 +226,7 @@ public interface API
 	 * Perform a PUT request to a path that specified by
 	 * {@link #url(String)}}
 	 *
-	 * @return the test runner itself
+	 * @return the response
 	 */
 	Response put();
 

@@ -7,9 +7,10 @@ package com.dsc.test.api.base;
 
 import static com.dsc.test.api.base.HttpMethod.GET;
 import static com.dsc.util.StringUtil.stringfy;
-import static com.dsc.util.StringUtil.stripLeadingAndTailWhitespace;
 import static com.dsc.util.StringUtil.toUTF8;
+import static com.dsc.util.StringUtil.trimBoth;
 import static com.dsc.util.StringUtil.unformat;
+import static com.dsc.util.Util.mustNotNull;
 import static com.dsc.util.Util.mustNotNullOrEmpty;
 import static com.dsc.util.Util.notEmpty;
 import static com.dsc.util.Util.nullOrEmpty;
@@ -76,7 +77,7 @@ public class Test
 			return null;
 		}
 
-		return stripLeadingAndTailWhitespace((String) fields.get(idx));
+		return trimBoth((String) fields.get(idx));
 	}
 
 	public String		caseName;
@@ -124,11 +125,11 @@ public class Test
 	public Test(String caseName, String url, String action, HttpMethod method, Object data, Object expectation)
 	{
 		this.caseName = caseName == null ? NON_NAMED_API_TEST : caseName;
-		mustNotNullOrEmpty(this.url = toUTF8(url), "nurl");
+		mustNotNullOrEmpty(this.url = toUTF8(url), "url");
+		mustNotNull(this.method = method, "method");
+		setupAction(action);
+		setupData(data);
 		this.expectation = Json.formatIfItIs(expectation);
-		this.method = method;
-		setUpAction(action);
-		setUpData(data);
 	}
 
 	/**
@@ -217,8 +218,8 @@ public class Test
 	 */
 	public String[] stringfyFields()
 	{
-		return new String[] { caseName, url, method == null ? null : method.toString(), stringfy(data), Float.toString(time()),
-				stringfy(expectation), result, diff() };
+		return new String[] { caseName, url, method.toString(), stringfy(data), stringfy(time()), stringfy(expectation), result,
+				diff() };
 	}
 
 	/**
@@ -226,7 +227,7 @@ public class Test
 	 */
 	public float time()
 	{
-		//HP printed time is far more short then actual time
+		// NP far more short then actual time
 		return (float) time / 1000;
 	}
 
@@ -294,7 +295,7 @@ public class Test
 	/**
 	 * @return
 	 */
-	private void setUpAction(String action)
+	private void setupAction(String action)
 	{
 		if (notEmpty(action))
 		{
@@ -310,7 +311,7 @@ public class Test
 	/**
 	 * @param data
 	 */
-	private void setUpData(Object data)
+	private void setupData(Object data)
 	{
 		this.data = toUTF8(data);
 

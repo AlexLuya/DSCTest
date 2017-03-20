@@ -60,7 +60,7 @@ public class Response
 	 */
 	public String asString()
 	{
-		return message != null ? message : StringUtil.stripLeadingAndTailWhitespace(raw.asString());
+		return message != null ? message : StringUtil.trimBoth(raw.asString());
 	}
 
 	/**

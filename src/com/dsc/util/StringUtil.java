@@ -15,12 +15,30 @@ import static java.lang.String.format;
  */
 public class StringUtil
 {
+	public static String stringfy(float obj)
+	{
+		return Float.toString(obj);
+	}
+
 	public static String stringfy(Object obj)
 	{
 		return obj == null ? null : toUTF8(obj.toString());
 	}
 
-	public static String stripLeadingAndTailWhitespace(String str)
+	public static String toUTF8(Object str)
+	{
+		try
+		{
+			// Log.debug(format("'%s' will be converted to UTF8", str));
+			return new String(str.toString().getBytes("UTF-8"));
+		} catch (Exception e)
+		{
+			Log.debug(format("'%s' can't be converted to UTF8", str));
+			return null;
+		}
+	}
+
+	public static String trimBoth(String str)
 	{
 		if (str == null)
 		{
@@ -28,19 +46,6 @@ public class StringUtil
 		}
 
 		return str.replaceAll("^\\s+|\\s+$", "");
-	}
-
-	public static String toUTF8(Object str)
-	{
-		try
-		{
-			//			Log.debug(format("'%s' will be converted to UTF8", str));
-			return new String(str.toString().getBytes("UTF-8"));
-		} catch (Exception e)
-		{
-			Log.debug(format("'%s' can't be converted to UTF8", str));
-			return null;
-		}
 	}
 
 	// remove formatting characters

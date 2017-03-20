@@ -310,7 +310,6 @@ public class APITestImpl implements API
 		Log.debug("The report generated under dir:report/api sucessfully!!!");
 
 		return summary;
-
 	}
 
 	/*
@@ -506,10 +505,14 @@ public class APITestImpl implements API
 	 */
 	private String url()
 	{
+		//both not set
 		if (null == url && null == domain)
 		{
 			throw new RuntimeException("Both domain and url don't set,can't determine where to request");
-		} else if (null != url && null != domain)
+		}
+
+		//both set
+		if (null != url && null != domain)
 		{
 			throw new RuntimeException("Both domain and url set,can't determine which one to request");
 		}

@@ -5,7 +5,7 @@
 package com.dsc.util.common.model
 
 
-import static com.dsc.util.StringUtil.stripLeadingAndTailWhitespace
+import static com.dsc.util.StringUtil.trimBoth
 
 import com.google.common.collect.Lists
 
@@ -21,8 +21,8 @@ class NameValue extends Name
 
 	NameValue(String[] arr){
 		//HP validate args
-		name=stripLeadingAndTailWhitespace(arr[0])
-		value=stripLeadingAndTailWhitespace(arr[1])
+		name=trimBoth(arr[0])
+		value=trimBoth(arr[1])
 	}
 
 	static List<NameValue>  parseAsList(Object obj){

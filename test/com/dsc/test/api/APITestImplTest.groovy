@@ -80,7 +80,7 @@ public class APITestImplTest extends Specification
 		res.asString()=="[\"家庭照护能力不足\",\"家庭成员关系问题\"]"
 	}
 
-	def "RestAssured raw"(){
+	def "Pure RestAssured test"(){
 		String url="http://test.icloudcare.com/assessment/api/Test.html"
 		RestAssured.config = RestAssured.config()
 				.httpClient(HttpClientConfig.httpClientConfig()
