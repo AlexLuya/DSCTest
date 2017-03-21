@@ -21,9 +21,10 @@ public class Report
 
 	public static File forAPITesting(String fileName)
 	{
-		File file= new File(new File(APT_TESTING_REPORT_DIR + fileName).getAbsolutePath());
+		File file = new File(new File(APT_TESTING_REPORT_DIR + fileName).getAbsolutePath());
 
-		file.mkdirs();
+		// create directory structure if not existed
+		new File(file.getParent()).mkdirs();
 
 		return file;
 	}

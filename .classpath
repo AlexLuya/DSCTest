@@ -53,10 +53,10 @@
 	<classpathentry kind="lib" path="lib/guava-21.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-validator-1.6.jar" sourcepath="lib/src/commons-validator-1.6-sources.jar"/>
 	<classpathentry kind="lib" path="lib/tagsoup-1.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/spock-excel-reader-1.2.1-modified.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/spock/spock-core-1.1-groovy-2.4-20161104.220104-75.jar" sourcepath="lib/src/spock-core-1.1-groovy-2.4-20161104.220104-75-sources.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/SpockExcelReader"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
