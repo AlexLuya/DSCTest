@@ -30,6 +30,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 import com.dsc.test.common.Context;
 import com.dsc.test.web.pagefactory.WebFieldDecorator;
@@ -139,6 +140,11 @@ public class Browser extends Context<Browser, WebDriver>
 		driver.close();
 	}
 
+	public String currentWindowHandle()
+	{
+		return driver.getWindowHandle();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -188,16 +194,16 @@ public class Browser extends Context<Browser, WebDriver>
 		return driver.getCurrentUrl();
 	}
 
+	// @Override
+	// public void open()
+	// {
+	// open("about:blank");
+	// }
+
 	public Navigation navigation()
 	{
 		return driver.navigate();
 	}
-
-	//	@Override
-	//	public void open()
-	//	{
-	//		open("about:blank");
-	//	}
 
 	@Override
 	public void open(String url)
@@ -245,22 +251,37 @@ public class Browser extends Context<Browser, WebDriver>
 		// starty).waitAction(duration).moveTo(xOffset,
 		// yOffset).release().perform();
 
-		//for other browsers
-		//		new TouchAction(this).press(startx, starty).waitAction(duration).moveTo(endx, endy).release().perform();
+		// for other browsers
+		// new TouchAction(this).press(startx,
+		// starty).waitAction(duration).moveTo(endx, endy).release().perform();
 
 		throw new RuntimeException("swiping ONLY avaialbe in app,browser DON'T SUPPORT this due to alex needs a break");
 	}
 
 	public void switchBackToPreviousWindow()
 	{
-		switchToWindow(previousWindowHandler);
-		previousWindowHandler = null;
+		if (null != previousWindowHandler)
+		{
+			switchToWindow(previousWindowHandler);
+			previousWindowHandler = null;
+		}
 	}
 
 	public void switchToPopupWindow()
 	{
 		// store current window for switching back
-		previousWindowHandler = driver.getWindowHandle();
+		previousWindowHandler = currentWindowHandle();
+
+		// wait for popup
+		waitUntil(new ExpectedCondition<Boolean>()
+		{
+			@Override
+			public Boolean apply(WebDriver d)
+			{
+				return d.getWindowHandles().size() != 1;
+			}
+		});
+
 		// switch to popoup window(last is latest opened under webdriver
 		// mechanism)
 		switchToWindow(windowHandles().length - 1);
