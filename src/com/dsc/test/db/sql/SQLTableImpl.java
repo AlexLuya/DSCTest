@@ -390,7 +390,44 @@ public class SQLTableImpl implements Table
 		Util.mustNotNullOrEmpty(column, "column name");
 		Util.mustNotNull(cellValue, "cellValue");
 
-		return selectBy(String.format("select * FROM %s %s", name(), whereColumnEquals(column, cellValue)));
+		return selectBy(format("select * FROM %s %s", name(), whereColumnEquals(column, cellValue)));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.db.Table#selectBy(java.lang.String, java.lang.Object,
+	 * java.lang.String)
+	 */
+	@Override
+	public Object selectBy(String filterColumn, Object filterValue, String resultColumn)
+	{
+		Util.mustNotNullOrEmpty(filterColumn, "filter name");
+		Util.mustNotNull(filterValue, "filter value");
+		Util.mustNotNull(resultColumn, "result column");
+
+		try (ResultSet res = selectBy(
+				format("select %s FROM %s %s", resultColumn, name(), whereColumnEquals(filterColumn, filterValue))))
+		{
+			List<Object> list = Lists.newArrayList();
+
+			while (res.next())
+			{
+				list.add(res.getObject(1));
+			}
+
+			if (list.size() == 1)
+			{
+				return list.get(0);
+			}else if(list.size()>1){
+				return list;
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	/*
@@ -406,7 +443,9 @@ public class SQLTableImpl implements Table
 		return selectBy("id", id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see com.dsc.test.db.Table#selectById(java.lang.Object, java.lang.String)
 	 */
 	@Override
@@ -415,10 +454,12 @@ public class SQLTableImpl implements Table
 		Util.mustNotNull(id, "id");
 		Util.mustNotNullOrEmpty(column, "column name");
 
-
-		try(ResultSet res= selectBy(String.format("select %s FROM %s %s",column, name(), whereColumnEquals("id", id))))
+		try (ResultSet res = selectBy(String.format("select %s FROM %s %s", column, name(), whereColumnEquals("id", id))))
 		{
-			return res.getObject(1);
+			if(res.next())
+			{
+				return res.getObject(1);
+			}
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
@@ -463,8 +504,8 @@ public class SQLTableImpl implements Table
 		}
 	}
 	//
-	//	private String whereIdEquals(Object id)
-	//	{
-	//		return whereColumnEquals("id", id);
-	//	}
+	// private String whereIdEquals(Object id)
+	// {
+	// return whereColumnEquals("id", id);
+	// }
 }

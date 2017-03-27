@@ -309,6 +309,38 @@ public class SQLTableImplTest extends Specification
 		"VARCHAR(250)"	|"column_string"	|"column_string_value"	|"noise row value"
 	}
 
+	def "select a column by specific column"(String filterValue,Object expectedRes){
+		String filterColumn="filter_column"
+		String resultColumn="result_column"
+
+		given:"table existed"
+		db.exec(format("DROP TABLE IF EXISTS %s;CREATE TABLE %s(\
+					id INT IDENTITY, \
+					%s INT, \
+					%s VARCHAR(250),\
+					)",tableName,tableName,filterColumn,resultColumn))
+		and:"first targeted row inserted"
+		Object[][] arr=[[1,1,"unique_value"]]
+		table.insert(format("insert into %s (id,%s,%s) values (?,?,?)",tableName,filterColumn,resultColumn),arr)
+		and:"second targeted row inserted"
+		arr=[[2,2,"cell_1_value"]]
+		table.insert(format("insert into %s (id,%s,%s) values (?,?,?)",tableName,filterColumn,resultColumn),arr)
+		and:"third target row inserted"
+		arr=[[3,2,"cell_2_value"]]
+		table.insert(format("insert into %s (id,%s,%s) values (?,?,?)",tableName,filterColumn,resultColumn),arr)
+
+		when:"select by specific column"
+		Object res=table.selectBy(filterColumn,filterValue,resultColumn)
+
+		then:"first expected row got selected out"
+		res==expectedRes
+
+		where:
+		filterValue				|expectedRes
+		1						|"unique_value"
+		2						|["cell_1_value","cell_2_value"]
+	}
+
 	def setupSpec(){
 		db=HsqlDB.get()
 

@@ -99,10 +99,11 @@ public interface Table
 	 * @param cellValue
 	 *            the cell value for filtering
 	 * @param childTablesInfo
-	 *            the infos where contains how child tables reference to parent table
+	 *            the infos where contains how child tables reference to parent
+	 *            table
 	 * @return the count of deleted row
 	 */
-	int deleteCascadely(String column, Object cellValue,List<ChildTable.Info> childTablesInfo);
+	int deleteCascadely(String column, Object cellValue, List<ChildTable.Info> childTablesInfo);
 
 	/**
 	 * Ensure schema retrieved.
@@ -199,6 +200,19 @@ public interface Table
 	ResultSet selectBy(String column, Object cellValue);
 
 	/**
+	 * Select a column by another column and it's value.
+	 *
+	 * @param filterColumn
+	 *            the column to be used as filtering condition
+	 * @param filter
+	 *            Value
+	 *            the cell value
+	 * @return hte unique cell value if only one row retrieved,the list of cells
+	 *         value if multiple rows returned,null if nothing got selected out
+	 */
+	Object selectBy(String filterColumn, Object filterValue, String resultColumn);
+
+	/**
 	 * Select by id.
 	 *
 	 * @param id
@@ -215,7 +229,7 @@ public interface Table
 	 *
 	 * @param column
 	 *            the column
-	 * @return the result cell value
+	 * @return the result cell value,,null if nothing got selected out
 	 */
-	Object selectById(Object id,String column);
+	Object selectById(Object id, String column);
 }
