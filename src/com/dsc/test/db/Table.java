@@ -206,4 +206,16 @@ public interface Table
 	 * @return the result set
 	 */
 	ResultSet selectById(Object id);
+
+	/**
+	 * Select by id and column.
+	 *
+	 * @param id
+	 *            the id
+	 *
+	 * @param column
+	 *            the column
+	 * @return the result cell value
+	 */
+	Object selectById(Object id,String column);
 }

@@ -6,7 +6,6 @@
 package com.dsc.test.common;
 
 import static com.dsc.util.Log.info;
-import static com.dsc.util.Log.warn;
 import static com.dsc.util.Util.wrap;
 
 import java.awt.image.BufferedImage;
@@ -314,27 +313,6 @@ public abstract class Context<T extends Context<T, D>, D extends WebDriver>
 	}
 
 	public abstract void swipe(int startx, int starty, int endx, int endy, int duration);
-
-	public void switchToWindow(String nameOrHandler)
-	{
-		// this will switch to expected window/tab but visually,it may won't
-		// due to window is opened in tab
-		driver.switchTo().window(nameOrHandler);
-
-		// so use a trick(show an alter,and click [OK]) to ensure focused
-		// visually
-		// but if 'alter' existed
-		if (null != alter())
-		{
-			// trick won't work,user must do it manually
-			warn("alter() existed,and it will shade the trick---alter('ensure focused visually').accept()---,please do it manually");
-			return;
-		}
-
-		// else use this trick
-		executeScript("alert('ensure focused visually')");
-		alter().accept();
-	}
 
 	public File takeScreenshot()
 	{

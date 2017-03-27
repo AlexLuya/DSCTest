@@ -406,6 +406,27 @@ public class SQLTableImpl implements Table
 		return selectBy("id", id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dsc.test.db.Table#selectById(java.lang.Object, java.lang.String)
+	 */
+	@Override
+	public Object selectById(Object id, String column)
+	{
+		Util.mustNotNull(id, "id");
+		Util.mustNotNullOrEmpty(column, "column name");
+
+
+		try(ResultSet res= selectBy(String.format("select %s FROM %s %s",column, name(), whereColumnEquals("id", id))))
+		{
+			return res.getObject(1);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	// HP override other methods
 	@Override
 	public String toString()

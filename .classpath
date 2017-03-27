@@ -3,8 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="lib/guava/error_prone_annotations-2.0.2.jar"/>
-	<classpathentry kind="lib" path="lib/guava/j2objc-annotations-0.1.jar"/>
 	<classpathentry kind="lib" path="lib/spock/cglib-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.9.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections4-4.1.jar"/>
@@ -50,10 +48,11 @@
 	<classpathentry kind="lib" path="lib/httpcore-4.4.6.jar" sourcepath="lib/src/httpcore-4.4.6-sources.jar"/>
 	<classpathentry kind="lib" path="lib/httpclient-4.5.3.jar"/>
 	<classpathentry kind="lib" path="lib/gson-2.7.jar"/>
-	<classpathentry kind="lib" path="lib/guava-21.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-validator-1.6.jar" sourcepath="lib/src/commons-validator-1.6-sources.jar"/>
 	<classpathentry kind="lib" path="lib/tagsoup-1.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/spock-excel-reader-1.2.1-modified.jar"/>
+	<classpathentry kind="lib" path="lib/guava/guava-21.0.jar"/>
+	<classpathentry kind="lib" path="lib/guava/j2objc-annotations-1.1.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>

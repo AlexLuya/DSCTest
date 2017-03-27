@@ -6,6 +6,8 @@
  **/
 package com.dsc.test.web;
 
+import static com.dsc.util.Log.warn;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -244,17 +246,6 @@ public class Browser extends Context<Browser, WebDriver>
 	@Override
 	public void swipe(int startx, int starty, int endx, int endy, int duration)
 	{
-		// for safari
-		// int xOffset = endx - startx;
-		// int yOffset = endy - starty;
-		// new TouchAction(this).press(startx,
-		// starty).waitAction(duration).moveTo(xOffset,
-		// yOffset).release().perform();
-
-		// for other browsers
-		// new TouchAction(this).press(startx,
-		// starty).waitAction(duration).moveTo(endx, endy).release().perform();
-
 		throw new RuntimeException("swiping ONLY avaialbe in app,browser DON'T SUPPORT this due to alex needs a break");
 	}
 
@@ -300,5 +291,26 @@ public class Browser extends Context<Browser, WebDriver>
 	public String[] windowHandles()
 	{
 		return driver.getWindowHandles().toArray(new String[driver.getWindowHandles().size()]);
+	}
+
+	private void switchToWindow(String nameOrHandler)
+	{
+		// this will switch to expected window/tab but visually,it may won't
+		// due to window is opened in tab
+		driver.switchTo().window(nameOrHandler);
+
+		// so use a trick(show an alter,and click [OK]) to ensure focused
+		// visually
+		// but if 'alter' existed
+		if (null != alter())
+		{
+			// trick won't work,user must do it manually
+			warn("alter() existed,and it will shade the trick---alter('ensure focused visually').accept()---,please do it manually");
+			return;
+		}
+
+		// else use this trick
+		executeScript("alert('ensure focused visually')");
+		alter().accept();
 	}
 }

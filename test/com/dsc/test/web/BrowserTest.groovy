@@ -16,21 +16,21 @@ public class BrowserTest extends Specification {
 	}
 
 	def "find by id,but corresponded element doesn't exist"(){
-		when:"find a non-existed element"
+		when:_ "find a non-existed element"
 		browser.findElemById("wild id - sdfasdfljsdorjw23")
 
 		then:thrown(RuntimeException)
 	}
 
 	def "switch between tabs"(){
-		when:"click link to open a window in new tab"
+		when:_ "click link to open a window in new tab"
 		new Link(browser,browser.findElemByLinkText("京公网安备11000002000001号")).click()
-		and:"switch to popup window"
+		and:_ "switch to popup window"
 		browser.switchToPopupWindow()
-		and:"switch back to previous window"
+		and:_ "switch back to previous window"
 		browser.switchBackToPreviousWindow()
 
-		then:"browser do switched back to previous window"
+		then:_ "browser do switched back to previous window"
 		Util.sleep(3)
 		browser.getCurrentUrl()==TEST_PAGE
 	}
