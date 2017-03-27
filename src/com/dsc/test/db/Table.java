@@ -207,7 +207,7 @@ public interface Table
 	 * @param filter
 	 *            Value
 	 *            the cell value
-	 * @return hte unique cell value if only one row retrieved,the list of cells
+	 * @return the unique cell value if only one row retrieved,the list of cells
 	 *         value if multiple rows returned,null if nothing got selected out
 	 */
 	Object selectBy(String filterColumn, Object filterValue, String resultColumn);
