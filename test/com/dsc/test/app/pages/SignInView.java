@@ -7,8 +7,11 @@ package com.dsc.test.app.pages;
 
 import java.util.List;
 
+import org.openqa.selenium.support.FindBy;
+
 import com.dsc.test.app.App;
 import com.dsc.test.app.ui.base.AppComposite;
+import com.dsc.test.web.ui.Link;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -21,6 +24,8 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
  */
 public class SignInView extends AppComposite
 {
+	@FindBy(id = "com.restwla.z88ab174d:id/customlabel_cell_horizontal_house")
+	Link contentPolicy;
 	@AndroidFindBy(id = "com.restwla.z88ab174d:id/customlabel_cell_horizontal_house")
 	List<MobileElement> navigateItems;// =context().findElemById("com.restwla.z88ab174d:id/customlabel_cell_horizontal_house");
 
@@ -32,6 +37,11 @@ public class SignInView extends AppComposite
 	{
 		super(context, context.findElemByXpath("//*"));
 		ensureAvailable();
+	}
+
+	public ContentPolicyView clickContentPolicy(){
+		contentPolicy.click();
+		return new ContentPolicyView(context());
 	}
 
 	public SignUpWithEmailView clickSignUpWithEmail()
@@ -48,6 +58,6 @@ public class SignInView extends AppComposite
 	@Override
 	protected void ensureChildrenAvailable()
 	{
-		//		Util.ensureItemsAvailable(navigateItems);
+		contentPolicy.ensureAvailable();
 	}
 }

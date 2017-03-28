@@ -25,6 +25,7 @@ import com.dsc.test.common.Context;
 import com.dsc.util.Util;
 
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.ios.IOSElement;
 
 /**
  * The Class UIField.
@@ -687,7 +688,7 @@ public class UIField<T extends WebElement>
 	protected void input(String text)
 	{
 		// due to
-		if (wrapee instanceof MobileElement)
+		if (wrapee instanceof IOSElement)
 		{
 			((MobileElement) wrapee).setValue(text);
 		} else
