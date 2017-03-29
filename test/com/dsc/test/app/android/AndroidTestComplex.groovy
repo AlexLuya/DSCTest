@@ -25,10 +25,10 @@ public class AndroidTestComplex extends AppTestStub
 	def setupSpec(){
 		//		app.deviceName("ZTEG719C").version("4.4.4").open("file/Hybrid_v1.8.1.apk")
 
-		//		app.deviceName("1501-M02").version("5.1").open("file/Hybrid_v1.8.1.apk")
-		//		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
+		app.deviceName("1501-M02").version("5.1").open("file/Hybrid_v1.8.1.apk")
+		app.activity("com.application.zomato.bake.prototype.activities.HomeActivityCommon")
 		//open installed app
-		app.deviceName("1501-M02").version("5.1").pkgOrBundle("com.restwla.z88ab174d").open("com.application.zomato.bake.prototype.activities.SplashActivity")
+		//		app.deviceName("1501-M02").version("5.1").pkgOrBundle("com.restwla.z88ab174d").open("com.application.zomato.bake.prototype.activities.SplashActivity")
 
 		homepage=new Homepage(app)
 	}
