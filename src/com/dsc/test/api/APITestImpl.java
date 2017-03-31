@@ -184,7 +184,7 @@ public class APITestImpl implements API
 		Path path = Paths.get(file);
 		ExcelDataReader excel = new ExcelDataReader(path.getParent().toString(), path.getFileName().toString());
 
-		for (int i = ignoredRows; i <excel.lastNonemptyRow(); i++)
+		for (int i = ignoredRows; i <= excel.lastNonemptyRow(); i++)
 		{
 			tests.add(new Test(excel.getDataFromRow(i), column, url()));
 		}
