@@ -16,14 +16,11 @@ public class Test extends TestStub
 	def "test"(){
 		given:_ ""
 		int i=1,j=2
-		println "given"
 
-		when:_ "when"
+		when:_ "删除老人相关合同数据，并确保老人做过照护计划,且老人是居家老人"
 		int l=i+j
-		println "when"
 
-		then:_ "then"
+		then:_ "新窗口正确打开t2的订单付款界面"
 		l==3
-		println "then"
 	}
 }
