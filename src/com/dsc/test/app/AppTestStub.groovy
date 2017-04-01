@@ -4,10 +4,10 @@
  **/
 package com.dsc.test.app
 
+import com.dsc.test.TestStub
 import com.dsc.test.common.ContextFactory
 
 import spock.lang.Shared
-import spock.lang.Specification
 
 /**
  * @Author alex
@@ -15,7 +15,7 @@ import spock.lang.Specification
  * @Version 1.0
  * @Since 1.0
  */
-public class AppTestStub extends Specification
+public class AppTestStub extends TestStub
 {
 	@Shared App app=ContextFactory.app()
 

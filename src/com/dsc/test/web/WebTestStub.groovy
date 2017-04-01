@@ -18,11 +18,11 @@ import org.apache.commons.io.FileUtils
 import org.junit.Rule
 import org.junit.rules.TestName
 
+import com.dsc.test.TestStub
 import com.dsc.util.ImageUtil
 import com.dsc.util.Log
 
 import spock.lang.Shared
-import spock.lang.Specification
 
 /**
  * The Class WebTestStub.
@@ -32,7 +32,7 @@ import spock.lang.Specification
  * @Version 1.0
  * @Since v1.0
  */
-class WebTestStub  extends Specification {
+class WebTestStub  extends TestStub {
 	// NP get from configuration file
 	private static final String	SCREENSHOT_DIR				= "screenshots/"
 	private static final String	STANDARD_IMAGES_DIR				= "standard_images/"

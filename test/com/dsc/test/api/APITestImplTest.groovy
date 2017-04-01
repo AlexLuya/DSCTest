@@ -16,7 +16,6 @@ import io.restassured.RestAssured
 import io.restassured.config.EncoderConfig
 import io.restassured.config.HttpClientConfig
 import io.restassured.specification.RequestSpecification
-import spock.lang.Specification
 
 /**
  * @Author alex
@@ -24,7 +23,7 @@ import spock.lang.Specification
  * @Version 1.0
  * @Since 1.0
  */
-public class APITestImplTest extends Specification
+public class APITestImplTest extends APITestStub
 {
 	def "multiple specs in excel"(){
 
@@ -34,7 +33,7 @@ public class APITestImplTest extends Specification
 		ColumnCfg columnCfg = ColumnCfg.name(2).action(4).method(3).data(5).expectation(6)
 
 		when:"perform tests from specs in excel"
-		Summary summary=API.test.name("HuaShan").header("Authorization",authKey).excel(excelFile,ignoredRows,columnCfg).resultAsExcel()
+		Summary summary=api.name("HuaShan").header("Authorization",authKey).excel(excelFile,ignoredRows,columnCfg).resultAsExcel()
 
 		then:"expected result got returned"
 		summary.total==61
@@ -48,7 +47,7 @@ public class APITestImplTest extends Specification
 		String uploadingUrl="http://139.196.24.63:8082/api/PatientDiagnose/UploadImgs"
 
 		when:"upload a local image"
-		String res=API.test.name("API-Test-Image-Uploading").header("Authorization",authKey).action(uploadingUrl).upload(imageFile)
+		String res=api.name("API-Test-Image-Uploading").header("Authorization",authKey).action(uploadingUrl).upload(imageFile)
 
 		then:"expected result got returned"
 		res=="200"
@@ -61,7 +60,7 @@ public class APITestImplTest extends Specification
 		ColumnCfg columnCfg = ColumnCfg.name(0).method(1).url(2).data(3).expectation(4)
 
 		when:"perform tests from specs in excel"
-		Summary summary=API.test.name("Care plan").url(url).contentType(ContentType.URLENC).excel(excelFile,ignoredRows,columnCfg).resultAsExcel()
+		Summary summary=api.name("Care plan").url(url).contentType(ContentType.URLENC).excel(excelFile,ignoredRows,columnCfg).resultAsExcel()
 
 		then:"expected result got returned"
 		summary.total==2
@@ -76,7 +75,7 @@ public class APITestImplTest extends Specification
 		ColumnCfg columnCfg = ColumnCfg.name(0).method(1).url(2).data(3).expectation(4)
 
 		when:"perform tests from specs in excel"
-		Summary summary=API.test.name("CarePlan-getServiceList").url(url).contentType(ContentType.URLENC).excel(excelFile,ignoredRows,columnCfg).resultAsExcel()
+		Summary summary=api.name("CarePlan-getServiceList").url(url).contentType(ContentType.URLENC).excel(excelFile,ignoredRows,columnCfg).resultAsExcel()
 
 		then:"expected result got returned"
 		summary.total==2
@@ -86,7 +85,7 @@ public class APITestImplTest extends Specification
 
 	def "single spec-diagosis"(){
 		String url="http://test.icloudcare.com/assessment/api/Test.html"
-		API test=API.test.name("Care plan").url(url).contentType(ContentType.URLENC)
+		API test=api.name("Care plan").url(url).contentType(ContentType.URLENC)
 
 		when:"perform tests from specs in excel"
 		Response res=test.formParam("Action", "getDiagnosisList").formParam("Data", "[{\"subject\":\"家庭介护能力\",\"option\":\"介护能力较弱\"}]").post()
@@ -97,7 +96,7 @@ public class APITestImplTest extends Specification
 
 	def "single spec-service"(){
 		String url="http://test.icloudcare.com/assessment/api/Test.html"
-		API test=API.test.name("Care plan").url(url).contentType(ContentType.URLENC)
+		API test=api.name("Care plan").url(url).contentType(ContentType.URLENC)
 
 		when:"perform tests from specs in excel"
 		Response res=test.formParam("Action", "getServiceList").formParam("Data", "[\"起居动作困难\"]").post()
