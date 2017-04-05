@@ -343,7 +343,7 @@ public class Util
 	 */
 	public static void sleep(int seconds, String elementId)
 	{
-		Log.info("Waiting %d seconds for ******'%s'****** to be displayed fully", seconds, elementId);
+		//		Log.info("Waiting %d seconds for ******'%s'****** to be displayed fully", seconds, elementId);
 		sleep(seconds);
 	}
 

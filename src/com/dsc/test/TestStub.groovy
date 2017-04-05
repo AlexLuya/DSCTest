@@ -24,7 +24,6 @@ class TestStub  extends Specification
 
 	def _(def message) {
 		if( null==message || "".equals(message))
-			//			println "😼 懒鬼，你都没输given/when/then后的内容，叫我打印个球"//s,行号：$lineNumber"
 			Log.info("😼 😤  👿  🙁   懒鬼，你都没输given/when/then后的内容，叫我打印个球")//s,行号：$lineNumber"
 		else
 			Log.info("⏩⏩⏩⏩⏩ 💨  "+message)
@@ -34,19 +33,18 @@ class TestStub  extends Specification
 
 	protected String testCase(){
 		return  String.join("_", name.methodName.replaceAll("[^a-zA-Z0-9]", "_"))
-
 	}
 
-	def setupSpec() {
-		Log.info(String.format("\nTest****%s**************************started",this.class.simpleName))
-	}
-
-	def setup() {
-		Log.info(String.format("Case----%s-----------------------",testCase()))
-	}
-	def cleanup() {
-		log.info("")
-	}
+	//	def setupSpec() {
+	//		Log.info(String.format("\nTest****%s**************************started",this.class.simpleName))
+	//	}
+	//
+	//	def setup() {
+	//		Log.info(String.format("Case----%s-----------------------",testCase()))
+	//	}
+	//	def cleanup() {
+	//		log.info("")
+	//	}
 
 	//	StackTraceElement getStackFrame(String debugMethodName) {
 	//		def ignorePackages = [
