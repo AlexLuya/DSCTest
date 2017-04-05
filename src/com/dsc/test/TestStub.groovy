@@ -24,10 +24,10 @@ class TestStub  extends Specification
 
 	def _(def message) {
 		if( null==message || "".equals(message))
-			println "😼 懒鬼，你都没输given/when/then后的内容，叫我打印个球"//s,行号：$lineNumber"
-		//			Log.info("😼 😤  👿  🙁   懒鬼，你都没输given/when/then后的内容，叫我打印个球")//s,行号：$lineNumber"
+			//			println "😼 懒鬼，你都没输given/when/then后的内容，叫我打印个球"//s,行号：$lineNumber"
+			Log.info("😼 😤  👿  🙁   懒鬼，你都没输given/when/then后的内容，叫我打印个球")//s,行号：$lineNumber"
 		else
-			Log.info("💨  "+message)
+			Log.info("⏩⏩⏩⏩⏩ 💨  "+message)
 
 		true
 	}
