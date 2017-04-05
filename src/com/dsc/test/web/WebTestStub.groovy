@@ -15,8 +15,6 @@ import java.text.SimpleDateFormat
 import javax.imageio.ImageIO
 
 import org.apache.commons.io.FileUtils
-import org.junit.Rule
-import org.junit.rules.TestName
 
 import com.dsc.test.TestStub
 import com.dsc.util.ImageUtil
@@ -36,14 +34,12 @@ class WebTestStub  extends TestStub {
 	// NP get from configuration file
 	private static final String	SCREENSHOT_DIR				= "screenshots/"
 	private static final String	STANDARD_IMAGES_DIR				= "standard_images/"
-	@Rule TestName name = new TestName()
+
 	//	@Shared Browser browser= Browser.firfox()
 	@Shared Browser browser= Browser.chrome()
 	@Shared boolean takeScreenshot=false
 
-	def setup() {
-		Log.info(String.format("\n\n\n Test: '%s' started----------------------------------------------",name.methodName))
-	}
+
 
 	def tryToCreateScreenshotDir() {
 
@@ -91,12 +87,6 @@ class WebTestStub  extends TestStub {
 
 	private File screenshotSavingFile(){
 		return new File(screenshotsDir() + testCase() + "-" + formatTime("HH-mm-ss") + ".png")
-	}
-
-	private String testCase(){
-		// make our screenshot name friendly
-		return  String.join("_", name.methodName.replaceAll("[^a-zA-Z0-9]", "_"))
-
 	}
 
 	//NP path separator from library

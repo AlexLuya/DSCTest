@@ -17,58 +17,58 @@ public class Log
 {
 	// BLOG log the details of checking event to avoid debugging
 
-	private static Logger Log = Logger.getLogger(Log.class.getName()); //
+	private static Logger log = Logger.getLogger(Log.class.getName()); //
 
 	public static void debug(String message)
 	{
-		Log.debug(message);
+		log.debug(message);
 	}
 
 	public static void endTestCase(String sTestCaseName)
 	{
-		Log.info("XXXXXXXXXXXXXXXXXXXXXXX             " + "-E---N---D-" + sTestCaseName + "             XXXXXXXXXXXXXXXXXXXXXX");
+		log.info("XXXXXXXXXXXXXXXXXXXXXXX             " + "-E---N---D-" + sTestCaseName + "             XXXXXXXXXXXXXXXXXXXXXX");
 
-		Log.info("X");
+		log.info("X");
 
-		Log.info("X");
+		log.info("X");
 
-		Log.info("X");
+		log.info("X");
 
-		Log.info("X");
+		log.info("X");
 
 	}
 
 	public static void error(String message)
 	{
-		Log.error(message);
+		log.error(message);
 	}
 
 	public static void fatal(String message)
 	{
-		Log.fatal(message);
+		log.fatal(message);
 	}
 
 	public static void info(String info, Object... args)
 	{
 		Util.mustNotNullOrEmpty(info, "info");
-		Log.info(Util.message(info, args));
+		log.info(Util.message(info, args));
 	}
 
 	public static void startTestCase(String testCaseName)
 	{
-		Log.info("****************************************************************************************");
+		log.info("****************************************************************************************");
 
-		Log.info("****************************************************************************************");
+		log.info("****************************************************************************************");
 
-		Log.info("$$$$$$$$$$$$$$$$$$$$$                 " + testCaseName + "       $$$$$$$$$$$$$$$$$$$$$$$$$");
+		log.info("$$$$$$$$$$$$$$$$$$$$$                 " + testCaseName + "       $$$$$$$$$$$$$$$$$$$$$$$$$");
 
-		Log.info("****************************************************************************************");
+		log.info("****************************************************************************************");
 
-		Log.info("****************************************************************************************");
+		log.info("****************************************************************************************");
 	}
 
 	public static void warn(String message)
 	{
-		Log.warn(message);
+		log.warn(message);
 	}
 }

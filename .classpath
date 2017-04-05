@@ -25,7 +25,6 @@
 	<classpathentry kind="lib" path="lib/db/hsqldb-2.3.4.jar"/>
 	<classpathentry kind="lib" path="lib/db/javassist-3.12.1.GA.jar"/>
 	<classpathentry kind="lib" path="lib/driver/postgresql-9.4.1209.jar"/>
-	<classpathentry kind="lib" path="lib/driver/mysql-connector-java-5.1.39-bin.jar"/>
 	<classpathentry kind="lib" path="lib/maven/maven-core-3.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/maven/maven-plugin-annotations-3.4.jar"/>
 	<classpathentry kind="lib" path="lib/maven/maven-plugin-api-3.3.1.jar"/>
@@ -57,5 +56,6 @@
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/spock/spock-core-1.1-groovy-2.4-20161104.220104-75.jar" sourcepath="lib/src/spock-core-1.1-groovy-2.4-20161104.220104-75-sources.jar"/>
+	<classpathentry kind="lib" path="lib/driver/mysql-connector-java-6.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
