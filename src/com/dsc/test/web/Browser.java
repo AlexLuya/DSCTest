@@ -46,7 +46,6 @@ public class Browser extends Context<Browser, WebDriver>
 	// NP get from configuration file
 	private static final String	WHERE_CHROME_DRIVER_IN_LIN	= "/usr/local/bin/chromedriver.lin";
 	private static final String	WHERE_CHROME_DRIVER_IN_MAC	= "/usr/local/bin/chromedriver.mac";
-
 	private static final String	WHERE_CHROME_DRIVER_IN_WIN	= "C:\\Program Files\\chromedriver.exe";
 
 	public static DesiredCapabilities cap(DesiredCapabilities caps)
@@ -69,7 +68,7 @@ public class Browser extends Context<Browser, WebDriver>
 		}
 
 		System.setProperty("webdriver.chrome.driver", whereChromeDriver());
-		System.setProperty("webdriver.chrome.logfile", "/var/log/chromedriver/chromedriver.log");
+		System.setProperty("webdriver.chrome.logfile", System.getProperty("user.home")+"/chromedriver.log");
 
 		// disable popup blocking
 		ChromeOptions options = new ChromeOptions();
