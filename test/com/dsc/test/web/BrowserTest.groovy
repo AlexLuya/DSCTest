@@ -1,15 +1,10 @@
 package com.dsc.test.web
 
-import com.dsc.test.common.ContextFactory
 import com.dsc.test.web.ui.Link
 import com.dsc.util.Util
 
-import spock.lang.Specification
-
-public class BrowserTest extends Specification {
-
+public class BrowserTest extends WebTestStub {
 	static final String TEST_PAGE="https://www.baidu.com/"
-	Browser browser=ContextFactory.browser()
 
 	def setup(){
 		browser.open(TEST_PAGE)
@@ -33,9 +28,5 @@ public class BrowserTest extends Specification {
 		then:_ "browser do switched back to previous window"
 		Util.sleep(3)
 		browser.getCurrentUrl()==TEST_PAGE
-	}
-
-	def cleanup(){
-		browser.close()
 	}
 }

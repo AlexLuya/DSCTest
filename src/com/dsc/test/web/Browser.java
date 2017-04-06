@@ -69,6 +69,7 @@ public class Browser extends Context<Browser, WebDriver>
 		}
 
 		System.setProperty("webdriver.chrome.driver", whereChromeDriver());
+		System.setProperty("webdriver.chrome.logfile", "/var/log/chromedriver/chromedriver.log");
 
 		// disable popup blocking
 		ChromeOptions options = new ChromeOptions();

@@ -39,8 +39,6 @@ class WebTestStub  extends TestStub {
 	@Shared Browser browser= Browser.chrome()
 	@Shared boolean takeScreenshot=false
 
-
-
 	def tryToCreateScreenshotDir() {
 
 		File dir = new File(screenshotsDir())
@@ -55,7 +53,6 @@ class WebTestStub  extends TestStub {
 			}
 		}
 	}
-
 
 	/**
 	 * @return
