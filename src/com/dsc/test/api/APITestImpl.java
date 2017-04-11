@@ -186,6 +186,11 @@ public class APITestImpl implements API
 
 		for (int i = ignoredRows; i < excel.lastNonemptyRow(); i++)
 		{
+			if (excel.getDataFromRow(i).isEmpty())
+			{
+				Log.debug(format("😼------The %dth row is empty,and will be ignored", i));
+				continue;//ignore empty row
+			}
 			tests.add(new Test(excel.getDataFromRow(i), column, url()));
 		}
 
