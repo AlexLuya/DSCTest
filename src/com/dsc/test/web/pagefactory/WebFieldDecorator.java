@@ -5,8 +5,6 @@
  **/
 package com.dsc.test.web.pagefactory;
 
-import static com.dsc.util.Util.wrap;
-
 import java.lang.reflect.Field;
 
 import org.openqa.selenium.SearchContext;
@@ -14,19 +12,19 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 
+import com.dsc.test.common.Context;
 import com.dsc.test.common.UIFieldFactory;
 import com.dsc.test.common.ui.base.GeneralUIField;
-import com.dsc.test.web.Browser;
 
 public class WebFieldDecorator extends DefaultFieldDecorator
 {
-	private final Browser	context;
+	private final Context<?, ?>	context;
 
 	// private CompositeFactory compositeFactory = new CompositeFactoryImpl();
 
 	private UIFieldFactory	uiObjectFactory	= new UIFieldFactory();
 
-	public WebFieldDecorator(Browser context, SearchContext searchContext)
+	public WebFieldDecorator(Context<?, ?> context, SearchContext searchContext)
 	{
 		super(new WebElementLocatorFactory(searchContext));
 		this.context = context;
@@ -46,13 +44,13 @@ public class WebFieldDecorator extends DefaultFieldDecorator
 
 		if (GeneralUIField.class.isAssignableFrom(field.getType()))
 		{
-			try
-			{
-				return decorateElement(field, wrapee);
-			} catch (Exception e)
-			{
-				throw new RuntimeException(wrap("can't create element with id='" + annotatedId(field) + "'"), e);
-			}
+			//			try
+			//			{
+			return decorateElement(field, wrapee);
+			//			} catch (Exception e)
+			//			{
+			//				throw new RuntimeException(wrap("can't create element with id='" + annotatedId(field) + "'"), e);
+			//			}
 		}
 
 		return super.decorate(classLoader, field);
@@ -86,7 +84,7 @@ public class WebFieldDecorator extends DefaultFieldDecorator
 		return (Class<T>) FindBy.class;
 	}
 
-	private Object decorateElement(final Field field, final WebElement wrapee) throws Exception
+	private Object decorateElement(final Field field, final WebElement wrapee)// throws Exception
 	{
 		@SuppressWarnings("unchecked")
 		GeneralUIField element = uiObjectFactory.create(context, (Class<? extends GeneralUIField>) field.getType(), wrapee);

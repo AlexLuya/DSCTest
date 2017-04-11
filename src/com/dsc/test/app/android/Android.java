@@ -50,6 +50,12 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 		return this;
 	}
 
+	@Override
+	public String browserName()
+	{
+		return CHROME;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -94,12 +100,6 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 	public void lockDevice(int seconds)
 	{
 		driver.lockDevice();
-	}
-
-	public Android needBrowser()
-	{
-		browser(CHROME);
-		return this;
 	}
 
 	//	@Override

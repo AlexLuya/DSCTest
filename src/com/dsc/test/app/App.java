@@ -5,6 +5,7 @@
  **/
 package com.dsc.test.app;
 
+import static com.dsc.util.Util.wrap;
 import static io.appium.java_client.remote.MobileCapabilityType.APP;
 import static io.appium.java_client.remote.MobileCapabilityType.AUTOMATION_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.BROWSER_NAME;
@@ -26,6 +27,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import com.dsc.test.common.Context;
+import com.dsc.test.web.Browser;
 import com.dsc.util.FileUtil;
 import com.dsc.util.Util;
 
@@ -53,6 +55,8 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 
 	/** The Constant WEBVIEW. */
 	private static final String	WEBVIEW			= "WEBVIEW_";
+
+	private Browser				browser;
 
 	/** The remote address. */
 	private String				remoteAddress	= "http://127.0.0.1:4723/wd/hub";
@@ -87,12 +91,16 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	 *            the browser
 	 * @return the t
 	 */
-	@SuppressWarnings("unchecked")
-	public T browser(String browser)
+	public Browser browser()
 	{
-		Util.mustNotNull("browser", browser);
-		setCapability(BROWSER_NAME, browser);
-		return (T) this;
+		if (null == browser)
+		{
+			Util.mustNotNull("browser", browserName());
+			setCapability(BROWSER_NAME, browserName());
+			browser = new Browser(driver, cap);
+		}
+
+		return browser;
 	}
 
 	public Set<String> contexts()
@@ -194,7 +202,13 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		// HP ensure necessary capabilities got set already
 		// such as device name
 
-		driver = createDriver(remoteAddress);
+		try
+		{
+			driver = createDriver(remoteAddress);
+		} catch (Exception e)
+		{
+			throw new RuntimeException(msgOfCreateDriverFailed(), e);
+		}
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
@@ -304,6 +318,13 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		return (T) this;
 	}
 
+	@SuppressWarnings("unchecked")
+	public T toWebView(String name)
+	{
+		driver.context(WEBVIEW + name);
+		return (T) this;
+	}
+
 	public abstract T UDID(String udid);
 
 	public void uninstall(String bundleId)
@@ -312,6 +333,8 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	}
 
 	public abstract void unlockDevice();
+
+	protected abstract String browserName();
 
 	/**
 	 * Creates the driver.
@@ -350,5 +373,10 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	{
 		setCapability(PLATFORM_VERSION, version);
 		return (T) this;
+	}
+
+	private String msgOfCreateDriverFailed()
+	{
+		return "create driver failed," + wrap("Possible reasons:\n") + "① Appium not running\n" + "② Network disconnected\n";
 	}
 }

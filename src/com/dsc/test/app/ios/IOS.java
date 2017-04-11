@@ -36,7 +36,6 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	{
 		super(DesiredCapabilities.iphone());
 		platform(IOS);
-		browser(SAFARI);
 	}
 
 	/*
@@ -49,6 +48,12 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	{
 		// android only,not applied for IOS
 		return this;
+	}
+
+	@Override
+	public String browserName()
+	{
+		return SAFARI;
 	}
 
 	/*
@@ -90,12 +95,6 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	public void lockDevice(int seconds)
 	{
 		driver.lockDevice(seconds);
-	}
-
-	public IOS needBrowser()
-	{
-		browser(SAFARI);
-		return this;
 	}
 
 	/*

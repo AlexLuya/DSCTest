@@ -8,6 +8,7 @@ package com.dsc.test.common;
 import static com.dsc.util.Util.wrap;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 
 import org.openqa.selenium.WebElement;
@@ -16,7 +17,7 @@ import com.dsc.test.common.ui.base.UIField;
 
 public class UIFieldFactory
 {
-	public <T extends UIField<?>> T create(Context<?, ?> context, Class<T> wrapping, WebElement wrapee) throws Exception
+	public <T extends UIField<?>> T create(Context<?, ?> context, Class<T> wrapping, WebElement wrapee) //throws Exception
 	{
 		// create instance by reflection
 		try
@@ -31,7 +32,17 @@ public class UIFieldFactory
 		} catch (InstantiationException e)
 		{
 			throw new RuntimeException(msgOfCanNotInstantiation(wrapping), e.getCause());
+		} catch (IllegalAccessException e)
+		{
+			e.printStackTrace();
+		} catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+		} catch (InvocationTargetException e)
+		{
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	/**

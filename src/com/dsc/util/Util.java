@@ -415,7 +415,7 @@ public class Util
 
 	public static String wrap(String wrapee)
 	{
-		return "★★★   " + wrapee;
+		return "★★★" + wrapee;
 	}
 
 	public static String wrap(String format, Object... args)
