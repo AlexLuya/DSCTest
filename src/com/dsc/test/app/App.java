@@ -300,21 +300,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	@SuppressWarnings("unchecked")
 	public T toWebView()
 	{
-		driver.context(WEBVIEW + 1);
-		return (T) this;
-	}
-
-	/**
-	 * To web view.
-	 *
-	 * @param index
-	 *            the index
-	 * @return the t
-	 */
-	@SuppressWarnings("unchecked")
-	public T toWebView(int index)
-	{
-		driver.context(WEBVIEW + index);
+		driver.context(WEBVIEW + cap.getCapability(pkgOrBundle()));
 		return (T) this;
 	}
 
