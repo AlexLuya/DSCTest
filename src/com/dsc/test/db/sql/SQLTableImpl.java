@@ -142,6 +142,33 @@ public class SQLTableImpl implements Table
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dsc.test.db.Table#count()
+	 */
+	@Override
+	public int count()
+	{
+		try(ResultSet rs = dataBase.query(format("SELECT COUNT(*) FROM %s",name())))
+		{
+			rs.next();
+			return rs.getInt(1);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.dsc.test.db.Table#deleteAll()
+	 */
+	@Override
+	public int deleteAll()
+	{
+		return deleteBy(format("DELETE FROM %s",name()));
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *

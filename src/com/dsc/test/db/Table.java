@@ -62,6 +62,10 @@ public interface Table
 	 */
 	Columns columnsExcept(String... columns);
 
+	int count();
+
+	int deleteAll();
+
 	/**
 	 * Delete by.
 	 *

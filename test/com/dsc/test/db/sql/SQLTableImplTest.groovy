@@ -59,6 +59,35 @@ public class SQLTableImplTest extends Specification
 		row.next()==false
 	}
 
+	def "delete all"(){
+
+		given:"table existed"
+		db.exec("DROP TABLE IF EXISTS "+tableName+";CREATE TABLE "+tableName+"(\
+							id INT IDENTITY, \
+							value_1 VARCHAR(250),\
+							)")
+		and:"two row existed"
+		//NP quite ugly,concise blow three lines
+		Object[][] arr=[[1,"first row"]]
+		table.insert(format("insert into %s (id,value_1) values (?,?)",tableName),arr)
+		arr=[[2,"second row"]]
+		table.insert(format("insert into %s (id,value_1) values (?,?)",tableName),arr)
+
+		when:"counting"
+		int rowCount=table.count()
+
+		then:"result set is 2"
+		rowCount==2
+
+		when:"delete all"
+		table.deleteAll()
+		and:"count existed"
+		rowCount=table.count()
+
+		then:"result set is empty"
+		rowCount==0
+	}
+
 	def "delete by specific column"(String columnType,String columnName,Object value,Object noiseRowValue){
 
 		given:"table existed"
