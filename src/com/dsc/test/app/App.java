@@ -9,6 +9,7 @@ import static com.dsc.util.Util.wrap;
 import static io.appium.java_client.remote.MobileCapabilityType.APP;
 import static io.appium.java_client.remote.MobileCapabilityType.AUTOMATION_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.BROWSER_NAME;
+import static io.appium.java_client.remote.MobileCapabilityType.CLEAR_SYSTEM_FILES;
 import static io.appium.java_client.remote.MobileCapabilityType.DEVICE_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.FULL_RESET;
 import static io.appium.java_client.remote.MobileCapabilityType.NEW_COMMAND_TIMEOUT;
@@ -80,6 +81,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		setCapability(TAKES_SCREENSHOT, "true");
 		// appium exit after 30 seconds idle
 		setCapability(NEW_COMMAND_TIMEOUT, "30");
+		setCapability(CLEAR_SYSTEM_FILES, "true");
 	}
 
 	public abstract T activity(String activity);
