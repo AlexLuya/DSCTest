@@ -210,7 +210,27 @@ public interface Table
 	 */
 	int nullifyCell(String targetCol, String filterCol,Object filterValue, Object... defaultValue);
 
-	int nullifyCellLite(String filterCol,Object filterValue, Object... defaultValue);
+	/**
+	 * Nullify cell.<br>
+	 * <ul>
+	 * <li>if column is nullable,cell will be set to null;</li>
+	 * <li>if column is NOT NULL,and <code>defaultValue</code> provided,cell will be set to provided value</li>
+	 * <li>if column is NOT NULL,and <code>defaultValue</code> NOT provided,cell will be set to default value in DDL</li>
+	 * </ul>
+	 *
+	 * @param column
+	 *            the column to performing filtering and nullifying
+	 * @param filterValue
+	 *            the column value
+	 * @param defaultValue
+	 *            the default value if column MUST not null in DDL,</br>
+	 *            can be ignored if column is nullable or DDL has default value like: NOT NULL DEFAULT xxxx
+	 * @return the updated row count
+	 *
+	 * @exception RunTimeException to indicate integrity constraint violation</br>
+	 * if column is NOT NULL,no default value in DDL,and <code>defaultValue</code> NOT provided or null
+	 */
+	int nullifyCellLite(String column,Object filterValue, Object... defaultValue);
 
 	/**
 	 * Primary key.

@@ -20,6 +20,7 @@ import com.dsc.test.db.Columns;
 import com.dsc.test.db.DataBase;
 import com.dsc.test.db.Table;
 import com.dsc.test.db.sql.ChildTable.Info;
+import com.dsc.util.Log;
 import com.dsc.util.Util;
 import com.google.common.collect.Lists;
 
@@ -229,7 +230,7 @@ public class SQLTableImpl implements Table
 		for (Info child : childTablesInfo)
 		{
 			dataBase.exec(
-					format("DELETE FROM %s where %s in (select parent.%s from %s AS parent INNER JOIN (SELECT * FROM %s) AS child ON parent.%s=child.%s %s)",
+					format("DELETE FROM %s WHERE %s IN (SELECT parent.%s FROM %s AS parent INNER JOIN (SELECT * FROM %s) AS child ON parent.%s=child.%s %s)",
 							child.table, child.foreignKey, child.refereeColumn, name(), child.table, child.refereeColumn,
 							child.foreignKey, whereColumnEquals("parent." + column, cellValue)));
 		}
@@ -274,7 +275,7 @@ public class SQLTableImpl implements Table
 		Util.mustNotNullOrEmpty(column, "column name");
 		Util.mustNotNull(cellValue, "cellValue");
 
-		return existedBy(String.format("select * FROM %s %s", name(), whereColumnEquals(column, cellValue)));
+		return existedBy(String.format("SELECT * FROM %s %s", name(), whereColumnEquals(column, cellValue)));
 	}
 
 	/*
@@ -315,6 +316,9 @@ public class SQLTableImpl implements Table
 	public void insert(String sql, Object[][] values)
 	{
 		dataBase.ensureConnected();
+
+		Log.debug(format("Batching insertion:-----------%s\n", sql));
+		Log.debug(format("------------------------------%s\n", flatten(values)));
 
 		try (PreparedStatement stmt = dataBase.prepareStatement(sql))
 		{
@@ -376,30 +380,10 @@ public class SQLTableImpl implements Table
 	 * (non-Javadoc)
 	 *
 	 * @see com.dsc.test.db.Table#nullifyCell(java.lang.Object,
-	 * java.lang.String[])
-	 */
-	//	@Override
-	//	public int nullifyCell(Object id, String... columns)
-	//	{
-	//		Util.mustNotNull(id, "id");
-	//		Util.mustNotNull(columns, "columns");
-	//
-	//		for (String col : columns)
-	//		{
-	//			nullifyCell(id, col);
-	//		}
-	//
-	//		return 1;
-	//	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.dsc.test.db.Table#nullifyCell(java.lang.Object,
 	 * java.lang.String, java.lang.Object[])
 	 */
 	@Override
-	public int nullifyCell(String targetCol,String filterCol,Object filterValue, Object... defaultValue)
+	public int nullifyCell(String targetCol, String filterCol, Object filterValue, Object... defaultValue)
 	{
 		Util.mustNotNullOrEmpty(targetCol, "targetCol");
 		Util.mustNotNullOrEmpty(filterCol, "filterCol");
@@ -408,17 +392,42 @@ public class SQLTableImpl implements Table
 		dataBase.ensureConnected();
 		try
 		{
-			return dataBase.exec(format("UPDATE %s SET %s = NULL %s", name(), targetCol, whereColumnEquals(filterCol, filterValue)));
-		} catch (Exception e)//column is NOT NULL in DDL
+			return dataBase
+					.exec(format("UPDATE %s SET %s = NULL %s", name(), targetCol, whereColumnEquals(filterCol, filterValue)));
+		} catch (Exception e)// column is NOT NULL in DDL
 		{
 			Object value = defaultValue == null ? column(targetCol).defaultValue() : defaultValue[0];
 
-			return dataBase.exec(format("UPDATE %s SET %s %s", name(), targetCol + "=" + value, whereColumnEquals(filterCol, filterValue)));
+			return dataBase.exec(
+					format("UPDATE %s SET %s %s", name(), targetCol + "=" + value, whereColumnEquals(filterCol, filterValue)));
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.dsc.test.db.Table#nullifyCellLite(java.lang.String, java.lang.Object, java.lang.Object[])
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.db.Table#nullifyCell(java.lang.Object,
+	 * java.lang.String[])
+	 */
+	// @Override
+	// public int nullifyCell(Object id, String... columns)
+	// {
+	// Util.mustNotNull(id, "id");
+	// Util.mustNotNull(columns, "columns");
+	//
+	// for (String col : columns)
+	// {
+	// nullifyCell(id, col);
+	// }
+	//
+	// return 1;
+	// }
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.db.Table#nullifyCellLite(java.lang.String,
+	 * java.lang.Object, java.lang.Object[])
 	 */
 	@Override
 	public int nullifyCellLite(String filterCol, Object filterValue, Object... defaultValue)
@@ -475,7 +484,7 @@ public class SQLTableImpl implements Table
 		Util.mustNotNullOrEmpty(column, "column name");
 		Util.mustNotNull(cellValue, "cellValue");
 
-		return selectBy(format("select * FROM %s %s", name(), whereColumnEquals(column, cellValue)));
+		return selectBy(format("SELECT * FROM %s %s", name(), whereColumnEquals(column, cellValue)));
 	}
 
 	/*
@@ -492,7 +501,7 @@ public class SQLTableImpl implements Table
 		Util.mustNotNull(resultColumn, "result column");
 
 		try (ResultSet res = selectBy(
-				format("select %s FROM %s %s", resultColumn, name(), whereColumnEquals(filterColumn, filterValue))))
+				format("SELECT %s FROM %s %s", resultColumn, name(), whereColumnEquals(filterColumn, filterValue))))
 		{
 			List<Object> list = Lists.newArrayList();
 
@@ -540,7 +549,7 @@ public class SQLTableImpl implements Table
 		Util.mustNotNull(id, "id");
 		Util.mustNotNullOrEmpty(column, "column name");
 
-		try (ResultSet res = selectBy(String.format("select %s FROM %s %s", column, name(), whereColumnEquals("id", id))))
+		try (ResultSet res = selectBy(String.format("SELECT %s FROM %s %s", column, name(), whereColumnEquals("id", id))))
 		{
 			if (res.next())
 			{
@@ -559,6 +568,23 @@ public class SQLTableImpl implements Table
 	public String toString()
 	{
 		return name();
+	}
+
+	private String flatten(Object[][] arr)
+	{
+		String flattened = "";
+		for (Object[] subArr : arr)
+		{
+			flattened = flattened + "[";
+			for (Object val : subArr)
+			{
+				String item = val == null ? "null" : val.toString();
+				flattened = flattened + item + ",  ";
+			}
+			flattened = flattened.substring(0, flattened.length() - 3) + "]\n";
+		}
+
+		return flattened;
 	}
 
 	/**

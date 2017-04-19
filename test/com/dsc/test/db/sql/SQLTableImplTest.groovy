@@ -397,11 +397,12 @@ public class SQLTableImplTest extends Specification
 		res.getString(3)==filterVal
 
 		when:"nullify target cell"
-		table.nullifyCell(targetColumn,filterColumn,filterVal,defaultValueInInputParam)
+		int updatedRowCount=table.nullifyCell(targetColumn,filterColumn,filterVal,defaultValueInInputParam)
 		and:"select again"
 		res=table.selectById(id)
 
 		then:"values updated to null successfully"
+		updatedRowCount==1
 		res.next()==true
 		res.getObject(2)==expectedResult
 		and:"noise column not touched"

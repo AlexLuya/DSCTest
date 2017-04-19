@@ -5,6 +5,8 @@
  **/
 package com.dsc.test.db.sql;
 
+import static java.lang.String.format;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,6 +17,7 @@ import java.sql.Timestamp;
 
 import com.dsc.test.db.DataBase;
 import com.dsc.test.db.Table;
+import com.dsc.util.Log;
 import com.dsc.util.Util;
 
 /**
@@ -94,6 +97,7 @@ public abstract class SQLDataBase implements DataBase
 		try (Statement stmt = conn.createStatement())
 		{
 			stmt.execute(sql);
+			Log.debug(format("%d row(s) updated by-----------%s\n", stmt.getUpdateCount(), sql));
 			return stmt.getUpdateCount();
 		} catch (Exception e)
 		{
@@ -242,6 +246,7 @@ public abstract class SQLDataBase implements DataBase
 
 		try
 		{
+			Log.debug(format("Querying-----------%s\n", query));
 			// query and return result
 			return conn.createStatement().executeQuery(query);
 		} catch (Exception e)
