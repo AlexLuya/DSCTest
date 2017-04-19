@@ -370,6 +370,7 @@ public class SQLTableImplTest extends Specification
 		2						|["cell_1_value","cell_2_value"]
 	}
 
+	//	@Unroll
 	def "nullify cell-target column is #testCase"(String testCase,String nullableInDDL,Object defaultValueInInputParam,Object expectedResult){
 		String targetColumn="target_column"
 		String noiseColumn="noise_column"

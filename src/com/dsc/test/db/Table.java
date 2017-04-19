@@ -200,7 +200,8 @@ public interface Table
 	 * @param column
 	 *            the column
 	 * @param defaultValue
-	 *            the default value if not null,zero or one value is needed
+	 *            the default value if column MUST not null in DDL,</br>
+	 *            can be ignored if column is nullable or DDL has default value like: NOT NULL DEFAULT xxxx
 	 * @return the int
 	 *
 	 * @exception RunTimeException to indicate integrity constraint violation</br>
