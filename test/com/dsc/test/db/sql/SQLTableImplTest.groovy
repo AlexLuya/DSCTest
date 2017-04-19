@@ -373,20 +373,20 @@ public class SQLTableImplTest extends Specification
 	//	@Unroll
 	def "nullify cell-target column is #testCase"(String testCase,String nullableInDDL,Object defaultValueInInputParam,Object expectedResult){
 		String targetColumn="target_column"
-		String noiseColumn="noise_column"
+		String filterColumn="filter_column"
 		int id=1
 		int targetVal=2
-		String noiseVal="noise value"
+		String filterVal="filter value"
 
 		given:"table existed"
 		db.exec(format("DROP TABLE IF EXISTS %s;CREATE TABLE %s(\
 					id INT IDENTITY, \
 					%s INT %s, \
 					%s VARCHAR(250),\
-					)",tableName,tableName,targetColumn,nullableInDDL,noiseColumn))
+					)",tableName,tableName,targetColumn,nullableInDDL,filterColumn))
 		and:"insert values"
-		Object[][] arr=[[id,targetVal,noiseVal]]
-		table.insert(format("insert into %s (id,%s,%s) values (?,?,?)",tableName,targetColumn,noiseColumn),arr)
+		Object[][] arr=[[id,targetVal,filterVal]]
+		table.insert(format("insert into %s (id,%s,%s) values (?,?,?)",tableName,targetColumn,filterColumn),arr)
 
 		when:"select by id"
 		ResultSet res=table.selectById(id)
@@ -394,10 +394,10 @@ public class SQLTableImplTest extends Specification
 		then:"values inserted successfully"
 		res.next()==true
 		res.getInt(2)==targetVal
-		res.getString(3)==noiseVal
+		res.getString(3)==filterVal
 
 		when:"nullify target cell"
-		table.nullifyCell(targetColumn,targetVal,defaultValueInInputParam)
+		table.nullifyCell(targetColumn,filterColumn,filterVal,defaultValueInInputParam)
 		and:"select again"
 		res=table.selectById(id)
 
@@ -405,7 +405,7 @@ public class SQLTableImplTest extends Specification
 		res.next()==true
 		res.getObject(2)==expectedResult
 		and:"noise column not touched"
-		res.getString(3)==noiseVal
+		res.getString(3)==filterVal
 
 		where:
 		testCase								|nullableInDDL			|defaultValueInInputParam	|expectedResult

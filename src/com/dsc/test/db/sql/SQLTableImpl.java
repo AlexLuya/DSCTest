@@ -378,19 +378,19 @@ public class SQLTableImpl implements Table
 	 * @see com.dsc.test.db.Table#nullifyCell(java.lang.Object,
 	 * java.lang.String[])
 	 */
-	@Override
-	public int nullifyCell(Object id, String... columns)
-	{
-		Util.mustNotNull(id, "id");
-		Util.mustNotNull(columns, "columns");
-
-		for (String col : columns)
-		{
-			nullifyCell(id, col);
-		}
-
-		return 1;
-	}
+	//	@Override
+	//	public int nullifyCell(Object id, String... columns)
+	//	{
+	//		Util.mustNotNull(id, "id");
+	//		Util.mustNotNull(columns, "columns");
+	//
+	//		for (String col : columns)
+	//		{
+	//			nullifyCell(id, col);
+	//		}
+	//
+	//		return 1;
+	//	}
 
 	/*
 	 * (non-Javadoc)
@@ -399,21 +399,31 @@ public class SQLTableImpl implements Table
 	 * java.lang.String, java.lang.Object[])
 	 */
 	@Override
-	public int nullifyCell(String column,Object columnValue, Object... defaultValue)
+	public int nullifyCell(String targetCol,String filterCol,Object filterValue, Object... defaultValue)
 	{
-		Util.mustNotNullOrEmpty(column, "column");
-		Util.mustNotNull(columnValue, "columnValue");
+		Util.mustNotNullOrEmpty(targetCol, "targetCol");
+		Util.mustNotNullOrEmpty(filterCol, "filterCol");
+		Util.mustNotNull(filterValue, "filterValue");
 
 		dataBase.ensureConnected();
 		try
 		{
-			return dataBase.exec(format("UPDATE %s SET %s = NULL %s", name(), column, whereColumnEquals(column, columnValue)));
-		} catch (Exception e)
+			return dataBase.exec(format("UPDATE %s SET %s = NULL %s", name(), targetCol, whereColumnEquals(filterCol, filterValue)));
+		} catch (Exception e)//column is NOT NULL in DDL
 		{
-			Object value = defaultValue == null ? column(column).defaultValue() : defaultValue[0];
+			Object value = defaultValue == null ? column(targetCol).defaultValue() : defaultValue[0];
 
-			return dataBase.exec(format("UPDATE %s SET %s %s", name(), column + "=" + value, whereColumnEquals(column, columnValue)));
+			return dataBase.exec(format("UPDATE %s SET %s %s", name(), targetCol + "=" + value, whereColumnEquals(filterCol, filterValue)));
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.dsc.test.db.Table#nullifyCellLite(java.lang.String, java.lang.Object, java.lang.Object[])
+	 */
+	@Override
+	public int nullifyCellLite(String filterCol, Object filterValue, Object... defaultValue)
+	{
+		return nullifyCell(filterCol, filterCol, filterValue, defaultValue);
 	}
 
 	/*

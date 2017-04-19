@@ -20,7 +20,6 @@ import com.dsc.test.db.sql.ChildTable;
  */
 public interface Table
 {
-
 	/**
 	 * Char typed columns.
 	 *
@@ -177,15 +176,15 @@ public interface Table
 	 */
 	String name();
 
-	/**
-	 * Nullify multiple cells.
-	 *
-	 * @param id
-	 *            the id
-	 * @param columns
-	 *            the columns
-	 */
-	int nullifyCell(Object id, String... columns);
+	//	/**
+	//	 * Nullify multiple cells.
+	//	 *
+	//	 * @param id
+	//	 *            the id
+	//	 * @param columns
+	//	 *            the columns
+	//	 */
+	//	int nullifyCell(Object id, String... columns);
 
 	/**
 	 * Nullify cell.<br>
@@ -195,19 +194,23 @@ public interface Table
 	 * <li>if column is NOT NULL,and <code>defaultValue</code> NOT provided,cell will be set to default value in DDL</li>
 	 * </ul>
 	 *
-	 * @param column
-	 *            the column
-	 * @param columnValue
+	 * @param targetCol
+	 * 			  the column of the cell to be nullified
+	 * @param filterCol
+	 *            the column to performing filtering on
+	 * @param filterValue
 	 *            the column value
 	 * @param defaultValue
 	 *            the default value if column MUST not null in DDL,</br>
 	 *            can be ignored if column is nullable or DDL has default value like: NOT NULL DEFAULT xxxx
-	 * @return the int
+	 * @return the updated row count
 	 *
 	 * @exception RunTimeException to indicate integrity constraint violation</br>
 	 * if column is NOT NULL,no default value in DDL,and <code>defaultValue</code> NOT provided or null
 	 */
-	int nullifyCell( String column,Object columnValue, Object... defaultValue);
+	int nullifyCell(String targetCol, String filterCol,Object filterValue, Object... defaultValue);
+
+	int nullifyCellLite(String filterCol,Object filterValue, Object... defaultValue);
 
 	/**
 	 * Primary key.
