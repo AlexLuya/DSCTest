@@ -49,6 +49,16 @@ dependencies {
 	compile 'org.apache.httpcomponents:httpclient:4.5.3'
 	compile 'com.google.guava:guava:21.0'
 	
+	compile 'us.fatehi:schemacrawler:14.16.01'
+	compile 'us.fatehi:schemacrawler-db2:14.16.01'
+	compile 'us.fatehi:schemacrawler-dbtest:14.16.01'
+	compile 'us.fatehi:schemacrawler-h2:14.09.03'
+	compile 'us.fatehi:schemacrawler-hsqldb:14.16.01'
+	compile 'us.fatehi:schemacrawler-mysql:14.16.01'
+	compile 'us.fatehi:schemacrawler-oracle:14.16.01'
+	compile 'us.fatehi:schemacrawler-postgresql:14.16.01'
+	compile 'us.fatehi:schemacrawler-sqlserver:14.16.01'
+	
 	compile fileTree(dir: 'lib', include: '*.jar')
 	compile fileTree(dir: 'lib/appium', include: '*.jar')
 	compile fileTree(dir: 'lib/db', include: '*.jar')

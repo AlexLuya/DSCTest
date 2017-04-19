@@ -370,6 +370,52 @@ public class SQLTableImplTest extends Specification
 		2						|["cell_1_value","cell_2_value"]
 	}
 
+	def "nullify cell-target column is #testCase"(String testCase,String nullableInDDL,Object defaultValueInInputParam,Object expectedResult){
+		String targetColumn="target_column"
+		String noiseColumn="noise_column"
+		int id=1
+		int targetVal=2
+		String noiseVal="noise value"
+
+		given:"table existed"
+		db.exec(format("DROP TABLE IF EXISTS %s;CREATE TABLE %s(\
+					id INT IDENTITY, \
+					%s INT %s, \
+					%s VARCHAR(250),\
+					)",tableName,tableName,targetColumn,nullableInDDL,noiseColumn))
+		and:"insert values"
+		Object[][] arr=[[id,targetVal,noiseVal]]
+		table.insert(format("insert into %s (id,%s,%s) values (?,?,?)",tableName,targetColumn,noiseColumn),arr)
+
+		when:"select by id"
+		ResultSet res=table.selectById(id)
+
+		then:"values inserted successfully"
+		res.next()==true
+		res.getInt(2)==targetVal
+		res.getString(3)==noiseVal
+
+		when:"nullify target cell"
+		table.nullifyCell(id,targetColumn,defaultValueInInputParam)
+		and:"select again"
+		res=table.selectById(id)
+
+		then:"values updated to null successfully"
+		res.next()==true
+		res.getObject(2)==expectedResult
+		and:"noise column not touched"
+		res.getString(3)==noiseVal
+
+		where:
+		testCase								|nullableInDDL			|defaultValueInInputParam	|expectedResult
+		"nullable"								|""						|null						|null
+		"nullable"								|"DEFAULT NULL"			|null						|null
+		"not null-has default value in DDL"		|"DEFAULT -1 NOT NULL"	|null						|-1
+		"not null-has default value in DDL"		|"DEFAULT -1 NOT NULL"	|-2							|-2
+		"not null-has NOT default value in DDL"	|"NOT NULL" 			|-2							|-2
+		//		"not null-has NOT default value in DDL"	|"NOT NULL" 			|null							|-2
+	}
+
 	def setupSpec(){
 		db=HsqlDB.get()
 

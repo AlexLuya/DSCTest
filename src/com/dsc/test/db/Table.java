@@ -1,5 +1,5 @@
 /**
- * Copyright (c) (2010-2018),Deep Space Century and/or its affiliates.All rights
+ * Copyright (c) (2010-2013),Deep Sky Century and/or its affiliates.All rights
  * reserved.
  * DSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  **/
@@ -62,8 +62,18 @@ public interface Table
 	 */
 	Columns columnsExcept(String... columns);
 
+	/**
+	 * Count.
+	 *
+	 * @return the int
+	 */
 	int count();
 
+	/**
+	 * Delete all.
+	 *
+	 * @return the int
+	 */
 	int deleteAll();
 
 	/**
@@ -168,6 +178,37 @@ public interface Table
 	String name();
 
 	/**
+	 * Nullify multiple cells.
+	 *
+	 * @param id
+	 *            the id
+	 * @param columns
+	 *            the columns
+	 */
+	int nullifyCell(Object id, String... columns);
+
+	/**
+	 * Nullify cell.<br>
+	 * <ul>
+	 * <li>if column is nullable,cell will be set to null;</li>
+	 * <li>if column is NOT NULL,and <code>defaultValue</code> provided,cell will be set to provided value</li>
+	 * <li>if column is NOT NULL,and <code>defaultValue</code> NOT provided,cell will be set to default value in DDL</li>
+	 * </ul>
+	 *
+	 * @param id
+	 *            the id
+	 * @param column
+	 *            the column
+	 * @param defaultValue
+	 *            the default value if not null,zero or one value is needed
+	 * @return the int
+	 *
+	 * @exception RunTimeException to indicate integrity constraint violation</br>
+	 * if column is NOT NULL,no default value in DDL,and <code>defaultValue</code> NOT provided or null
+	 */
+	int nullifyCell(Object id, String column, Object... defaultValue);
+
+	/**
 	 * Primary key.
 	 *
 	 * @return primary key
@@ -208,9 +249,10 @@ public interface Table
 	 *
 	 * @param filterColumn
 	 *            the column to be used as filtering condition
-	 * @param filter
-	 *            Value
-	 *            the cell value
+	 * @param filterValue
+	 *            the filter value
+	 * @param resultColumn
+	 *            the result column
 	 * @return the unique cell value if only one row retrieved,the list of cells
 	 *         value if multiple rows returned,null if nothing got selected out
 	 */

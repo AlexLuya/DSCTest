@@ -142,13 +142,15 @@ public class SQLTableImpl implements Table
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see com.dsc.test.db.Table#count()
 	 */
 	@Override
 	public int count()
 	{
-		try(ResultSet rs = dataBase.query(format("SELECT COUNT(*) FROM %s",name())))
+		try (ResultSet rs = dataBase.query(format("SELECT COUNT(*) FROM %s", name())))
 		{
 			rs.next();
 			return rs.getInt(1);
@@ -160,13 +162,15 @@ public class SQLTableImpl implements Table
 		return -1;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see com.dsc.test.db.Table#deleteAll()
 	 */
 	@Override
 	public int deleteAll()
 	{
-		return deleteBy(format("DELETE FROM %s",name()));
+		return deleteBy(format("DELETE FROM %s", name()));
 	}
 
 	/*
@@ -371,6 +375,50 @@ public class SQLTableImpl implements Table
 	/*
 	 * (non-Javadoc)
 	 *
+	 * @see com.dsc.test.db.Table#nullifyCell(java.lang.Object,
+	 * java.lang.String[])
+	 */
+	@Override
+	public int nullifyCell(Object id, String... columns)
+	{
+		Util.mustNotNull(id, "id");
+		Util.mustNotNull(columns, "columns");
+
+		for (String col : columns)
+		{
+			nullifyCell(id, col);
+		}
+
+		return 1;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.dsc.test.db.Table#nullifyCell(java.lang.Object,
+	 * java.lang.String, java.lang.Object[])
+	 */
+	@Override
+	public int nullifyCell(Object id, String column, Object... defaultValue)
+	{
+		Util.mustNotNull(id, "id");
+		Util.mustNotNull(column, "column");
+
+		dataBase.ensureConnected();
+		try
+		{
+			return dataBase.exec(format("UPDATE %s SET %s = NULL %s", name(), column, whereColumnEquals("id", id)));
+		} catch (Exception e)
+		{
+			Object value = defaultValue == null ? column(column).defaultValue() : defaultValue[0];
+
+			return dataBase.exec(format("UPDATE %s SET %s %s", name(), column + "=" + value, whereColumnEquals("id", id)));
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see com.dsc.test.db.Table#primaryKey()
 	 */
 	@Override
@@ -446,7 +494,8 @@ public class SQLTableImpl implements Table
 			if (list.size() == 1)
 			{
 				return list.get(0);
-			}else if(list.size()>1){
+			} else if (list.size() > 1)
+			{
 				return list;
 			}
 		} catch (SQLException e)
@@ -483,7 +532,7 @@ public class SQLTableImpl implements Table
 
 		try (ResultSet res = selectBy(String.format("select %s FROM %s %s", column, name(), whereColumnEquals("id", id))))
 		{
-			if(res.next())
+			if (res.next())
 			{
 				return res.getObject(1);
 			}
@@ -510,24 +559,24 @@ public class SQLTableImpl implements Table
 		return schema.ensureTableRetrieved();
 	}
 
-	private String whereColumnEquals(String column, Object id)
+	private String whereColumnEquals(String column, Object value)
 	{
 		String whereIdEquals = "WHERE " + column + "=";
 
-		if (id instanceof Integer)
+		if (value instanceof Integer)
 		{
-			return whereIdEquals + (int) id;
-		} else if (id instanceof Long)
+			return whereIdEquals + (int) value;
+		} else if (value instanceof Long)
 		{
-			return whereIdEquals + (long) id;
-		} else if (id instanceof String)
+			return whereIdEquals + (long) value;
+		} else if (value instanceof String)
 		{
-			return whereIdEquals + "'" + (String) id + "'";
+			return whereIdEquals + "'" + (String) value + "'";
 		} else
 		{
 			throw new RuntimeException(
 					wrap("%s's type is %s that isn't a supported type:int/Integer,long/Long,String typed id supported,",
-							id.toString(), id.getClass().getSimpleName()));
+							value.toString(), value.getClass().getSimpleName()));
 		}
 	}
 	//

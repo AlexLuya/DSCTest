@@ -98,7 +98,7 @@ public class Schema
 
 		for (Column cl : tableSchema.getColumns())
 		{
-			if (columnName.equals(cl.getName()))
+			if (column().equals(cl.getName().toLowerCase()))
 			{
 				return columnSchema = cl;
 			}

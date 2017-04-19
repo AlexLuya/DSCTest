@@ -24,13 +24,11 @@
 	<classpathentry kind="lib" path="lib/spock-dbunit-0.2.jar"/>
 	<classpathentry kind="lib" path="lib/db/hsqldb-2.3.4.jar"/>
 	<classpathentry kind="lib" path="lib/db/javassist-3.12.1.GA.jar"/>
-	<classpathentry kind="lib" path="lib/driver/postgresql-9.4.1209.jar"/>
 	<classpathentry kind="lib" path="lib/maven/maven-core-3.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/maven/maven-plugin-annotations-3.4.jar"/>
 	<classpathentry kind="lib" path="lib/maven/maven-plugin-api-3.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/maven/maven-model-3.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/freemarker-2.3.21.jar"/>
-	<classpathentry kind="lib" path="lib/schemacrawler/schemacrawler-14.09.03.jar"/>
 	<classpathentry kind="lib" path="lib/ashot-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/appium-5.0.0.jar" sourcepath="lib/src/appium-5.0.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jmeter/lib/jorphan.jar"/>
@@ -56,6 +54,8 @@
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/spock/spock-core-1.1-groovy-2.4-20161104.220104-75.jar" sourcepath="lib/src/spock-core-1.1-groovy-2.4-20161104.220104-75-sources.jar"/>
-	<classpathentry kind="lib" path="lib/driver/mysql-connector-java-6.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/driver/mssql-jdbc-6.1.0.jre8.jar"/>
+	<classpathentry kind="lib" path="lib/driver/postgresql-42.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/schemacrawler/schemacrawler-14.16.01.jar" sourcepath="lib/src/schemacrawler-14.16.01-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
