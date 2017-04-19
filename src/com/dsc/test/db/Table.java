@@ -195,10 +195,10 @@ public interface Table
 	 * <li>if column is NOT NULL,and <code>defaultValue</code> NOT provided,cell will be set to default value in DDL</li>
 	 * </ul>
 	 *
-	 * @param id
-	 *            the id
 	 * @param column
 	 *            the column
+	 * @param columnValue
+	 *            the column value
 	 * @param defaultValue
 	 *            the default value if column MUST not null in DDL,</br>
 	 *            can be ignored if column is nullable or DDL has default value like: NOT NULL DEFAULT xxxx
@@ -207,7 +207,7 @@ public interface Table
 	 * @exception RunTimeException to indicate integrity constraint violation</br>
 	 * if column is NOT NULL,no default value in DDL,and <code>defaultValue</code> NOT provided or null
 	 */
-	int nullifyCell(Object id, String column, Object... defaultValue);
+	int nullifyCell( String column,Object columnValue, Object... defaultValue);
 
 	/**
 	 * Primary key.

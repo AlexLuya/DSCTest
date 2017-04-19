@@ -397,7 +397,7 @@ public class SQLTableImplTest extends Specification
 		res.getString(3)==noiseVal
 
 		when:"nullify target cell"
-		table.nullifyCell(id,targetColumn,defaultValueInInputParam)
+		table.nullifyCell(targetColumn,targetVal,defaultValueInInputParam)
 		and:"select again"
 		res=table.selectById(id)
 

@@ -399,20 +399,20 @@ public class SQLTableImpl implements Table
 	 * java.lang.String, java.lang.Object[])
 	 */
 	@Override
-	public int nullifyCell(Object id, String column, Object... defaultValue)
+	public int nullifyCell(String column,Object columnValue, Object... defaultValue)
 	{
-		Util.mustNotNull(id, "id");
-		Util.mustNotNull(column, "column");
+		Util.mustNotNullOrEmpty(column, "column");
+		Util.mustNotNull(columnValue, "columnValue");
 
 		dataBase.ensureConnected();
 		try
 		{
-			return dataBase.exec(format("UPDATE %s SET %s = NULL %s", name(), column, whereColumnEquals("id", id)));
+			return dataBase.exec(format("UPDATE %s SET %s = NULL %s", name(), column, whereColumnEquals(column, columnValue)));
 		} catch (Exception e)
 		{
 			Object value = defaultValue == null ? column(column).defaultValue() : defaultValue[0];
 
-			return dataBase.exec(format("UPDATE %s SET %s %s", name(), column + "=" + value, whereColumnEquals("id", id)));
+			return dataBase.exec(format("UPDATE %s SET %s %s", name(), column + "=" + value, whereColumnEquals(column, columnValue)));
 		}
 	}
 
