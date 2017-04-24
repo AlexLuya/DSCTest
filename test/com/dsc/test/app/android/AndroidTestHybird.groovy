@@ -8,8 +8,6 @@ import com.dsc.test.app.AppTestStub
 import com.dsc.test.app.pages.HybirdDemoNative
 import com.dsc.test.app.pages.HybirdDemoWeb
 
-import spock.lang.Shared
-
 /**
  * @Author alex
  * @CreateTime Feb 12, 2017 12:12:05 AM
@@ -18,9 +16,9 @@ import spock.lang.Shared
  */
 public class AndroidTestHybird extends AppTestStub
 {
-	@Shared HybirdDemoNative nativePage
+	HybirdDemoNative nativePage
 
-	def setupSpec(){
+	def setup(){
 
 		app.deviceName("1501-M02").version("5.1").open("file/WebviewTestArcher.apk")
 		app.activity("com.ginkodrop.hybirddemo.view.MainActivity")

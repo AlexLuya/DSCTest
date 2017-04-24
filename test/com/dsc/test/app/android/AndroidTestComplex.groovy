@@ -22,7 +22,7 @@ public class AndroidTestComplex extends AppTestStub
 {
 	@Shared Homepage homepage
 
-	def setupSpec(){
+	def setup(){
 		//		app.deviceName("ZTEG719C").version("4.4.4").open("file/Hybrid_v1.8.1.apk")
 
 		app.deviceName("1501-M02").version("5.1").open("file/Hybrid_v1.8.1.apk")

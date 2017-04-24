@@ -7,8 +7,6 @@ package com.dsc.test.app
 import com.dsc.test.TestStub
 import com.dsc.test.common.ContextFactory
 
-import spock.lang.Shared
-
 /**
  * @Author alex
  * @CreateTime Feb 1, 2017 12:24:43 PM
@@ -17,9 +15,9 @@ import spock.lang.Shared
  */
 public class AppTestStub extends TestStub
 {
-	@Shared App app=ContextFactory.app()
+	App app=ContextFactory.app()
 
-	def cleanupSpec(){
+	def cleanup(){
 		app.close()
 	}
 }

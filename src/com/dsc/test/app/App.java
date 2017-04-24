@@ -13,6 +13,7 @@ import static io.appium.java_client.remote.MobileCapabilityType.CLEAR_SYSTEM_FIL
 import static io.appium.java_client.remote.MobileCapabilityType.DEVICE_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.FULL_RESET;
 import static io.appium.java_client.remote.MobileCapabilityType.NEW_COMMAND_TIMEOUT;
+import static io.appium.java_client.remote.MobileCapabilityType.NO_RESET;
 import static io.appium.java_client.remote.MobileCapabilityType.PLATFORM_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.PLATFORM_VERSION;
 import static org.openqa.selenium.remote.CapabilityType.TAKES_SCREENSHOT;
@@ -72,7 +73,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	{
 		super(cap);
 		setWaitSeconds(5);
-		// setCapability("noReset","true");
+		setCapability(NO_RESET,"true");
 		// Reset state by clearing data rather then uninstalling to prevent
 		// re-installing between sessions.
 		setCapability(FULL_RESET, "false");
@@ -250,7 +251,11 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 
 	public void reset()
 	{
+		//		browser.close();
+		//		browser=null;
 		driver.resetApp();
+		//		driver.closeApp();
+		//		driver.launchApp();
 	}
 
 	public void runInBackground(int seconds)

@@ -7,6 +7,7 @@ package com.dsc.test.app.android;
 
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.APP_ACTIVITY;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.APP_PACKAGE;
+import static io.appium.java_client.remote.AndroidMobileCapabilityType.RECREATE_CHROME_DRIVER_SESSIONS;
 import static io.appium.java_client.remote.AutomationName.ANDROID_UIAUTOMATOR2;
 import static io.appium.java_client.remote.AutomationName.SELENDROID;
 import static io.appium.java_client.remote.MobileBrowserType.CHROME;
@@ -41,6 +42,7 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 		super(DesiredCapabilities.android());
 		platform(ANDROID);
 		setCapability("noSign", "true");
+		setCapability(RECREATE_CHROME_DRIVER_SESSIONS, "true");
 	}
 
 	@Override
