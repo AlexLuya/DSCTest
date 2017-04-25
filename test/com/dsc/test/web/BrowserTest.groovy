@@ -1,10 +1,10 @@
 package com.dsc.test.web
 
 import com.dsc.test.web.ui.Link
-import com.dsc.util.Util
 
 public class BrowserTest extends WebTestStub {
 	static final String TEST_PAGE="https://www.baidu.com/"
+	static final String OPENED_PAGE="http://www.beian.gov.cn/portal/registerSystemInfo"
 
 	def setup(){
 		browser.open(TEST_PAGE)
@@ -22,11 +22,14 @@ public class BrowserTest extends WebTestStub {
 		new Link(browser,browser.findElemByLinkText("京公网安备11000002000001号")).click()
 		and:_ "switch to popup window"
 		browser.switchToPopupWindow()
-		and:_ "switch back to previous window"
+
+		then:_ "browser switched to opened "
+		browser.getCurrentUrl().startsWith(OPENED_PAGE)
+
+		when:_ "switch back to previous window"
 		browser.switchBackToPreviousWindow()
 
 		then:_ "browser do switched back to previous window"
-		Util.sleep(3)
 		browser.getCurrentUrl()==TEST_PAGE
 	}
 }

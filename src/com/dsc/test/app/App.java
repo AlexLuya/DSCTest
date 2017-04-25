@@ -258,6 +258,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		//		driver.launchApp();
 	}
 
+	@SuppressWarnings("deprecation")
 	public void runInBackground(int seconds)
 	{
 		driver.runAppInBackground(seconds);

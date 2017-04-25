@@ -91,6 +91,7 @@ public class IOS extends App<IOS, IOSDriver<RemoteWebElement>>
 	 *
 	 * @see com.dsc.test.app.App#lockDevice(int)
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void lockDevice(int seconds)
 	{

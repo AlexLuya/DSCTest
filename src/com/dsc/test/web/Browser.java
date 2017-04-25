@@ -6,8 +6,6 @@
  **/
 package com.dsc.test.web;
 
-import static com.dsc.util.Log.warn;
-
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -68,7 +66,7 @@ public class Browser extends Context<Browser, WebDriver>
 		}
 
 		System.setProperty("webdriver.chrome.driver", whereChromeDriver());
-		System.setProperty("webdriver.chrome.logfile", System.getProperty("user.home")+"/chromedriver.log");
+		System.setProperty("webdriver.chrome.logfile", System.getProperty("user.home") + "/chromedriver.log");
 
 		// disable popup blocking
 		ChromeOptions options = new ChromeOptions();
@@ -273,8 +271,6 @@ public class Browser extends Context<Browser, WebDriver>
 			}
 		});
 
-		// switch to popoup window(last is latest opened under webdriver
-		// mechanism)
 		switchToWindow(windowHandles().length - 1);
 	}
 
@@ -295,22 +291,6 @@ public class Browser extends Context<Browser, WebDriver>
 
 	private void switchToWindow(String nameOrHandler)
 	{
-		// this will switch to expected window/tab but visually,it may won't
-		// due to window is opened in tab
 		driver.switchTo().window(nameOrHandler);
-
-		// so use a trick(show an alter,and click [OK]) to ensure focused
-		// visually
-		// but if 'alter' existed
-		if (null != alter())
-		{
-			// trick won't work,user must do it manually
-			warn("alter() existed,and it will shade the trick---alter('ensure focused visually').accept()---,please do it manually");
-			return;
-		}
-
-		// else use this trick
-		executeScript("alert('ensure focused visually')");
-		alter().accept();
 	}
 }
