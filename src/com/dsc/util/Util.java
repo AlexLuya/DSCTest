@@ -327,11 +327,11 @@ public class Util
 	// return null;
 	// }
 
-	public static void sleep(int seconds)
+	public static void sleep(double seconds)
 	{
 		try
 		{
-			Thread.sleep(seconds * 1000);
+			Thread.sleep((long) (seconds * 1000));
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
