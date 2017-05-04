@@ -17,7 +17,16 @@ public class AppTestStub extends TestStub
 {
 	App app=ContextFactory.app()
 
+	//	def setupSpec(){
+	//		ChromedriverHandler.chromeDriverHandlerThread().start()
+	//	}
+	//
+	//	def cleanupSpec(){
+	//		ChromedriverHandler.chromeDriverHandlerThread().interrupt()
+	//	}
+
 	def cleanup(){
+		//driver.resetApp()=closeApp+lanuchApp
 		app.close()
 	}
 }

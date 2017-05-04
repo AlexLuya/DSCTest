@@ -57,5 +57,6 @@
 	<classpathentry kind="lib" path="lib/driver/mssql-jdbc-6.1.0.jre8.jar"/>
 	<classpathentry kind="lib" path="lib/driver/postgresql-42.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/schemacrawler/schemacrawler-14.16.01.jar" sourcepath="lib/src/schemacrawler-14.16.01-sources.jar"/>
+	<classpathentry kind="lib" path="lib/chromedriverHandler.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

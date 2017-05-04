@@ -73,7 +73,7 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	{
 		super(cap);
 		setWaitSeconds(5);
-		setCapability(NO_RESET,"true");
+		setCapability(NO_RESET, "true");
 		// Reset state by clearing data rather then uninstalling to prevent
 		// re-installing between sessions.
 		setCapability(FULL_RESET, "false");
@@ -98,13 +98,39 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	{
 		if (null == browser)
 		{
-			Util.mustNotNull("browser", browserName());
 			setCapability(BROWSER_NAME, browserName());
 			browser = new Browser(driver, cap);
 		}
 
 		return browser;
 	}
+
+	// public void closeApp()
+	// {
+	// // browser.close();
+	// // browser=null;
+	// driver.closeApp();
+	// // driver.resetApp();
+	// // driver.closeApp();
+	// // driver.launchApp();
+	// }
+
+	public void close()
+	{
+		browser=null;
+		// driver.quit() use to shut down the webdriver instance. you totally
+		// get out from webdriver, means if you have to use webdriver again in
+		// code then you have to initiate it again. it called at last after all
+		// test execute.
+		//		browser.close();
+		driver.quit();
+		//		driver=null;
+		//		driver.closeApp();
+	}
+	//
+	//	public void closeApp(){
+	//		//		driver.closeApp();
+	//	}
 
 	public Set<String> contexts()
 	{
@@ -171,22 +197,6 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.dsc.test.common.Context#open()
-	 */
-	// @Override
-	// public void open() throws MalformedURLException
-	// {
-	// // HP ensure necessary capabilities got set already
-	// // such as device name
-	//
-	// driver = createDriver(remoteAddress);
-	//
-	// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	// }
-
-	/*
-	 * (non-Javadoc)
-	 *
 	 * @see com.dsc.test.common.Context#open(java.lang.String)
 	 */
 	@Override
@@ -194,26 +204,13 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	{
 		Util.mustNotNull("app id or file", pageIdOrFile);
 
-		if (FileUtil.existed(pageIdOrFile))
+		if (null != driver)
 		{
-			setCapability(APP, new File(pageIdOrFile).getAbsolutePath());
+			driver.launchApp();
 		} else
 		{
-			setCapability(pageId(), pageIdOrFile);
+			setupDriver(pageIdOrFile);
 		}
-
-		// HP ensure necessary capabilities got set already
-		// such as device name
-
-		try
-		{
-			driver = createDriver(remoteAddress);
-		} catch (Exception e)
-		{
-			throw new RuntimeException(msgOfCreateDriverFailed(), e);
-		}
-
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -247,15 +244,6 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 		Util.mustNotNull("remote address", remoteAddress);
 		this.remoteAddress = remoteAddress;
 		return (T) this;
-	}
-
-	public void reset()
-	{
-		//		browser.close();
-		//		browser=null;
-		driver.resetApp();
-		//		driver.closeApp();
-		//		driver.launchApp();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -372,5 +360,32 @@ public abstract class App<T extends App<T, D>, D extends AppiumDriver<RemoteWebE
 	private String msgOfCreateDriverFailed()
 	{
 		return "create driver failed," + wrap("Possible reasons:\n") + "① Appium not running\n" + "② Network disconnected\n";
+	}
+
+	/**
+	 * @param pageIdOrFile
+	 */
+	private void setupDriver(String pageIdOrFile)
+	{
+		if (FileUtil.existed(pageIdOrFile))
+		{
+			setCapability(APP, new File(pageIdOrFile).getAbsolutePath());
+		} else
+		{
+			setCapability(pageId(), pageIdOrFile);
+		}
+
+		// HP ensure necessary capabilities got set already
+		// such as device name
+
+		try
+		{
+			driver = createDriver(remoteAddress);
+		} catch (Exception e)
+		{
+			throw new RuntimeException(msgOfCreateDriverFailed(), e);
+		}
+
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 }

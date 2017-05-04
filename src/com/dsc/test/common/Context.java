@@ -97,11 +97,6 @@ public abstract class Context<T extends Context<T, D>, D extends WebDriver>
 		}
 	}
 
-	public void close()
-	{
-		driver.quit();
-	}
-
 	public abstract FieldDecorator decorator(SearchContext searchCxt);
 
 	public boolean ensureNotPresented(String id)

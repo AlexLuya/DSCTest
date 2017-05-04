@@ -52,12 +52,6 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 		return this;
 	}
 
-	@Override
-	public String browserName()
-	{
-		return CHROME;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 *
@@ -104,17 +98,17 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 		driver.lockDevice();
 	}
 
+	public void openNotification()
+	{
+		driver.openNotifications();
+	}
+
 	//	@Override
 	//	public Android launch(String pkg)
 	//	{
 	//		setCapability(APP_PACKAGE, pkg);
 	//		return this;
 	//	}
-
-	public void openNotification()
-	{
-		driver.openNotifications();
-	}
 
 	public void pushFile(String file, String toWhere) throws IOException
 	{
@@ -159,6 +153,12 @@ public class Android extends App<Android, AndroidDriver<RemoteWebElement>>
 	public void unlockDevice()
 	{
 		driver.unlockDevice();
+	}
+
+	@Override
+	protected String browserName()
+	{
+		return CHROME;
 	}
 
 	/*

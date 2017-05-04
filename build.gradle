@@ -1,5 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -7,6 +9,19 @@ targetCompatibility = 1.8
 repositories {
     jcenter()
 	mavenCentral()
+}
+
+//create a single Jar with all dependencies
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'com.dsc'
+            artifactId 'dsctest'
+            version '1.0.0'
+
+            from components.java
+        }
+    }
 }
 
 //reasons to set java src dirs to []

@@ -78,6 +78,11 @@ public class Browser extends Context<Browser, WebDriver>
 		return new Browser(new ChromeDriver(cap(cap)), cap);
 	}
 
+	public static Browser ie()
+	{
+		return new Browser(new InternetExplorerDriver(), DesiredCapabilities.internetExplorer());
+	}
+
 	// public static Browser firfox()
 	// {
 	// System.setProperty("webdriver.firefox.driver", WHERE_FIREFOX_DRIVER);
@@ -91,11 +96,6 @@ public class Browser extends Context<Browser, WebDriver>
 	// private static final String WHERE_FIREFOX_BIN = "/usr/bin/firefox";
 	// private static final String WHERE_FIREFOX_DRIVER =
 	// "/usr/local/bin/geckodriver";
-
-	public static Browser ie()
-	{
-		return new Browser(new InternetExplorerDriver(), DesiredCapabilities.internetExplorer());
-	}
 
 	public static Browser safari()
 	{
@@ -133,6 +133,11 @@ public class Browser extends Context<Browser, WebDriver>
 	{
 		super(cap);
 		this.driver = driver;
+	}
+
+	public void close()
+	{
+		driver.quit();
 	}
 
 	public void closeCurrentWindow()
